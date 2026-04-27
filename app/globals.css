@@ -1,0 +1,436 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bone: #f4efe6;
+  --bone-light: #faf7f1;
+  --bone-dark: #e8e0ce;
+  --ink: #14181f;
+  --ink-soft: #2a2f38;
+  --ink-mute: #5a6068;
+  --clay: #c2553d;
+  --clay-deep: #9e3e29;
+  --clay-light: #e8b5a6;
+  --sage: #6b7e6e;
+  --mist: #e5dcc9;
+  --line: rgba(20, 24, 31, 0.12);
+  --line-strong: rgba(20, 24, 31, 0.22);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bone);
+  color: var(--ink);
+  font-feature-settings: "ss01", "ss02", "cv11";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Paper grain — subtle SVG noise overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.08 0 0 0 0 0.09 0 0 0 0 0.12 0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ─── Type primitives ───────────────────────────────────────────────────── */
+
+.display {
+  font-family: var(--font-display), Georgia, serif;
+  font-feature-settings: "ss01", "ss02";
+  font-variation-settings: "opsz" 144, "SOFT" 30;
+  letter-spacing: -0.035em;
+  line-height: 0.96;
+}
+
+.display-italic {
+  font-style: italic;
+  font-variation-settings: "opsz" 144, "SOFT" 60;
+  letter-spacing: -0.045em;
+}
+
+.label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.num {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-feature-settings: "tnum";
+}
+
+/* ─── Hairlines & rules ─────────────────────────────────────────────────── */
+
+.rule {
+  height: 1px;
+  background: var(--line);
+}
+
+.rule-strong {
+  height: 1px;
+  background: var(--line-strong);
+}
+
+.hairline {
+  border-color: var(--line);
+}
+
+.hairline-strong {
+  border-color: var(--line-strong);
+}
+
+.accent-rule {
+  background: linear-gradient(
+    to right,
+    var(--clay) 0,
+    var(--clay) 56px,
+    var(--line) 56px,
+    var(--line) 100%
+  );
+  height: 1px;
+}
+
+/* ─── Container ─────────────────────────────────────────────────────────── */
+
+.container-page {
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 56px);
+}
+
+/* ─── ECG ornament strokes ──────────────────────────────────────────────── */
+
+.ecg-stroke {
+  stroke: var(--ink);
+  stroke-width: 1;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ecg-accent {
+  stroke: var(--clay);
+}
+
+/* ─── Buttons ───────────────────────────────────────────────────────────── */
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--bone-light);
+  padding: 14px 22px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 8px 24px -12px rgba(20, 24, 31, 0.45);
+}
+
+.btn-primary:hover {
+  background: var(--clay-deep);
+  transform: translateY(-1px);
+}
+
+.btn-primary .arrow {
+  transition: transform 0.3s ease;
+}
+
+.btn-primary:hover .arrow {
+  transform: translateX(3px);
+}
+
+.btn-ghost {
+  color: var(--ink);
+  padding: 14px 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  font-size: 15px;
+  border-bottom: 1px solid var(--line-strong);
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.btn-ghost:hover {
+  color: var(--clay-deep);
+  border-color: var(--clay);
+}
+
+/* ─── Section number badge ─────────────────────────────────────────────── */
+
+.sec-num {
+  font-family: var(--font-display), serif;
+  font-style: italic;
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+  color: var(--clay);
+  letter-spacing: -0.04em;
+}
+
+/* ─── Eyebrow row ───────────────────────────────────────────────────────── */
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--ink-mute);
+}
+
+.eyebrow .bar {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+/* ─── Marginalia ────────────────────────────────────────────────────────── */
+
+.marginalia {
+  color: var(--ink-mute);
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+}
+
+/* ─── Pill ──────────────────────────────────────────────────────────────── */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.4);
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.pill .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--clay);
+  display: inline-block;
+}
+
+.pill .dot.sage {
+  background: var(--sage);
+}
+
+/* ─── Specimen card hover ──────────────────────────────────────────────── */
+
+.specimen {
+  transition:
+    transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.4s ease,
+    border-color 0.4s ease;
+}
+
+.specimen:hover {
+  transform: translateY(-3px);
+  border-color: var(--ink-soft);
+  box-shadow: 0 24px 60px -30px rgba(20, 24, 31, 0.35);
+}
+
+/* ─── Animations ────────────────────────────────────────────────────────── */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: scaleY(0.4);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+.stagger > * {
+  animation: fade-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.stagger > *:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.stagger > *:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.stagger > *:nth-child(3) {
+  animation-delay: 0.25s;
+}
+.stagger > *:nth-child(4) {
+  animation-delay: 0.35s;
+}
+.stagger > *:nth-child(5) {
+  animation-delay: 0.45s;
+}
+.stagger > *:nth-child(6) {
+  animation-delay: 0.55s;
+}
+
+.draw-path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw 2.6s cubic-bezier(0.5, 0.05, 0.2, 1) 0.3s forwards;
+}
+
+.pulse-dot {
+  animation: pulse-soft 2.4s ease-in-out infinite;
+}
+
+.blink-cursor {
+  animation: blink 1.05s steps(1) infinite;
+}
+
+.wave-bar {
+  transform-origin: center;
+  animation: wave 1.3s ease-in-out infinite;
+}
+
+/* ─── Logo wall ─────────────────────────────────────────────────────────── */
+
+.logo-mark {
+  font-family: var(--font-display), serif;
+  font-style: italic;
+  font-variation-settings: "opsz" 144, "SOFT" 80;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--ink-soft);
+}
+
+/* ─── Underline link ────────────────────────────────────────────────────── */
+
+.ulink {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  padding-bottom: 2px;
+  transition:
+    color 0.25s,
+    background-size 0.25s;
+}
+
+.ulink:hover {
+  color: var(--clay-deep);
+}
+
+/* ─── Form ──────────────────────────────────────────────────────────────── */
+
+.vinput {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  color: var(--ink);
+  padding: 14px 0;
+  font-size: 16px;
+  width: 100%;
+  transition: border-color 0.25s ease;
+  font-family: inherit;
+}
+
+.vinput:focus {
+  outline: none;
+  border-color: var(--ink);
+}
+
+.vinput::placeholder {
+  color: var(--ink-mute);
+}
+
+/* ─── Drop cap ──────────────────────────────────────────────────────────── */
+
+.dropcap::first-letter {
+  font-family: var(--font-display), serif;
+  font-variation-settings: "opsz" 144, "SOFT" 30;
+  float: left;
+  font-size: 4.6em;
+  line-height: 0.85;
+  padding: 0.08em 0.12em 0 0;
+  color: var(--clay);
+  font-style: italic;
+}
+
+/* ─── Selection ─────────────────────────────────────────────────────────── */
+
+::selection {
+  background: var(--clay-light);
+  color: var(--ink);
+}
