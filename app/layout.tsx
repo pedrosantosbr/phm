@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Manrope, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { I18nProvider } from "./i18n/provider";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -25,12 +26,12 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Praxia — Inteligência clínica em tempo real.",
+  title: "PHMCare AI — Inteligência clínica em tempo real.",
   description:
-    "O sistema operativo de IA para hospitais. A Praxia liga medicação, voz e prontuários numa única camada de inteligência clínica — reduzindo erros, custos administrativos e tempos de espera.",
-  metadataBase: new URL("https://praxia.health"),
+    "O sistema operativo de IA para hospitais. A PHMCare AI liga medicação, voz e prontuários numa única camada de inteligência clínica — reduzindo erros, custos administrativos e tempos de espera.",
+  metadataBase: new URL("https://phmcare.ai"),
   openGraph: {
-    title: "Praxia — Inteligência clínica em tempo real.",
+    title: "PHMCare AI — Inteligência clínica em tempo real.",
     description:
       "O sistema operativo de IA para hospitais. MediGuard, CodiCare e MediCall numa única camada.",
     locale: "pt_PT",
@@ -48,7 +49,9 @@ export default function RootLayout({
       lang="pt"
       className={`${fraunces.variable} ${manrope.variable} ${jetbrains.variable}`}
     >
-      <body className="bg-bone text-ink font-body antialiased">{children}</body>
+      <body className="bg-bone text-ink font-body antialiased">
+        <I18nProvider>{children}</I18nProvider>
+      </body>
     </html>
   );
 }

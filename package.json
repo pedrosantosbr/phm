@@ -1,5 +1,5 @@
 {
-  "name": "praxia",
+  "name": "phmcare-ai",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "i18next": "^24.2.2",
     "next": "^15.1.6",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-i18next": "^15.4.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.5",

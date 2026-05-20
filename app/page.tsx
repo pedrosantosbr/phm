@@ -1,96 +1,21 @@
 "use client";
 
 import { useEffect, FormEvent } from "react";
+import { useTranslation } from "react-i18next";
+import { LanguageSwitcher } from "./i18n/LanguageSwitcher";
 
 /* ──────────────────────────────────────────────────────────────────────────
-   Praxia — landing page
+   PHMCare AI — landing page
    Sister brand to the Vellum specimen at /index.html.
    Same Clinical Editorial system, calibrated for the Portuguese-speaking market
    and the three products: MediGuard · CodiCare · MediCall.
    ────────────────────────────────────────────────────────────────────────── */
 
-const HOSPITAIS = [
-  "Hospital São Bartolomeu",
-  "Centro Clínico Tejo Sul",
-  "Vitalis Health Group",
-  "Belmar Saúde",
-  "Caldera Hospital Group",
-  "Mercator Health",
-];
-
 type Validation = { name: string; valuation: string };
 
-const PRODUCTS: {
-  index: string;
-  codename: string;
-  name: string;
-  tagline: string;
-  body: string;
-  bullets: string[];
-  pill: string;
-  validation: Validation[];
-}[] = [
-  {
-    index: "01",
-    codename: "Instrumento 01 / MediGuard",
-    name: "MediGuard",
-    tagline: "Cada dose, com o contexto certo.",
-    body: "Atua na administração de medicamentos, analisando o histórico do paciente em tempo real para alertar a equipa de enfermagem sobre possíveis riscos de alergia, interação ou contraindicação — antes da aplicação, no momento da verificação à beira do leito.",
-    bullets: [
-      "Verificação de alergias e interações em <50ms à cabeceira do doente",
-      "Integração nativa com BCMA, prescrição electrónica e farmácia hospitalar",
-      "Alertas com gradação clínica — modo zero-fadiga, calibrado por serviço",
-    ],
-    pill: "Segurança em tempo real",
-    validation: [
-      { name: "Epic Systems", valuation: "$60–80B" },
-      { name: "Oracle Health (Cerner)", valuation: "$250B+" },
-      { name: "MedAware", valuation: "$500–700M" },
-    ],
-  },
-  {
-    index: "02",
-    codename: "Instrumento 02 / CodiCare",
-    name: "CodiCare",
-    tagline: "Cada prontuário, codificado e auditado — automaticamente.",
-    body: "Automatiza a análise de prontuários médicos com IA e OCR clínico, sugerindo e validando códigos CID com citação directa do excerto fonte. Reduz drasticamente o tempo e o custo dos processos de auditoria, faturamento e relatório regulatório.",
-    bullets: [
-      "Sugestão de CID-10 / CID-11 com citação do excerto fonte e nível de confiança",
-      "OCR clínico treinado em prontuários manuscritos PT/BR e formulários hospitalares",
-      "Auditoria automática contra protocolos do hospital e regras do pagador",
-    ],
-    pill: "Codificação · auditoria",
-    validation: [
-      { name: "3M Health Info Systems", valuation: "$400B" },
-      { name: "Optum", valuation: "$400B" },
-      { name: "Abridge", valuation: "$1–2B" },
-      { name: "Ambience Healthcare", valuation: "$1–2B" },
-      { name: "Fathom", valuation: "$400–800M" },
-    ],
-  },
-  {
-    index: "03",
-    codename: "Instrumento 03 / MediCall",
-    name: "MediCall",
-    tagline: "Cada chamada, triada à entrada.",
-    body: "Assistente virtual inteligente que atende chamadas de pacientes em urgência, recolhe informação clínica relevante e agenda atendimentos automaticamente — priorizando casos pela gravidade clínica e pela disponibilidade hospitalar, com pré-triagem incluída de raiz.",
-    bullets: [
-      "Pré-triagem por voz alinhada com o protocolo de Manchester",
-      "Agendamento com prioridade clínica e disponibilidade em tempo real",
-      "24/7 em Português, Inglês e Espanhol — voz natural, latência conversacional",
-    ],
-    pill: "Voz · triagem clínica",
-    validation: [
-      { name: "Suki AI", valuation: "$500–700M" },
-      { name: "sully.ai", valuation: "$1B" },
-      { name: "K Health", valuation: "$900M–1.5B" },
-      { name: "Steer Health", valuation: "$300–600M" },
-      { name: "Assort Health", valuation: "$200–500M" },
-    ],
-  },
-];
-
 export default function Page() {
+  const { t } = useTranslation();
+
   // Scroll reveal + smooth anchor scrolling
   useEffect(() => {
     const io = new IntersectionObserver(
@@ -110,10 +35,37 @@ export default function Page() {
 
   function handleDemo(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    alert(
-      "Pedido recebido. Um responsável clínico entrará em contacto nas próximas 24 horas.",
-    );
+    alert(t("cta.alertSubmitted"));
   }
+
+  const HOSPITAIS = [
+    t("hospitals.h1"),
+    t("hospitals.h2"),
+    t("hospitals.h3"),
+    t("hospitals.h4"),
+    t("hospitals.h5"),
+    t("hospitals.h6"),
+  ];
+
+  const MEDIGUARD_VALIDATION: Validation[] = [
+    { name: "Epic Systems", valuation: "$60–80B" },
+    { name: "Oracle Health (Cerner)", valuation: "$250B+" },
+    { name: "MedAware", valuation: "$500–700M" },
+  ];
+  const CODICARE_VALIDATION: Validation[] = [
+    { name: "3M Health Info Systems", valuation: "$400B" },
+    { name: "Optum", valuation: "$400B" },
+    { name: "Abridge", valuation: "$1–2B" },
+    { name: "Ambience Healthcare", valuation: "$1–2B" },
+    { name: "Fathom", valuation: "$400–800M" },
+  ];
+  const MEDICALL_VALIDATION: Validation[] = [
+    { name: "Suki AI", valuation: "$500–700M" },
+    { name: "sully.ai", valuation: "$1B" },
+    { name: "K Health", valuation: "$900M–1.5B" },
+    { name: "Steer Health", valuation: "$300–600M" },
+    { name: "Assort Health", valuation: "$200–500M" },
+  ];
 
   return (
     <>
@@ -122,15 +74,13 @@ export default function Page() {
           ════════════════════════════════════════════════════════════════════ */}
       <div className="hairline border-b">
         <div className="container-page flex items-center justify-between py-2 label text-ink-mute">
-          <span>Vol. I · Edição 01 · Abril 2026</span>
-          <span className="hidden md:inline">
-            Construída com clínicos, para clínicos.
-          </span>
+          <span>{t("masthead.edition")}</span>
+          <span className="hidden md:inline">{t("masthead.tagline")}</span>
           <span className="flex items-center gap-2">
             <span className="num">99.97%</span> uptime
             <span className="inline-block w-px h-3 bg-line mx-1" />
             <span className="pulse-dot inline-block w-1.5 h-1.5 rounded-full bg-clay" />
-            Operacional
+            {t("masthead.uptimeStatus")}
           </span>
         </div>
       </div>
@@ -140,34 +90,32 @@ export default function Page() {
           ════════════════════════════════════════════════════════════════════ */}
       <header className="container-page py-7 flex items-center justify-between">
         <a href="#" className="flex items-baseline gap-2">
-          <span className="display text-3xl">Praxia</span>
+          <span className="display text-3xl">PHMCare AI</span>
           <span className="label text-ink-mute hidden sm:inline">
-            — Health
+            {t("nav.brandSuffix")}
           </span>
         </a>
         <nav className="hidden lg:flex items-center gap-9 text-[15px] text-ink-soft">
           <a href="#produtos" className="ulink">
-            Produtos
+            {t("nav.products")}
           </a>
           <a href="#mercado" className="ulink">
-            Mercado
+            {t("nav.market")}
           </a>
           <a href="#vantagem" className="ulink">
-            Vantagem
-          </a>
-          <a href="#colofao" className="ulink">
-            Colofão
+            {t("nav.advantage")}
           </a>
         </nav>
         <div className="flex items-center gap-4">
+          <LanguageSwitcher />
           <a
             href="#"
-            className="hidden sm:inline-block text-[15px] text-ink-soft ulink"
+            className="hidden text-[15px] text-ink-soft ulink"
           >
-            Iniciar sessão
+            {t("nav.login")}
           </a>
           <a href="#cta" className="btn-primary text-[14px] py-3 px-5">
-            Pedir demo
+            {t("nav.cta")}
             <svg
               className="arrow"
               width="14"
@@ -198,28 +146,24 @@ export default function Page() {
           <div className="col-span-12 lg:col-span-7 stagger">
             <div className="eyebrow label">
               <span className="sec-num text-[28px] leading-none">I</span>
-              <span>O sistema operativo de IA para hospitais</span>
+              <span>{t("hero.eyebrow")}</span>
               <span className="bar" />
-              <span className="hidden md:inline">
-                Filed under: medicina · raciocínio máquina · fluxo
-              </span>
+              <span className="hidden md:inline">{t("hero.eyebrowMeta")}</span>
             </div>
 
             <h1 className="display mt-8 text-[clamp(48px,7.5vw,108px)]">
-              Inteligência clínica,
+              {t("hero.titleLine1")}
               <br />
-              <span className="display-italic">à velocidade do hospital.</span>
+              <span className="display-italic">{t("hero.titleLine2")}</span>
             </h1>
 
             <p className="mt-8 text-[20px] leading-[1.55] text-ink-soft max-w-[58ch]">
-              A Praxia liga medicação, voz e prontuários numa única camada de
-              inteligência clínica — reduzindo erros, custos administrativos e
-              tempos de espera. Sem substituir o critério de quem cuida.
+              {t("hero.body")}
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-6">
               <a href="#cta" className="btn-primary">
-                Pedir demonstração
+                {t("hero.ctaPrimary")}
                 <svg
                   className="arrow"
                   width="14"
@@ -237,7 +181,7 @@ export default function Page() {
                 </svg>
               </a>
               <a href="#produtos" className="btn-ghost">
-                Ler o pitch
+                {t("hero.ctaGhost")}
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
                   <path
                     d="M1 12L12 1M5 1h7v7"
@@ -263,8 +207,8 @@ export default function Page() {
                 <span className="w-1.5 h-1.5 rounded-full bg-sage" /> LGPD
               </span>
               <span className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-sage" /> Go-live em
-                14 dias
+                <span className="w-1.5 h-1.5 rounded-full bg-sage" />{" "}
+                {t("hero.complianceGolive")}
               </span>
             </div>
           </div>
@@ -273,7 +217,7 @@ export default function Page() {
           <aside className="col-span-12 lg:col-span-5 lg:pl-8 reveal">
             <div className="relative">
               <div className="absolute -top-3 -left-3 label text-ink-mute hidden lg:block">
-                Specimen 01 / MediGuard
+                {t("hero.specimen.label")}
               </div>
 
               <div className="border hairline-strong rounded-sm bg-bone-light/80 backdrop-blur-sm p-6 md:p-7 shadow-[0_30px_80px_-40px_rgba(20,24,31,0.35)]">
@@ -281,10 +225,10 @@ export default function Page() {
                 <div className="flex items-center justify-between pb-4 border-b hairline">
                   <div className="flex items-center gap-2">
                     <span className="pulse-dot w-2 h-2 rounded-full bg-clay" />
-                    <span className="label">MediGuard · Pré-administração</span>
+                    <span className="label">{t("hero.specimen.header")}</span>
                   </div>
                   <span className="num text-xs text-ink-mute">
-                    00:38s · Enf.ª 4-B
+                    {t("hero.specimen.meta")}
                   </span>
                 </div>
 
@@ -292,14 +236,18 @@ export default function Page() {
                 <div className="pt-4 flex items-baseline justify-between">
                   <div>
                     <div className="label text-ink-mute mb-1">
-                      Doente · MRN 0–8814–73
+                      {t("hero.specimen.patientLabel")}
                     </div>
-                    <div className="display text-[24px]">Sra. R. — 67 anos</div>
+                    <div className="display text-[24px]">
+                      {t("hero.specimen.patientName")}
+                    </div>
                   </div>
                   <div className="text-right">
-                    <div className="label text-ink-mute mb-1">Severidade</div>
+                    <div className="label text-ink-mute mb-1">
+                      {t("hero.specimen.severity")}
+                    </div>
                     <div className="num text-[26px] text-clay-deep tracking-tight">
-                      Alta
+                      {t("hero.specimen.severityHigh")}
                     </div>
                   </div>
                 </div>
@@ -308,9 +256,11 @@ export default function Page() {
                 <div className="mt-5 rounded-sm bg-bone-dark/50 p-4 border hairline">
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="label text-ink-mute">Prescrição</div>
+                      <div className="label text-ink-mute">
+                        {t("hero.specimen.prescription")}
+                      </div>
                       <div className="display text-[28px] mt-1">
-                        Cefepime 2g IV
+                        {t("hero.specimen.prescriptionDrug")}
                       </div>
                     </div>
                     <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
@@ -333,15 +283,21 @@ export default function Page() {
                     <div className="flex items-center gap-2">
                       <span className="num text-clay">↳</span>
                       <span>
-                        Alergia: <span className="font-medium">cefalosporinas</span>{" "}
-                        · 2019
+                        {t("hero.specimen.allergyLabel")}:{" "}
+                        <span className="font-medium">
+                          {t("hero.specimen.allergyDrug")}
+                        </span>{" "}
+                        {t("hero.specimen.allergyYear")}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="num text-clay">↳</span>
                       <span>
-                        Interação: <span className="font-medium">varfarina</span>{" "}
-                        · INR ↑
+                        {t("hero.specimen.interactionLabel")}:{" "}
+                        <span className="font-medium">
+                          {t("hero.specimen.interactionDrug")}
+                        </span>{" "}
+                        {t("hero.specimen.interactionConsequence")}
                       </span>
                     </div>
                   </div>
@@ -350,30 +306,31 @@ export default function Page() {
                 {/* recommendation */}
                 <div className="mt-5 border-l-2 border-clay pl-4">
                   <div className="label text-clay-deep mb-1.5">
-                    Recomendação · evidência: A
+                    {t("hero.specimen.recommendation")}
                   </div>
                   <p className="text-[15px] leading-snug text-ink-soft">
-                    Reter dose. Considerar{" "}
-                    <span className="font-medium text-ink">aztreonam</span> como
-                    alternativa em doente com hipersensibilidade documentada a
-                    β-lactâmicos.
+                    {t("hero.specimen.recPart1")}{" "}
+                    <span className="font-medium text-ink">
+                      {t("hero.specimen.recDrug")}
+                    </span>{" "}
+                    {t("hero.specimen.recPart2")}
                   </p>
                   <div className="mt-3 marginalia">
-                    Fonte: IDSA 2024 · Protocolo local v3.2 · Histórico clínico
+                    {t("hero.specimen.source")}
                   </div>
                 </div>
 
                 <div className="mt-5 flex items-center justify-between">
                   <div className="flex gap-2">
                     <button className="px-3 py-1.5 text-[12px] rounded-full bg-ink text-bone-light">
-                      Reter dose
+                      {t("hero.specimen.btnRetain")}
                     </button>
                     <button className="px-3 py-1.5 text-[12px] rounded-full border hairline-strong text-ink-soft">
-                      Justificar e administrar
+                      {t("hero.specimen.btnJustify")}
                     </button>
                   </div>
                   <span className="num text-[11px] text-ink-mute">
-                    latência 38ms
+                    {t("hero.specimen.latency")}
                   </span>
                 </div>
               </div>
@@ -388,11 +345,7 @@ export default function Page() {
                     fill="none"
                   />
                 </svg>
-                <span>
-                  Specimen ao vivo — toda recomendação inclui citação,
-                  latência medida e trilho de auditoria. Nada substitui o
-                  critério clínico; tudo o afia.
-                </span>
+                <span>{t("hero.specimen.annotation")}</span>
               </div>
             </div>
           </aside>
@@ -420,14 +373,14 @@ export default function Page() {
         <div className="container-page py-14">
           <div className="grid grid-cols-12 gap-8 items-end">
             <div className="col-span-12 md:col-span-5">
-              <div className="label text-ink-mute mb-3">— Construído com</div>
+              <div className="label text-ink-mute mb-3">{t("trust.label")}</div>
               <p className="display text-[28px] md:text-[34px] leading-[1.05] text-ink">
-                Hospitais que servem mais de
+                {t("trust.headlinePre")}
                 <br />
                 <span className="display-italic text-clay-deep">
-                  14 milhões
+                  {t("trust.headlineEmphasis")}
                 </span>{" "}
-                de atendimentos anuais.
+                {t("trust.headlinePost")}
               </p>
             </div>
             <div className="col-span-12 md:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-5 md:pl-10 md:border-l hairline">
@@ -445,7 +398,7 @@ export default function Page() {
                 3
               </div>
               <div className="label text-ink-mute mt-2">
-                Produtos · uma camada
+                {t("trust.stats.productsLabel")}
               </div>
             </div>
             <div>
@@ -453,7 +406,7 @@ export default function Page() {
                 14<span className="text-clay text-[26px] align-top">d</span>
               </div>
               <div className="label text-ink-mute mt-2">
-                Do contrato à primeira recomendação
+                {t("trust.stats.goliveLabel")}
               </div>
             </div>
             <div>
@@ -461,7 +414,7 @@ export default function Page() {
                 99.97<span className="text-clay text-[26px] align-top">%</span>
               </div>
               <div className="label text-ink-mute mt-2">
-                Disponibilidade · 24m
+                {t("trust.stats.uptimeLabel")}
               </div>
             </div>
             <div>
@@ -469,7 +422,7 @@ export default function Page() {
                 38<span className="text-clay text-[26px] align-top">ms</span>
               </div>
               <div className="label text-ink-mute mt-2">
-                Latência mediana de decisão
+                {t("trust.stats.latencyLabel")}
               </div>
             </div>
           </div>
@@ -484,28 +437,24 @@ export default function Page() {
           <div className="col-span-12 lg:col-span-5 lg:sticky lg:top-24 self-start">
             <div className="eyebrow label">
               <span className="sec-num text-[28px] leading-none">II</span>
-              <span>O Problema</span>
+              <span>{t("problem.eyebrow")}</span>
               <span className="bar" />
             </div>
 
             <h2 className="display mt-8 text-[clamp(40px,5.5vw,72px)]">
-              Hospitais com sistemas
+              {t("problem.titleLine1")}
               <br />
-              fragmentados.
+              {t("problem.titleLine2")}
               <br />
-              <span className="display-italic">As pessoas pagam a conta.</span>
+              <span className="display-italic">{t("problem.titleLine3")}</span>
             </h2>
 
             <p className="dropcap mt-10 text-[17px] leading-[1.7] text-ink-soft max-w-[42ch]">
-              Cada hospital é uma constelação de sistemas que não se falam.
-              Os profissionais são a cola — e estão a partir. Os doentes
-              esperam. Os custos administrativos crescem. O risco evitável
-              passa por baixo do radar.
+              {t("problem.body")}
             </p>
 
             <div className="marginalia mt-8 max-w-[40ch]">
-              — Fonte: benchmark interno Praxia 2025, n=1.4M episódios
-              clínicos, 22 instituições EU/BR.
+              {t("problem.source")}
             </div>
           </div>
 
@@ -516,19 +465,17 @@ export default function Page() {
               </div>
               <div className="col-span-10">
                 <h3 className="display text-[28px] md:text-[34px]">
-                  Erros de medicação por falta de contexto.
+                  {t("problem.items.meds.title")}
                 </h3>
                 <p className="mt-3 text-[16px] leading-[1.65] text-ink-soft max-w-[62ch]">
-                  Alergias, interações e contraindicações estão registadas em
-                  sítios diferentes. À cabeceira do doente, a enfermagem decide
-                  com{" "}
+                  {t("problem.items.meds.bodyPart1")}{" "}
                   <span className="text-ink font-medium">
-                    fragmentos do quadro completo
+                    {t("problem.items.meds.bodyEmphasis")}
                   </span>{" "}
-                  — e cada falha tem consequências reais.
+                  {t("problem.items.meds.bodyPart2")}
                 </p>
                 <div className="marginalia mt-4">
-                  tag · medicação · BCMA · hipersensibilidade
+                  {t("problem.items.meds.tag")}
                 </div>
               </div>
             </li>
@@ -539,16 +486,13 @@ export default function Page() {
               </div>
               <div className="col-span-10">
                 <h3 className="display text-[28px] md:text-[34px]">
-                  Codificação manual: cara, lenta, instável.
+                  {t("problem.items.coding.title")}
                 </h3>
                 <p className="mt-3 text-[16px] leading-[1.65] text-ink-soft max-w-[62ch]">
-                  A codificação CID e a documentação clínica continuam a ser
-                  feitas a olho — produzindo atrasos no faturamento, glosas
-                  evitáveis e horas perdidas em auditoria que não devolve nada
-                  ao doente.
+                  {t("problem.items.coding.body")}
                 </p>
                 <div className="marginalia mt-4">
-                  tag · cid · auditoria · faturamento · glosas
+                  {t("problem.items.coding.tag")}
                 </div>
               </div>
             </li>
@@ -559,19 +503,17 @@ export default function Page() {
               </div>
               <div className="col-span-10">
                 <h3 className="display text-[28px] md:text-[34px]">
-                  Triagem dependente de call centers em rotura.
+                  {t("problem.items.triage.title")}
                 </h3>
                 <p className="mt-3 text-[16px] leading-[1.65] text-ink-soft max-w-[62ch]">
-                  As decisões de prioridade clínica são tomadas em ambientes
-                  ruidosos, por pessoas sobrecarregadas, sem suporte em tempo
-                  real. O resultado é{" "}
+                  {t("problem.items.triage.bodyPart1")}{" "}
                   <span className="text-ink font-medium">
-                    triagem inconsistente
+                    {t("problem.items.triage.bodyEmphasis")}
                   </span>{" "}
-                  e tempo de espera que castiga primeiro quem mais precisa.
+                  {t("problem.items.triage.bodyPart2")}
                 </p>
                 <div className="marginalia mt-4">
-                  tag · manchester · urgência · agendamento · voz
+                  {t("problem.items.triage.tag")}
                 </div>
               </div>
             </li>
@@ -582,16 +524,17 @@ export default function Page() {
               </div>
               <div className="col-span-10">
                 <h3 className="display text-[28px] md:text-[34px]">
-                  Profissionais à beira da exaustão.
+                  {t("problem.items.burnout.title")}
                 </h3>
                 <p className="mt-3 text-[16px] leading-[1.65] text-ink-soft max-w-[62ch]">
-                  Médicos e enfermeiros passam até{" "}
-                  <span className="text-ink font-medium">49% do tempo</span> em
-                  documentação e revisão de prontuários. O sinal vive no
-                  presente — o sistema só descreve o passado.
+                  {t("problem.items.burnout.bodyPart1")}{" "}
+                  <span className="text-ink font-medium">
+                    {t("problem.items.burnout.bodyEmphasis")}
+                  </span>{" "}
+                  {t("problem.items.burnout.bodyPart2")}
                 </p>
                 <div className="marginalia mt-4">
-                  tag · burnout · documentação · cognitiva
+                  {t("problem.items.burnout.tag")}
                 </div>
               </div>
             </li>
@@ -631,7 +574,7 @@ export default function Page() {
                 >
                   III
                 </span>
-                <span>A Plataforma</span>
+                <span>{t("platform.eyebrow")}</span>
                 <span
                   className="bar"
                   style={{ background: "rgba(244,239,230,0.2)" }}
@@ -642,12 +585,12 @@ export default function Page() {
                 className="display mt-8 text-[clamp(40px,6vw,80px)]"
                 style={{ color: "#FAF7F1" }}
               >
-                Uma camada horizontal.
+                {t("platform.titleLine1")}
                 <br />
-                Três instrumentos.
+                {t("platform.titleLine2")}
                 <br />
                 <span className="display-italic" style={{ color: "#E8B5A6" }}>
-                  Um único registo.
+                  {t("platform.titleLine3")}
                 </span>
               </h2>
             </div>
@@ -657,18 +600,16 @@ export default function Page() {
                 className="text-[18px] leading-[1.65]"
                 style={{ color: "rgba(244,239,230,0.78)" }}
               >
-                A Praxia integra-se ao seu EHR existente, escuta a voz, lê os
-                prontuários, vigia a medicação — e devolve recomendações com
-                citação, latência medida e trilho de auditoria.
+                {t("platform.body1")}
               </p>
               <p
                 className="mt-5 text-[18px] leading-[1.65]"
                 style={{ color: "rgba(244,239,230,0.78)" }}
               >
-                Nada substitui o critério clínico.
+                {t("platform.body2Line1")}
                 <br />
                 <span className="display-italic" style={{ color: "#E8B5A6" }}>
-                  Tudo o afia.
+                  {t("platform.body2Line2")}
                 </span>
               </p>
             </div>
@@ -682,18 +623,18 @@ export default function Page() {
             {[
               {
                 num: "01",
-                title: "Federada por design.",
-                body: "Os dados nunca saem do seu perímetro. Os modelos correm dentro do seu VPC ou on-premise. PHI nunca é exposto.",
+                title: t("platform.pillars.federated.title"),
+                body: t("platform.pillars.federated.body"),
               },
               {
                 num: "02",
-                title: "Citada por padrão.",
-                body: "Cada saída — alerta, código, decisão — traz citação à fonte: literatura primária, protocolo local, histórico clínico. Sem caixa preta.",
+                title: t("platform.pillars.cited.title"),
+                body: t("platform.pillars.cited.body"),
               },
               {
                 num: "03",
-                title: "Calibrada à sua realidade.",
-                body: "Protocolos, formulário, regras do pagador e legislação local. PT, BR e EU. Calibração feita com a sua equipa clínica.",
+                title: t("platform.pillars.calibrated.title"),
+                body: t("platform.pillars.calibrated.body"),
               },
             ].map((c, i) => (
               <div
@@ -725,23 +666,19 @@ export default function Page() {
       <section id="produtos" className="container-page py-28 lg:py-36">
         <div className="eyebrow label">
           <span className="sec-num text-[28px] leading-none">IV</span>
-          <span>Os Instrumentos — três produtos, um único registo.</span>
+          <span>{t("products.eyebrow")}</span>
           <span className="bar" />
-          <span className="hidden md:inline">
-            Independentes · interligados · audit-ready
-          </span>
+          <span className="hidden md:inline">{t("products.eyebrowMeta")}</span>
         </div>
 
         <div className="grid grid-cols-12 gap-8 mt-8">
           <h2 className="display col-span-12 lg:col-span-9 text-[clamp(40px,6vw,84px)]">
-            Construídos por clínicos,
+            {t("products.titleLine1")}
             <br />
-            <span className="display-italic">indexados pela evidência.</span>
+            <span className="display-italic">{t("products.titleLine2")}</span>
           </h2>
           <p className="col-span-12 lg:col-span-3 lg:pt-6 text-[15px] leading-[1.65] text-ink-soft">
-            Cada instrumento é independente, interligável, e integra com o EHR
-            via HL7 v2, FHIR R4 e SMART-on-FHIR. Comece por um. Acrescente os
-            outros à medida que a equipa cresce de confiança.
+            {t("products.body")}
           </p>
         </div>
 
@@ -749,32 +686,38 @@ export default function Page() {
         <article className="specimen mt-16 border hairline-strong rounded-sm p-8 md:p-10 bg-bone-light grid grid-cols-12 gap-8">
           <div className="col-span-12 md:col-span-7">
             <div className="flex items-center justify-between flex-wrap gap-2">
-              <span className="label text-ink-mute">{PRODUCTS[0].codename}</span>
+              <span className="label text-ink-mute">
+                {t("products.items.mediguard.codename")}
+              </span>
               <span className="pill">
                 <span className="dot" />
-                {PRODUCTS[0].pill}
+                {t("products.items.mediguard.pill")}
               </span>
             </div>
             <h3 className="display mt-5 text-[clamp(36px,4vw,56px)]">
-              {PRODUCTS[0].name}
+              {t("products.items.mediguard.name")}
             </h3>
             <p className="display-italic text-clay-deep text-[20px] mt-2">
-              {PRODUCTS[0].tagline}
+              {t("products.items.mediguard.tagline")}
             </p>
 
             <p className="mt-6 text-[16px] leading-[1.65] text-ink-soft max-w-[58ch]">
-              {PRODUCTS[0].body}
+              {t("products.items.mediguard.body")}
             </p>
 
             <ul className="mt-7 space-y-3 text-[15px] text-ink-soft">
-              {PRODUCTS[0].bullets.map((b) => (
+              {[
+                t("products.items.mediguard.bullet1"),
+                t("products.items.mediguard.bullet2"),
+                t("products.items.mediguard.bullet3"),
+              ].map((b) => (
                 <li key={b} className="flex gap-3">
                   <span className="num text-clay mt-1">›</span> {b}
                 </li>
               ))}
             </ul>
 
-            <ValidationStrip items={PRODUCTS[0].validation} />
+            <ValidationStrip items={MEDIGUARD_VALIDATION} />
           </div>
 
           {/* MediGuard specimen visual */}
@@ -782,7 +725,7 @@ export default function Page() {
             <div className="rounded-sm bg-bone-dark/60 border hairline p-5 h-full flex flex-col">
               <div className="flex items-center justify-between">
                 <span className="label text-ink-mute">
-                  Verificação · à cabeceira
+                  {t("products.items.mediguard.specimen.header")}
                 </span>
                 <span className="num text-[11px] text-ink-mute">+38ms</span>
               </div>
@@ -792,15 +735,19 @@ export default function Page() {
                   Cefepime <span className="display-italic">2g IV</span>
                 </div>
                 <div className="label text-ink-mute mt-1">
-                  Sra. R. · 67a · MRN 0–8814–73
+                  {t("products.items.mediguard.specimen.patient")}
                 </div>
               </div>
 
               {/* severity bar */}
               <div className="mt-2">
                 <div className="flex items-center justify-between label text-ink-mute mb-1.5">
-                  <span>Severidade</span>
-                  <span className="text-clay-deep">Alta</span>
+                  <span>
+                    {t("products.items.mediguard.specimen.severity")}
+                  </span>
+                  <span className="text-clay-deep">
+                    {t("products.items.mediguard.specimen.severityHigh")}
+                  </span>
                 </div>
                 <div className="h-1.5 bg-bone rounded-full overflow-hidden">
                   <div
@@ -833,9 +780,11 @@ export default function Page() {
                     />
                   </svg>
                   <div className="text-[12.5px] leading-snug">
-                    <div className="font-medium">Alergia · cefalosporinas</div>
+                    <div className="font-medium">
+                      {t("products.items.mediguard.specimen.allergyTitle")}
+                    </div>
                     <div className="text-ink-mute marginalia mt-1">
-                      Documentada em 2019 · anafilaxia
+                      {t("products.items.mediguard.specimen.allergyMeta")}
                     </div>
                   </div>
                 </div>
@@ -863,9 +812,11 @@ export default function Page() {
                     />
                   </svg>
                   <div className="text-[12.5px] leading-snug">
-                    <div className="font-medium">Interação · varfarina</div>
+                    <div className="font-medium">
+                      {t("products.items.mediguard.specimen.interactionTitle")}
+                    </div>
                     <div className="text-ink-mute marginalia mt-1">
-                      Risco de elevação do INR
+                      {t("products.items.mediguard.specimen.interactionMeta")}
                     </div>
                   </div>
                 </div>
@@ -873,10 +824,10 @@ export default function Page() {
 
               <div className="mt-auto pt-5 flex items-center justify-between border-t hairline">
                 <span className="num text-[11px] text-ink-mute">
-                  14 fontes verificadas
+                  {t("products.items.mediguard.specimen.sources")}
                 </span>
                 <span className="num text-[11px] text-clay-deep">
-                  RETER DOSE
+                  {t("products.items.mediguard.specimen.retain")}
                 </span>
               </div>
             </div>
@@ -890,36 +841,35 @@ export default function Page() {
             <div className="rounded-sm bg-bone-dark/40 border hairline p-5 h-full">
               <div className="flex items-center justify-between mb-4">
                 <span className="label text-ink-mute">
-                  Prontuário · processado
+                  {t("products.items.codicare.specimen.header")}
                 </span>
                 <span className="num text-[11px] text-ink-mute">
-                  alta · 12.04
+                  {t("products.items.codicare.specimen.meta")}
                 </span>
               </div>
 
               {/* document mock */}
               <div className="bg-bone-light border hairline rounded-sm p-4 text-[13px] leading-[1.55] text-ink-soft">
                 <div className="text-ink-mute marginalia mb-2">
-                  EVOLUÇÃO · 12.04.2026 · 14:22
+                  {t("products.items.codicare.specimen.recordHeader")}
                 </div>
                 <p>
-                  Doente refere{" "}
+                  {t("products.items.codicare.specimen.recordPart1")}{" "}
                   <span
                     className="bg-clay-light/50 underline decoration-clay decoration-[1.5px] underline-offset-2 px-0.5"
                     title="extracted"
                   >
-                    dor torácica
+                    {t("products.items.codicare.specimen.recordHighlight1")}
                   </span>{" "}
-                  com início súbito, irradiação para o membro superior esquerdo,
-                  associada a{" "}
+                  {t("products.items.codicare.specimen.recordPart2")}{" "}
                   <span className="bg-clay-light/50 underline decoration-clay decoration-[1.5px] underline-offset-2 px-0.5">
-                    dispneia em esforço
+                    {t("products.items.codicare.specimen.recordHighlight2")}
                   </span>
-                  . Ausculta cardíaca rítmica, sem sopros. ECG mostra{" "}
+                  {t("products.items.codicare.specimen.recordPart3")}{" "}
                   <span className="bg-clay-light/50 underline decoration-clay decoration-[1.5px] underline-offset-2 px-0.5">
-                    elevação de ST
+                    {t("products.items.codicare.specimen.recordHighlight3")}
                   </span>{" "}
-                  em parede inferior.
+                  {t("products.items.codicare.specimen.recordPart4")}
                 </p>
               </div>
 
@@ -927,56 +877,66 @@ export default function Page() {
               <div className="mt-5 space-y-2.5">
                 <CodeChip
                   code="I21.1"
-                  label="Enfarte agudo do miocárdio · parede inferior"
+                  label={t("products.items.codicare.specimen.code1Label")}
                   confidence={0.96}
                 />
                 <CodeChip
                   code="R07.4"
-                  label="Dor torácica não especificada"
+                  label={t("products.items.codicare.specimen.code2Label")}
                   confidence={0.88}
                 />
                 <CodeChip
                   code="R06.0"
-                  label="Dispneia"
+                  label={t("products.items.codicare.specimen.code3Label")}
                   confidence={0.82}
                 />
               </div>
 
               <div className="mt-5 pt-4 border-t hairline grid grid-cols-2 gap-2 text-[12px] text-ink-mute">
-                <span>12 excertos analisados</span>
-                <span className="text-right">3 códigos sugeridos</span>
+                <span>
+                  {t("products.items.codicare.specimen.excerpts")}
+                </span>
+                <span className="text-right">
+                  {t("products.items.codicare.specimen.suggested")}
+                </span>
               </div>
             </div>
           </div>
 
           <div className="col-span-12 md:col-span-7 order-1 md:order-2">
             <div className="flex items-center justify-between flex-wrap gap-2">
-              <span className="label text-ink-mute">{PRODUCTS[1].codename}</span>
+              <span className="label text-ink-mute">
+                {t("products.items.codicare.codename")}
+              </span>
               <span className="pill">
                 <span className="dot" />
-                {PRODUCTS[1].pill}
+                {t("products.items.codicare.pill")}
               </span>
             </div>
             <h3 className="display mt-5 text-[clamp(36px,4vw,56px)]">
-              {PRODUCTS[1].name}
+              {t("products.items.codicare.name")}
             </h3>
             <p className="display-italic text-clay-deep text-[20px] mt-2">
-              {PRODUCTS[1].tagline}
+              {t("products.items.codicare.tagline")}
             </p>
 
             <p className="mt-6 text-[16px] leading-[1.65] text-ink-soft max-w-[58ch]">
-              {PRODUCTS[1].body}
+              {t("products.items.codicare.body")}
             </p>
 
             <ul className="mt-7 space-y-3 text-[15px] text-ink-soft">
-              {PRODUCTS[1].bullets.map((b) => (
+              {[
+                t("products.items.codicare.bullet1"),
+                t("products.items.codicare.bullet2"),
+                t("products.items.codicare.bullet3"),
+              ].map((b) => (
                 <li key={b} className="flex gap-3">
                   <span className="num text-clay mt-1">›</span> {b}
                 </li>
               ))}
             </ul>
 
-            <ValidationStrip items={PRODUCTS[1].validation} />
+            <ValidationStrip items={CODICARE_VALIDATION} />
           </div>
         </article>
 
@@ -984,32 +944,38 @@ export default function Page() {
         <article className="specimen mt-8 border hairline-strong rounded-sm p-8 md:p-10 bg-bone-light grid grid-cols-12 gap-8">
           <div className="col-span-12 md:col-span-7">
             <div className="flex items-center justify-between flex-wrap gap-2">
-              <span className="label text-ink-mute">{PRODUCTS[2].codename}</span>
+              <span className="label text-ink-mute">
+                {t("products.items.medicall.codename")}
+              </span>
               <span className="pill">
                 <span className="dot" />
-                {PRODUCTS[2].pill}
+                {t("products.items.medicall.pill")}
               </span>
             </div>
             <h3 className="display mt-5 text-[clamp(36px,4vw,56px)]">
-              {PRODUCTS[2].name}
+              {t("products.items.medicall.name")}
             </h3>
             <p className="display-italic text-clay-deep text-[20px] mt-2">
-              {PRODUCTS[2].tagline}
+              {t("products.items.medicall.tagline")}
             </p>
 
             <p className="mt-6 text-[16px] leading-[1.65] text-ink-soft max-w-[58ch]">
-              {PRODUCTS[2].body}
+              {t("products.items.medicall.body")}
             </p>
 
             <ul className="mt-7 space-y-3 text-[15px] text-ink-soft">
-              {PRODUCTS[2].bullets.map((b) => (
+              {[
+                t("products.items.medicall.bullet1"),
+                t("products.items.medicall.bullet2"),
+                t("products.items.medicall.bullet3"),
+              ].map((b) => (
                 <li key={b} className="flex gap-3">
                   <span className="num text-clay mt-1">›</span> {b}
                 </li>
               ))}
             </ul>
 
-            <ValidationStrip items={PRODUCTS[2].validation} />
+            <ValidationStrip items={MEDICALL_VALIDATION} />
           </div>
 
           {/* MediCall specimen */}
@@ -1018,7 +984,7 @@ export default function Page() {
               <div className="flex items-center justify-between">
                 <span className="label text-ink-mute flex items-center gap-2">
                   <span className="pulse-dot w-1.5 h-1.5 rounded-full bg-clay" />
-                  MediCall · em curso
+                  {t("products.items.medicall.specimen.header")}
                 </span>
                 <span className="num text-[11px] text-ink-mute">02:14</span>
               </div>
@@ -1045,26 +1011,30 @@ export default function Page() {
               {/* transcript bubble */}
               <div className="mt-5 border-l-2 border-ink pl-4 py-1">
                 <div className="label text-ink-mute mb-1.5">
-                  Transcrito · PT-PT
+                  {t("products.items.medicall.specimen.transcriptLabel")}
                 </div>
                 <p className="text-[14px] leading-[1.5] text-ink-soft">
-                  &ldquo;Estou com{" "}
+                  &ldquo;{t("products.items.medicall.specimen.transcriptPart1")}{" "}
                   <span className="bg-clay-light/50 underline decoration-clay decoration-[1.5px] underline-offset-2 px-0.5">
-                    dor no peito
+                    {t("products.items.medicall.specimen.transcriptHighlight1")}
                   </span>{" "}
-                  desde a manhã, tenho 67 anos e já senti{" "}
+                  {t("products.items.medicall.specimen.transcriptPart2")}{" "}
                   <span className="bg-clay-light/50 underline decoration-clay decoration-[1.5px] underline-offset-2 px-0.5">
-                    falta de ar
+                    {t("products.items.medicall.specimen.transcriptHighlight2")}
                   </span>
-                  …&rdquo;
+                  {t("products.items.medicall.specimen.transcriptPart3")}&rdquo;
                 </p>
               </div>
 
               {/* priority bar */}
               <div className="mt-5">
                 <div className="flex items-center justify-between label text-ink-mute mb-2">
-                  <span>Prioridade · Manchester</span>
-                  <span className="text-clay-deep">LARANJA · MUITO URGENTE</span>
+                  <span>
+                    {t("products.items.medicall.specimen.priorityLabel")}
+                  </span>
+                  <span className="text-clay-deep">
+                    {t("products.items.medicall.specimen.priorityValue")}
+                  </span>
                 </div>
                 <div className="flex gap-1 h-2">
                   <div className="flex-1 bg-sage rounded-full opacity-30" />
@@ -1078,15 +1048,22 @@ export default function Page() {
               {/* scheduled slot */}
               <div className="mt-auto pt-5 border-t hairline flex items-center justify-between">
                 <div>
-                  <div className="label text-ink-mute">Agendado</div>
+                  <div className="label text-ink-mute">
+                    {t("products.items.medicall.specimen.scheduledLabel")}
+                  </div>
                   <div className="display text-[20px]">
-                    Hoje · <span className="display-italic">14:20</span>
+                    {t("products.items.medicall.specimen.scheduledWhen")}
+                    <span className="display-italic">
+                      {t("products.items.medicall.specimen.scheduledTime")}
+                    </span>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="label text-ink-mute">Serviço</div>
+                  <div className="label text-ink-mute">
+                    {t("products.items.medicall.specimen.serviceLabel")}
+                  </div>
                   <div className="num text-[13px] text-ink">
-                    Urgência · Cardiologia
+                    {t("products.items.medicall.specimen.serviceValue")}
                   </div>
                 </div>
               </div>
@@ -1097,16 +1074,14 @@ export default function Page() {
         {/* Note about uniqueness */}
         <div className="mt-12 grid grid-cols-12 gap-6">
           <div className="col-span-12 md:col-span-3">
-            <div className="label text-clay">— Nota</div>
+            <div className="label text-clay">{t("products.noteLabel")}</div>
           </div>
           <p className="col-span-12 md:col-span-9 text-[15px] leading-[1.65] text-ink-soft max-w-[64ch]">
-            Cada uma destas categorias está validada por mais de mil milhões
-            de dólares de capital de risco. Mas{" "}
+            {t("products.notePart1")}{" "}
             <span className="text-ink font-medium">
-              cada hospital é único
+              {t("products.noteEmphasis")}
             </span>{" "}
-            — pela legislação, pelo fluxo, pela realidade do terreno. A Praxia
-            foi construída precisamente para essa diferença.
+            {t("products.notePart2")}
           </p>
         </div>
       </section>
@@ -1121,22 +1096,20 @@ export default function Page() {
         <div className="container-page py-28 lg:py-36">
           <div className="eyebrow label">
             <span className="sec-num text-[28px] leading-none">V</span>
-            <span>O Mercado</span>
+            <span>{t("market.eyebrow")}</span>
             <span className="bar" />
           </div>
 
           <div className="grid grid-cols-12 gap-8 mt-8">
             <h2 className="display col-span-12 lg:col-span-9 text-[clamp(40px,5.5vw,72px)]">
-              Mais de{" "}
+              {t("market.titlePre")}{" "}
               <span className="display-italic text-clay-deep">
-                4 biliões
+                {t("market.titleEmphasis")}
               </span>{" "}
-              de dólares em ineficiência hospitalar — à espera de uma camada
-              que pense.
+              {t("market.titlePost")}
             </h2>
             <p className="col-span-12 lg:col-span-3 lg:pt-8 text-[15px] leading-[1.65] text-ink-soft">
-              A IA clínica está a tornar-se infraestrutura. Quem chegar
-              primeiro à camada certa fica.
+              {t("market.body")}
             </p>
           </div>
 
@@ -1147,11 +1120,10 @@ export default function Page() {
                 $4B<span className="text-clay text-[28px] align-top">+</span>
               </div>
               <h3 className="display text-[20px] mt-4">
-                Ineficiências hospitalares globais.
+                {t("market.cards.ineff.title")}
               </h3>
               <p className="text-[14px] leading-[1.65] text-ink-soft mt-3">
-                Custo anual desperdiçado em fragmentação de sistemas, fluxos
-                manuais e erros evitáveis. Endereço directo da Praxia.
+                {t("market.cards.ineff.body")}
               </p>
             </div>
 
@@ -1161,12 +1133,14 @@ export default function Page() {
                 $5B<span className="text-clay text-[28px] align-top">+</span>
               </div>
               <h3 className="display text-[20px] mt-4">
-                Avaliação só em documentação clínica.
+                {t("market.cards.valuation.title")}
               </h3>
               <p className="text-[14px] leading-[1.65] text-ink-soft mt-3">
-                Empresas como Abridge ultrapassam os 5 mil milhões em avaliação.
-                E é apenas <span className="display-italic">um</span> dos três
-                eixos onde a Praxia opera.
+                {t("market.cards.valuation.bodyPart1")}{" "}
+                <span className="display-italic">
+                  {t("market.cards.valuation.bodyEmphasis")}
+                </span>{" "}
+                {t("market.cards.valuation.bodyPart2")}
               </p>
             </div>
 
@@ -1176,20 +1150,16 @@ export default function Page() {
                 ∞
               </div>
               <h3 className="display text-[20px] mt-4">
-                Infraestrutura essencial.
+                {t("market.cards.infra.title")}
               </h3>
               <p className="text-[14px] leading-[1.65] text-ink-soft mt-3">
-                Em cinco anos, a IA clínica deixará de ser um diferenciador
-                opcional para passar a ser tão obrigatória como o EHR. Quem
-                não tiver, não opera.
+                {t("market.cards.infra.body")}
               </p>
             </div>
           </div>
 
           <div className="marginalia mt-10 max-w-[64ch]">
-            — Fontes: McKinsey Global Institute (Healthcare AI 2024), CB
-            Insights, dados públicos das rondas de investimento dos competidores
-            listados em IV. Reproduzidos para efeito de validação de categoria.
+            {t("market.sources")}
           </div>
         </div>
       </section>
@@ -1200,33 +1170,33 @@ export default function Page() {
       <section id="vantagem" className="container-page py-28 lg:py-36">
         <div className="eyebrow label">
           <span className="sec-num text-[28px] leading-none">VI</span>
-          <span>A Vantagem</span>
+          <span>{t("advantage.eyebrow")}</span>
           <span className="bar" />
         </div>
 
         <div className="grid grid-cols-12 gap-8 mt-8">
           <h2 className="display col-span-12 lg:col-span-8 text-[clamp(40px,5.5vw,72px)]">
-            Não competimos numa categoria.
+            {t("advantage.titleLine1")}
             <br />
             <span className="display-italic">
-              Competimos em três — e ligamos as três.
+              {t("advantage.titleLine2")}
             </span>
           </h2>
           <p className="col-span-12 lg:col-span-4 lg:pt-8 text-[15px] leading-[1.65] text-ink-soft">
-            Cada categoria tem os seus titulares — gigantes ou unicórnios. Mas
-            todos operam em silos. A vantagem da Praxia é a camada que os
-            atravessa.
+            {t("advantage.body")}
           </p>
         </div>
 
         <div className="mt-14 grid grid-cols-1 lg:grid-cols-3 gap-px bg-line border hairline">
           <div className="bg-bone p-8">
-            <div className="label text-clay">— Categoria 01</div>
+            <div className="label text-clay">
+              {t("advantage.categories.docs.label")}
+            </div>
             <h3 className="display mt-3 text-[26px]">
-              Documentação clínica
+              {t("advantage.categories.docs.title")}
             </h3>
             <p className="text-[14px] leading-[1.65] text-ink-soft mt-3">
-              Capturam a voz do médico e geram nota clínica.
+              {t("advantage.categories.docs.body")}
             </p>
             <ul className="mt-5 space-y-2 text-[13px] text-ink-soft">
               <li className="flex justify-between border-b hairline pb-2">
@@ -1245,15 +1215,21 @@ export default function Page() {
           </div>
 
           <div className="bg-bone p-8">
-            <div className="label text-clay">— Categoria 02</div>
-            <h3 className="display mt-3 text-[26px]">IA de voz clínica</h3>
+            <div className="label text-clay">
+              {t("advantage.categories.voice.label")}
+            </div>
+            <h3 className="display mt-3 text-[26px]">
+              {t("advantage.categories.voice.title")}
+            </h3>
             <p className="text-[14px] leading-[1.65] text-ink-soft mt-3">
-              Conversam, transcrevem, agendam. Fora do EHR ou em adapter.
+              {t("advantage.categories.voice.body")}
             </p>
             <ul className="mt-5 space-y-2 text-[13px] text-ink-soft">
               <li className="flex justify-between border-b hairline pb-2">
                 <span>Nuance (Microsoft)</span>
-                <span className="num text-ink-mute">parte de MSFT</span>
+                <span className="num text-ink-mute">
+                  {t("advantage.msftSuffix")}
+                </span>
               </li>
               <li className="flex justify-between border-b hairline pb-2">
                 <span>K Health</span>
@@ -1267,10 +1243,14 @@ export default function Page() {
           </div>
 
           <div className="bg-bone p-8">
-            <div className="label text-clay">— Categoria 03</div>
-            <h3 className="display mt-3 text-[26px]">Sistemas clínicos</h3>
+            <div className="label text-clay">
+              {t("advantage.categories.systems.label")}
+            </div>
+            <h3 className="display mt-3 text-[26px]">
+              {t("advantage.categories.systems.title")}
+            </h3>
             <p className="text-[14px] leading-[1.65] text-ink-soft mt-3">
-              EHRs e plataformas hospitalares. Profundas, lentas a evoluir.
+              {t("advantage.categories.systems.body")}
             </p>
             <ul className="mt-5 space-y-2 text-[13px] text-ink-soft">
               <li className="flex justify-between border-b hairline pb-2">
@@ -1295,9 +1275,9 @@ export default function Page() {
             ↳
           </div>
           <h3 className="display col-span-12 md:col-span-11 text-[clamp(28px,3.5vw,44px)]">
-            Eles operam em silos.{" "}
+            {t("advantage.punchlinePre")}{" "}
             <span className="display-italic">
-              A Praxia é a camada que os atravessa.
+              {t("advantage.punchlineEmphasis")}
             </span>
           </h3>
         </div>
@@ -1313,24 +1293,27 @@ export default function Page() {
             <div className="col-span-12 lg:col-span-6 lg:pr-12 lg:border-r hairline">
               <div className="eyebrow label">
                 <span className="sec-num text-[28px] leading-none">VII</span>
-                <span>O Modelo</span>
+                <span>{t("model.eyebrow")}</span>
                 <span className="bar" />
               </div>
 
               <h2 className="display mt-8 text-[clamp(36px,4.5vw,60px)]">
-                SaaS por hospital,
+                {t("model.titleLine1")}
                 <br />
-                <span className="display-italic">utilização para a voz.</span>
+                <span className="display-italic">
+                  {t("model.titleLine2")}
+                </span>
               </h2>
 
               <ul className="mt-10 space-y-6">
                 <li className="grid grid-cols-12 gap-4 border-b hairline pb-6">
                   <div className="col-span-2 num text-clay">01</div>
                   <div className="col-span-10">
-                    <h3 className="display text-[22px]">SaaS clínico</h3>
+                    <h3 className="display text-[22px]">
+                      {t("model.items.saas.title")}
+                    </h3>
                     <p className="text-[14px] leading-[1.65] text-ink-soft mt-2">
-                      Por hospital, por cama ou por profissional de saúde.
-                      Modelos de preço alinhados com a estrutura interna.
+                      {t("model.items.saas.body")}
                     </p>
                   </div>
                 </li>
@@ -1338,11 +1321,10 @@ export default function Page() {
                   <div className="col-span-2 num text-clay">02</div>
                   <div className="col-span-10">
                     <h3 className="display text-[22px]">
-                      Consumo · MediCall
+                      {t("model.items.consumption.title")}
                     </h3>
                     <p className="text-[14px] leading-[1.65] text-ink-soft mt-2">
-                      Preço por minuto de chamada e por triagem completada.
-                      Escala com o volume, sem teto artificial.
+                      {t("model.items.consumption.body")}
                     </p>
                   </div>
                 </li>
@@ -1350,11 +1332,10 @@ export default function Page() {
                   <div className="col-span-2 num text-clay">03</div>
                   <div className="col-span-10">
                     <h3 className="display text-[22px]">
-                      Contratos enterprise
+                      {t("model.items.enterprise.title")}
                     </h3>
                     <p className="text-[14px] leading-[1.65] text-ink-soft mt-2">
-                      Integração com EHRs (Epic, Oracle Health, Meditech,
-                      Allscripts), SLAs definidos, BAA na assinatura.
+                      {t("model.items.enterprise.body")}
                     </p>
                   </div>
                 </li>
@@ -1365,45 +1346,46 @@ export default function Page() {
             <div className="col-span-12 lg:col-span-6 lg:pl-12">
               <div className="eyebrow label">
                 <span className="sec-num text-[28px] leading-none">≈</span>
-                <span>A Visão</span>
+                <span>{t("vision.eyebrow")}</span>
                 <span className="bar" />
               </div>
 
               <h2 className="display mt-8 text-[clamp(36px,4.5vw,60px)]">
-                Começamos com 3.
+                {t("vision.titleLine1")}
                 <br />
                 <span className="display-italic">
-                  Construímos para 1.
+                  {t("vision.titleLine2")}
                 </span>
               </h2>
 
               <p className="mt-8 text-[16px] leading-[1.7] text-ink-soft max-w-[44ch]">
-                Três produtos hoje. Uma camada amanhã. Um sistema operativo
-                hospitalar nativo de IA — coordenando decisão clínica, operação
-                e fluxo de pacientes em tempo real.
+                {t("vision.body")}
               </p>
 
               <div className="mt-10 grid grid-cols-12 gap-y-5">
-                <div className="col-span-3 label text-clay">Hoje</div>
+                <div className="col-span-3 label text-clay">
+                  {t("vision.todayLabel")}
+                </div>
                 <div className="col-span-9 text-[15px] leading-[1.6] text-ink-soft border-b hairline pb-5">
-                  Segurança da medicação · codificação automática · triagem por
-                  voz.
+                  {t("vision.todayBody")}
                 </div>
 
-                <div className="col-span-3 label text-clay">Próximo</div>
+                <div className="col-span-3 label text-clay">
+                  {t("vision.nextLabel")}
+                </div>
                 <div className="col-span-9 text-[15px] leading-[1.6] text-ink-soft border-b hairline pb-5">
-                  Pathways clínicos automatizados · monitorização remota ·
-                  formulário inteligente · gestão do fluxo de pacientes.
+                  {t("vision.nextBody")}
                 </div>
 
-                <div className="col-span-3 label text-clay">Visão</div>
+                <div className="col-span-3 label text-clay">
+                  {t("vision.visionLabel")}
+                </div>
                 <div className="col-span-9 text-[15px] leading-[1.6] text-ink">
-                  Sistema operativo hospitalar nativo de IA — uma única camada
-                  que coordena{" "}
+                  {t("vision.visionPart1")}{" "}
                   <span className="display-italic text-clay-deep">
-                    decisão, operação e fluxo
+                    {t("vision.visionEmphasis")}
                   </span>{" "}
-                  em tempo real.
+                  {t("vision.visionPart2")}
                 </div>
               </div>
             </div>
@@ -1454,7 +1436,7 @@ export default function Page() {
             >
               VIII
             </span>
-            <span>Falar com a equipa</span>
+            <span>{t("cta.eyebrow")}</span>
             <span
               className="bar"
               style={{ background: "rgba(244,239,230,0.2)" }}
@@ -1467,22 +1449,19 @@ export default function Page() {
                 className="display text-[clamp(48px,8vw,108px)]"
                 style={{ color: "#FAF7F1" }}
               >
-                Vamos colocar
+                {t("cta.titleLine1")}
                 <br />
-                a Praxia
+                {t("cta.titleLine2")}
                 <br />
                 <span className="display-italic" style={{ color: "#E8B5A6" }}>
-                  no seu hospital.
+                  {t("cta.titleLine3")}
                 </span>
               </h2>
               <p
                 className="mt-8 text-[18px] leading-[1.6] max-w-[52ch]"
                 style={{ color: "rgba(244,239,230,0.78)" }}
               >
-                Uma demonstração de 30 minutos sobre os seus fluxos reais. Sem
-                slideware. Conectamos a um sandbox dos seus dados, mostramos
-                MediGuard, CodiCare e MediCall em acção, e deixamos um relatório
-                escrito.
+                {t("cta.body")}
               </p>
             </div>
 
@@ -1495,7 +1474,7 @@ export default function Page() {
                 className="label block mb-2"
                 style={{ color: "rgba(244,239,230,0.6)" }}
               >
-                Email clínico ou executivo
+                {t("cta.emailLabel")}
               </label>
               <input
                 className="vinput"
@@ -1505,14 +1484,14 @@ export default function Page() {
                 }}
                 type="email"
                 required
-                placeholder="dr.apelido@hospital.org"
+                placeholder={t("cta.emailPlaceholder")}
               />
 
               <label
                 className="label block mt-7 mb-2"
                 style={{ color: "rgba(244,239,230,0.6)" }}
               >
-                Hospital · serviço
+                {t("cta.hospitalLabel")}
               </label>
               <input
                 className="vinput"
@@ -1522,14 +1501,14 @@ export default function Page() {
                 }}
                 type="text"
                 required
-                placeholder="Hospital São Bartolomeu, Cardiologia"
+                placeholder={t("cta.hospitalPlaceholder")}
               />
 
               <label
                 className="label block mt-7 mb-2"
                 style={{ color: "rgba(244,239,230,0.6)" }}
               >
-                EHR
+                {t("cta.ehrLabel")}
               </label>
               <select
                 className="vinput appearance-none"
@@ -1549,9 +1528,11 @@ export default function Page() {
                   Allscripts / Veradigm
                 </option>
                 <option style={{ color: "#14181F" }}>
-                  Soarian / outros EU
+                  {t("cta.ehrOtherEU")}
                 </option>
-                <option style={{ color: "#14181F" }}>Outro</option>
+                <option style={{ color: "#14181F" }}>
+                  {t("cta.ehrOther")}
+                </option>
               </select>
 
               <button
@@ -1559,7 +1540,7 @@ export default function Page() {
                 className="mt-10 btn-primary"
                 style={{ background: "#E8B5A6", color: "#14181F" }}
               >
-                Pedir demonstração
+                {t("cta.submit")}
                 <svg
                   className="arrow"
                   width="14"
@@ -1581,8 +1562,7 @@ export default function Page() {
                 className="label mt-5"
                 style={{ color: "rgba(244,239,230,0.5)" }}
               >
-                Resposta em 24h · BAA na assinatura · sem PHI necessário para
-                a demo
+                {t("cta.disclaimer")}
               </p>
             </form>
           </div>
@@ -1602,7 +1582,7 @@ export default function Page() {
                 className="label mt-2"
                 style={{ color: "rgba(244,239,230,0.55)" }}
               >
-                Do contrato à primeira recomendação
+                {t("cta.stats.goliveLabel")}
               </div>
             </div>
             <div>
@@ -1616,7 +1596,7 @@ export default function Page() {
                 className="label mt-2"
                 style={{ color: "rgba(244,239,230,0.55)" }}
               >
-                PHI sai do seu perímetro
+                {t("cta.stats.phiLabel")}
               </div>
             </div>
             <div>
@@ -1630,7 +1610,7 @@ export default function Page() {
                 className="label mt-2"
                 style={{ color: "rgba(244,239,230,0.55)" }}
               >
-                Override clínico — quem cuida tem sempre a última palavra
+                {t("cta.stats.overrideLabel")}
               </div>
             </div>
           </div>
@@ -1640,18 +1620,32 @@ export default function Page() {
       {/* ════════════════════════════════════════════════════════════════════
           FOOTER
           ════════════════════════════════════════════════════════════════════ */}
-      <footer className="bg-bone">
-        <div className="container-page py-20">
-          <div className="grid grid-cols-12 gap-8">
-            <div className="col-span-12 lg:col-span-5">
-              <div className="display text-[44px] leading-none">Praxia</div>
-              <p className="mt-5 text-[15px] leading-[1.65] text-ink-soft max-w-[44ch]">
-                A Praxia é o sistema operativo de IA para hospitais. Construído
-                por clínicos, engenheiros e investigadores de raciocínio
-                máquina que acreditam que a saúde merece software escrito com o
-                mesmo cuidado que pede às suas pessoas.
+      <footer className="bg-bone-dark/60 border-t hairline-strong relative overflow-hidden">
+        <div className="container-page pt-20 pb-10">
+          {/* Eyebrow */}
+          <div className="eyebrow label">
+            <span className="sec-num text-[28px] leading-none">¶</span>
+            <span>{t("footer.eyebrow")}</span>
+            <span className="bar" />
+            <span className="hidden md:inline num text-[11px]">
+              {t("footer.cities")}
+            </span>
+          </div>
+
+          {/* Brand lockup + newsletter */}
+          <div className="mt-10 grid grid-cols-12 gap-10 pb-14 border-b hairline">
+            <div className="col-span-12 lg:col-span-7">
+              <h2 className="display text-[clamp(72px,11vw,168px)] leading-[0.88] tracking-[-0.04em]">
+                PHMCare<span className="display-italic text-clay">.</span>
+                <br />
+                <span className="text-ink-soft">AI</span>
+              </h2>
+              <p className="mt-7 text-[15px] leading-[1.7] text-ink-soft max-w-[54ch]">
+                {t("footer.bodyPart1")}{" "}
+                <em>{t("footer.bodyProducts")}</em>{" "}
+                {t("footer.bodyPart2")}
               </p>
-              <div className="mt-7 flex flex-wrap items-center gap-3">
+              <div className="mt-7 flex flex-wrap items-center gap-2">
                 <span className="pill">
                   <span className="dot sage" />
                   SOC 2 Type II
@@ -1671,8 +1665,44 @@ export default function Page() {
               </div>
             </div>
 
-            <div className="col-span-6 md:col-span-3 lg:col-span-2">
-              <div className="label text-ink-mute mb-5">Produtos</div>
+            <div className="col-span-12 lg:col-span-5 lg:pl-10 lg:border-l hairline">
+              <div className="label text-ink-mute mb-5">
+                {t("footer.newsletter.label")}
+              </div>
+              <p className="text-[14px] leading-[1.65] text-ink-soft max-w-[42ch]">
+                {t("footer.newsletter.body")}
+              </p>
+              <form
+                className="mt-6 flex flex-col gap-4"
+                onSubmit={(e) => e.preventDefault()}
+              >
+                <input
+                  type="email"
+                  placeholder={t("footer.newsletter.placeholder")}
+                  className="vinput"
+                  aria-label="Email"
+                />
+                <div className="flex items-center justify-between gap-4">
+                  <span className="marginalia">
+                    {t("footer.newsletter.meta")}
+                  </span>
+                  <button type="submit" className="btn-ghost">
+                    {t("footer.newsletter.submit")} <span aria-hidden>→</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          {/* Nav columns */}
+          <nav
+            aria-label={t("footer.rodapeAria")}
+            className="grid grid-cols-12 gap-8 pt-14"
+          >
+            <div className="col-span-6 md:col-span-3">
+              <div className="label text-ink-mute mb-5">
+                {t("footer.columns.products")}
+              </div>
               <ul className="space-y-3 text-[15px]">
                 <li>
                   <a className="ulink" href="#produtos">
@@ -1691,101 +1721,147 @@ export default function Page() {
                 </li>
                 <li>
                   <a className="ulink" href="#">
-                    Integrações
+                    {t("footer.columns.productsLinks.integrations")}
                   </a>
                 </li>
                 <li>
                   <a className="ulink" href="#">
-                    Segurança
+                    {t("footer.columns.productsLinks.security")}
                   </a>
                 </li>
               </ul>
             </div>
 
-            <div className="col-span-6 md:col-span-3 lg:col-span-2">
-              <div className="label text-ink-mute mb-5">Recursos</div>
+            <div className="col-span-6 md:col-span-3">
+              <div className="label text-ink-mute mb-5">
+                {t("footer.columns.resources")}
+              </div>
               <ul className="space-y-3 text-[15px]">
                 <li>
                   <a className="ulink" href="#">
-                    Metodologia
+                    {t("footer.columns.resourcesLinks.methodology")}
                   </a>
                 </li>
                 <li>
                   <a className="ulink" href="#">
-                    Validações clínicas
+                    {t("footer.columns.resourcesLinks.validations")}
                   </a>
                 </li>
                 <li>
                   <a className="ulink" href="#">
-                    White papers
+                    {t("footer.columns.resourcesLinks.whitepapers")}
                   </a>
                 </li>
                 <li>
                   <a className="ulink" href="#">
-                    Imprensa
+                    {t("footer.columns.resourcesLinks.press")}
                   </a>
                 </li>
                 <li>
                   <a className="ulink" href="#">
-                    Centro de confiança
+                    {t("footer.columns.resourcesLinks.trust")}
                   </a>
                 </li>
               </ul>
             </div>
 
-            <div className="col-span-12 md:col-span-6 lg:col-span-3">
-              <div className="label text-ink-mute mb-5">Empresa</div>
+            <div className="col-span-6 md:col-span-3">
+              <div className="label text-ink-mute mb-5">
+                {t("footer.columns.company")}
+              </div>
               <ul className="space-y-3 text-[15px]">
                 <li>
                   <a className="ulink" href="#">
-                    Sobre
+                    {t("footer.columns.companyLinks.about")}
                   </a>
                 </li>
                 <li>
                   <a className="ulink" href="#">
-                    Conselho clínico
+                    {t("footer.columns.companyLinks.clinicalCouncil")}
                   </a>
                 </li>
                 <li>
                   <a className="ulink" href="#">
-                    Carreiras — estamos a contratar
+                    {t("footer.columns.companyLinks.careers")}{" "}
+                    <span className="num text-[11px] text-clay align-middle">
+                      {t("footer.columns.companyLinks.hiring")}
+                    </span>
                   </a>
                 </li>
                 <li>
                   <a className="ulink" href="#">
-                    Contacto
+                    {t("footer.columns.companyLinks.press")}
+                  </a>
+                </li>
+                <li>
+                  <a className="ulink" href="#">
+                    {t("footer.columns.companyLinks.contact")}
                   </a>
                 </li>
               </ul>
-              <div className="mt-7 marginalia">
-                Lisboa · Porto · São Paulo
+            </div>
+
+            <div className="col-span-6 md:col-span-3">
+              <div className="label text-ink-mute mb-5">
+                {t("footer.columns.hq")}
+              </div>
+              <address className="not-italic text-[14px] leading-[1.7] text-ink-soft">
+                {t("footer.columns.hqEntity")}
                 <br />
-                Av. da Liberdade 110, 2.º
+                {t("footer.columns.hqStreet")}
+                <br />
+                {t("footer.columns.hqCity")}
+              </address>
+              <div className="mt-5 marginalia">
+                {t("footer.columns.hqPhone")}
+                <br />
+                <a className="ulink" href="mailto:ola@phmcare.ai">
+                  ola@phmcare.ai
+                </a>
               </div>
             </div>
+          </nav>
+
+          {/* Accent rule */}
+          <div className="accent-rule mt-16" />
+
+          {/* Bottom band */}
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-6 label text-ink-mute">
+            <span className="flex items-center gap-3">
+              <span className="num text-clay">{t("footer.legal.copyright")}</span>
+              <span>{t("footer.legal.entity")}</span>
+              <span className="hidden md:inline">
+                {t("footer.legal.tagline")}
+              </span>
+            </span>
+            <span className="flex flex-wrap items-center gap-5">
+              <a className="ulink" href="#">
+                {t("footer.legal.privacy")}
+              </a>
+              <a className="ulink" href="#">
+                {t("footer.legal.terms")}
+              </a>
+              <a className="ulink" href="#">
+                {t("footer.legal.dataNotice")}
+              </a>
+              <a
+                className="ulink"
+                href="#top"
+                aria-label={t("footer.legal.topAria")}
+              >
+                {t("footer.legal.top")}
+              </a>
+            </span>
           </div>
 
-          <div className="rule-strong my-12" />
-
-          <div className="flex flex-wrap items-center justify-between gap-6 label text-ink-mute">
-            <span>
-              © 2026 Praxia Health, S.A. — Construída com cuidado, para quem
-              cuida.
-            </span>
-            <span className="flex items-center gap-5">
-              <a className="ulink" href="#">
-                Privacidade
-              </a>
-              <a className="ulink" href="#">
-                Termos
-              </a>
-              <a className="ulink" href="#">
-                Aviso de tratamento de dados
-              </a>
-              <a className="ulink" href="#colofao">
-                Colofão
-              </a>
-            </span>
+          {/* Wordmark watermark */}
+          <div
+            aria-hidden
+            className="pointer-events-none select-none mt-10 -mb-6 overflow-hidden"
+          >
+            <div className="display whitespace-nowrap leading-[0.85] tracking-[-0.05em] text-[clamp(160px,26vw,420px)] text-ink/[0.05]">
+              PHMCare<span className="display-italic">.</span>AI
+            </div>
           </div>
         </div>
       </footer>
@@ -1795,64 +1871,35 @@ export default function Page() {
           ════════════════════════════════════════════════════════════════════ */}
       <section
         id="colofao"
-        className="bg-bone-dark/40 border-t hairline-strong"
+        className="hidden bg-bone-dark/40 border-t hairline-strong"
       >
         <div className="container-page py-24">
           <div className="eyebrow label">
             <span className="sec-num text-[28px] leading-none">¶</span>
-            <span>Colofão — sobre esta edição</span>
+            <span>{t("colophon.eyebrow")}</span>
             <span className="bar" />
-            <span className="hidden md:inline">Edição 01 · Abril 2026</span>
+            <span className="hidden md:inline">{t("colophon.edition")}</span>
           </div>
 
           <h2 className="display mt-8 text-[clamp(36px,5vw,64px)] max-w-[24ch]">
-            Um specimen do sistema{" "}
-            <span className="display-italic">Praxia.</span>
+            {t("colophon.titlePart1")}{" "}
+            <span className="display-italic">
+              {t("colophon.titleEmphasis")}
+            </span>
           </h2>
           <p className="mt-5 text-[15px] leading-[1.65] text-ink-soft max-w-[60ch]">
-            Esta página partilha o sistema visual da{" "}
+            {t("colophon.bodyPart1")}{" "}
             <a className="ulink" href="/index.html">
-              edição-irmã Vellum
+              {t("colophon.bodySisterLink")}
             </a>
-            . Mesma autoridade clínica, mesma calorosidade humana — calibrada
-            para a realidade hospitalar de PT, BR e UE.
+            {t("colophon.bodyPart2")}
           </p>
-
-          {/* Names */}
-          <div className="mt-16">
-            <div className="label text-ink-mute mb-6">— Nomes considerados</div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border hairline">
-              <div className="bg-bone p-8">
-                <div className="num text-[12px] text-clay">01 / escolhido</div>
-                <h3 className="display text-[44px] mt-2">Praxia</h3>
-                <p className="text-[14px] leading-[1.65] text-ink-soft mt-3">
-                  Do grego <em>praxis</em>: prática, acção. A IA da Praxia não
-                  observa — actua. Curto, abstracto, fácil de pronunciar em
-                  PT/EN/ES.
-                </p>
-              </div>
-              <div className="bg-bone p-8">
-                <div className="num text-[12px] text-clay">02 / alternativa</div>
-                <h3 className="display text-[44px] mt-2">Auralis</h3>
-                <p className="text-[14px] leading-[1.65] text-ink-soft mt-3">
-                  Aura + alis (sufixo latino-médico). Sugere presença clínica
-                  silenciosa, sensorial. Mais poético, menos pragmático.
-                </p>
-              </div>
-              <div className="bg-bone p-8">
-                <div className="num text-[12px] text-clay">03 / alternativa</div>
-                <h3 className="display text-[44px] mt-2">Veridia</h3>
-                <p className="text-[14px] leading-[1.65] text-ink-soft mt-3">
-                  Verity + clinical. Posiciona-se na verdade verificável da
-                  evidência. Mais corporativo, menos memorável.
-                </p>
-              </div>
-            </div>
-          </div>
 
           {/* Palette */}
           <div className="mt-16">
-            <div className="label text-ink-mute mb-6">— Paleta</div>
+            <div className="label text-ink-mute mb-6">
+              {t("colophon.paletteLabel")}
+            </div>
             <div className="grid grid-cols-2 md:grid-cols-6 gap-px bg-line border hairline">
               {[
                 ["#F4EFE6", "Bone"],
@@ -1874,83 +1921,44 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Type */}
-          <div className="mt-16">
-            <div className="label text-ink-mute mb-6">— Tipografia</div>
-            <div className="grid grid-cols-12 gap-px bg-line border hairline">
-              <div className="col-span-12 md:col-span-7 bg-bone p-10">
-                <span className="num text-[12px] text-clay">
-                  Display · Fraunces (variável, opsz)
-                </span>
-                <div className="display text-[88px] leading-none mt-4">Aa</div>
-                <div className="display-italic text-[88px] leading-none mt-2 text-clay-deep">
-                  Aa
-                </div>
-                <p className="text-[13px] leading-[1.65] text-ink-soft mt-6 max-w-[44ch]">
-                  Fraunces é uma serif variável com eixos de tamanho óptico e de
-                  suavidade — pesada para títulos, itálica para acentos, leve
-                  para anotações. Carrega a autoridade de um jornal médico sem o
-                  seu frio.
-                </p>
-              </div>
-              <div className="col-span-12 md:col-span-5 bg-bone p-10">
-                <span className="num text-[12px] text-clay">
-                  Corpo · Manrope &nbsp;·&nbsp; Mono · JetBrains Mono
-                </span>
-                <div
-                  className="text-[44px] mt-4 font-body"
-                  style={{ fontWeight: 300 }}
-                >
-                  Aa
-                </div>
-                <div className="num text-[28px] mt-1">Aa 0123 ↑↓</div>
-                <p className="text-[13px] leading-[1.65] text-ink-soft mt-6 max-w-[36ch]">
-                  Manrope traz humanismo às proporções geométricas — perfeito
-                  para PT acentuado. JetBrains Mono carrega metadata clínica:
-                  latências, MRNs, códigos CID.
-                </p>
-              </div>
-            </div>
-          </div>
-
           {/* Image direction */}
           <div className="mt-16">
             <div className="label text-ink-mute mb-6">
-              — Direcção de imagem (briefing AI por secção)
+              {t("colophon.imageLabel")}
             </div>
             <div className="border hairline">
               {[
                 {
-                  s: "§ Hero",
-                  p: "Fotografia editorial de um corredor hospitalar silencioso ao amanhecer. Luz volumétrica suave a entrar pelas janelas. Estação de enfermagem ao fundo com brilho subtil de monitor. Sem pessoas em primeiro plano. Paleta: bone quente, ink charcoal, clay suave. Mamiya 7, 80mm, profundidade reduzida. Editorial arquival. 4K.",
+                  s: t("colophon.imageSection.hero"),
+                  p: t("colophon.images.hero"),
                 },
                 {
-                  s: "§ Trust",
-                  p: "Still life em mesa de nogueira: um livro clínico encadernado a couro entreaberto, candeeiro de mesa em latão a criar piscina de luz quente, crachás dispersos, caneta-tinteiro, bata branca. Cream + ink. NEJM-style. 45°, 50mm. 4K.",
+                  s: t("colophon.imageSection.trust"),
+                  p: t("colophon.images.trust"),
                 },
                 {
-                  s: "§ Problem",
-                  p: "Macro de uma pilha de prontuários em papel, um deles aberto com notas manuscritas e valores de laboratório. Luz suave de janela à esquerda, sombras longas, dessaturação subtil para tons de osso e tinta. Comunica peso sem alarme. Fotojornalismo, 100mm macro. 4K.",
+                  s: t("colophon.imageSection.problem"),
+                  p: t("colophon.images.problem"),
                 },
                 {
-                  s: "§ MediGuard",
-                  p: "Composição abstracta minimalista: uma única linha fina vermelho-clay a atravessar um campo bone vasto, com um pico dramático único — como um EKG de anomalia. Espaço negativo generoso. Editorial fine-art. Sugere um sinal de consequência num campo de quietude. 4K.",
+                  s: t("colophon.imageSection.mediguard"),
+                  p: t("colophon.images.mediguard"),
                 },
                 {
-                  s: "§ CodiCare",
-                  p: "Fotografia top-down: prontuário em papel com palavras-chave a ressaltar (sublinhado fino clay), ao lado uma régua brass e fichas pequenas com códigos impressos. Editorial product photography, sage e clay. 4K.",
+                  s: t("colophon.imageSection.codicare"),
+                  p: t("colophon.images.codicare"),
                 },
                 {
-                  s: "§ MediCall",
-                  p: "Close-up de uma forma de onda áudio rendered em tinta sobre linho — como uma gravação preservada. Espaço negativo amplo, uma linha clay a marcar o ponto de prioridade. Estética de impressão de museu. 4K.",
+                  s: t("colophon.imageSection.medicall"),
+                  p: t("colophon.images.medicall"),
                 },
                 {
-                  s: "§ Modelo / Visão",
-                  p: "Diagrama arquitectónico: workflow hospitalar desenhado como linhas de blueprint sobre papel cream quente, ferramentas de divisão em latão pousadas ao lado. Top-down editorial. Sem clutter. 4K.",
+                  s: t("colophon.imageSection.model"),
+                  p: t("colophon.images.model"),
                 },
                 {
-                  s: "§ Final CTA",
-                  p: "Fotografia editorial larga: átrio hospitalar com janelas altas em arco, uma figura solitária de bata branca a caminhar com confiança em direcção à luz. Iluminação de amanhecer, paredes cream, acentos terracotta no chão. Contemplativo, aspiracional, sem sci-fi. 4K.",
+                  s: t("colophon.imageSection.cta"),
+                  p: t("colophon.images.cta"),
                 },
               ].map((row, i, arr) => (
                 <div
@@ -1969,13 +1977,9 @@ export default function Page() {
           </div>
 
           <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 marginalia">
-            <span>
-              Composto em Fraunces (display, opsz 9–144) e Manrope (corpo, peso
-              variável). Mono em JetBrains Mono. Grelha editorial 12 colunas,
-              hairlines a 1px / 12% ink.
-            </span>
+            <span>{t("colophon.composedLine1")}</span>
             <span className="md:text-right">
-              Impresso em ecrã. Construído com cuidado · 2026.
+              {t("colophon.composedLine2")}
             </span>
           </div>
         </div>
@@ -1989,9 +1993,12 @@ export default function Page() {
    ────────────────────────────────────────────────────────────────────────── */
 
 function ValidationStrip({ items }: { items: Validation[] }) {
+  const { t } = useTranslation();
   return (
     <div className="mt-10 pt-6 border-t hairline">
-      <div className="label text-ink-mute mb-4">— Categoria validada por</div>
+      <div className="label text-ink-mute mb-4">
+        {t("products.validationLabel")}
+      </div>
       <div className="flex flex-wrap gap-2">
         {items.map((it) => (
           <div
