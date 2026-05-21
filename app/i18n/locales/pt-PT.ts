@@ -486,8 +486,8 @@ const ptPT = {
       },
       m2: {
         name: "Mariana Matos",
-        role: "Advogada",
-        body: "Direito societário e regulatório. Garante a conformidade legal — RGPD, LGPD e regulação clínica — em cada deployment hospitalar.",
+        role: "Jurista",
+        body: "Licenciada em Direito e História, mestre em Direito das Empresas e dos Negócios e doutoranda. Possui a especialização de Administração Hospitalar pela Escola Nacional de Saúde Pública da Universidade Nova de Lisboa.",
       },
       m3: {
         name: "Fillipi Nascimento",

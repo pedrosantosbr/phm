@@ -99,7 +99,7 @@ export default function TeamPage() {
             </h3>
             <div className="label text-clay mt-2">{m.role}</div>
 
-            <p className="mt-5 text-[14.5px] leading-[1.65] text-ink-soft">
+            <p className="mt-5 text-[14.5px] leading-[1.65] text-ink-soft text-justify hyphens-auto">
               {m.body}
             </p>
 

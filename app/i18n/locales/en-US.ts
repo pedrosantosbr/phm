@@ -490,8 +490,8 @@ const enUS: PtPT = {
       },
       m2: {
         name: "Mariana Matos",
-        role: "Attorney",
-        body: "Corporate and regulatory law. Owns legal compliance — GDPR, LGPD and clinical regulation — across every hospital deployment.",
+        role: "Jurist",
+        body: "Bachelor's degrees in Law and History, Master's in Corporate and Business Law, and PhD candidate. Holds a specialization in Hospital Administration from the Escola Nacional de Saúde Pública at Universidade Nova de Lisboa.",
       },
       m3: {
         name: "Fillipi Nascimento",
