@@ -12,6 +12,7 @@ const enUS: PtPT = {
     products: "Products",
     market: "Market",
     advantage: "Advantage",
+    team: "Team",
     login: "Sign in",
     cta: "Request demo",
   },
@@ -365,7 +366,7 @@ const enUS: PtPT = {
 
   footer: {
     eyebrow: "End of issue",
-    cities: "Lisbon · Porto · São Paulo",
+    cities: "Ponte de Lima · Portugal",
     body: "The AI operating system for hospitals. <em>MediGuard</em>, <em>CodiCare</em> and <em>MediCall</em> in a single layer of clinical intelligence — written with the same care it asks of the people who care.",
     bodyPart1: "The AI operating system for hospitals.",
     bodyProducts: "MediGuard, CodiCare and MediCall",
@@ -402,14 +403,14 @@ const enUS: PtPT = {
         contact: "Contact",
       },
       hq: "— Headquarters",
-      hqEntity: "PHMCare AI Health, S.A.",
-      hqStreet: "Av. da Liberdade 110, 2nd floor",
-      hqCity: "1250-146 Lisbon",
-      hqPhone: "+351 21 000 0000",
+      hqEntity: "Anvel Lda",
+      hqStreet: "Rua do Carrão n.º 3704 Lj D",
+      hqCity: "4990-620 Ponte de Lima, Portugal",
+      hqPhone: "+351 938 373 944",
     },
     legal: {
       copyright: "© 2026",
-      entity: "PHMCare AI Health, S.A.",
+      entity: "Anvel Lda",
       tagline: "— Built with care, for those who care.",
       privacy: "Privacy",
       terms: "Terms",
@@ -469,6 +470,35 @@ const enUS: PtPT = {
     h4: "Belmar Health",
     h5: "Caldera Hospital Group",
     h6: "Mercator Health",
+  },
+
+  team: {
+    eyebrow: "The Team",
+    eyebrowMeta: "Clinicians · engineers · researchers",
+    titleLine1: "The people behind",
+    titleLine2: "the system.",
+    body: "A small, deliberate group. We build PHMCare AI from real hospitals, with clinicians who prescribe and engineers who write production code. No distance between the floor and the repo.",
+    specimenFooter: "Ponte de Lima · open to a conversation",
+    footnoteLabel: "— Note",
+    footnoteBody:
+      "We're hiring across clinical engineering, calibration and hospital operations. Direct intro letters: pedro@anvel.pt.",
+    members: {
+      m1: {
+        name: "Pedro Santos",
+        role: "Senior Software + AI Engineer",
+        body: "Leads the product stack and the inference infrastructure. Owns the federated architecture that keeps PHI inside the hospital perimeter.",
+      },
+      m2: {
+        name: "Mariana Matos",
+        role: "Attorney",
+        body: "Corporate and regulatory law. Owns legal compliance — GDPR, LGPD and clinical regulation — across every hospital deployment.",
+      },
+      m3: {
+        name: "Fillipi Nascimento",
+        role: "Senior SRE Engineer",
+        body: "Owns reliability, observability and on-premise operations. Keeps the 99.97% uptime that partner hospitals read on the masthead.",
+      },
+    },
   },
 };
 

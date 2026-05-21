@@ -10,6 +10,7 @@ const ptPT = {
     products: "Produtos",
     market: "Mercado",
     advantage: "Vantagem",
+    team: "Equipa",
     login: "Iniciar sessão",
     cta: "Pedir demo",
   },
@@ -361,7 +362,7 @@ const ptPT = {
 
   footer: {
     eyebrow: "Fim de edição",
-    cities: "Lisboa · Porto · São Paulo",
+    cities: "Ponte de Lima · Portugal",
     body: "O sistema operativo de IA para hospitais. <em>MediGuard</em>, <em>CodiCare</em> e <em>MediCall</em> numa única camada de inteligência clínica — escrita com o mesmo cuidado que pede às pessoas que cuidam.",
     bodyPart1: "O sistema operativo de IA para hospitais.",
     bodyProducts: "MediGuard, CodiCare e MediCall",
@@ -398,14 +399,14 @@ const ptPT = {
         contact: "Contacto",
       },
       hq: "— Sede",
-      hqEntity: "PHMCare AI Health, S.A.",
-      hqStreet: "Av. da Liberdade 110, 2.º",
-      hqCity: "1250-146 Lisboa",
-      hqPhone: "+351 21 000 0000",
+      hqEntity: "Anvel Lda",
+      hqStreet: "Rua do Carrão n.º 3704 Lj D",
+      hqCity: "4990-620 Ponte de Lima, Portugal",
+      hqPhone: "+351 938 373 944",
     },
     legal: {
       copyright: "© 2026",
-      entity: "PHMCare AI Health, S.A.",
+      entity: "Anvel Lda",
       tagline: "— Construída com cuidado, para quem cuida.",
       privacy: "Privacidade",
       terms: "Termos",
@@ -465,6 +466,35 @@ const ptPT = {
     h4: "Belmar Saúde",
     h5: "Caldera Hospital Group",
     h6: "Mercator Health",
+  },
+
+  team: {
+    eyebrow: "A Equipa",
+    eyebrowMeta: "Clínicos · engenheiros · investigadores",
+    titleLine1: "As pessoas por trás",
+    titleLine2: "do sistema.",
+    body: "Um grupo pequeno, deliberado. Construímos a PHMCare AI a partir de hospitais reais, com clínicos que prescrevem e engenheiros que escrevem código de produção. Sem distância entre o terreno e o repositório.",
+    specimenFooter: "Ponte de Lima · disponível para conversa",
+    footnoteLabel: "— Nota",
+    footnoteBody:
+      "Estamos a recrutar para engenharia clínica, calibração e operações hospitalares. Carta de motivação directa: pedro@anvel.pt.",
+    members: {
+      m1: {
+        name: "Pedro Santos",
+        role: "Senior Engenheiro de Software + IA",
+        body: "Lidera a stack de produto e a infraestrutura de inferência. Responsável pela arquitectura federada que mantém o PHI dentro do perímetro do hospital.",
+      },
+      m2: {
+        name: "Mariana Matos",
+        role: "Advogada",
+        body: "Direito societário e regulatório. Garante a conformidade legal — RGPD, LGPD e regulação clínica — em cada deployment hospitalar.",
+      },
+      m3: {
+        name: "Fillipi Nascimento",
+        role: "Senior SRE Engineer",
+        body: "Responsável pela fiabilidade, observabilidade e operações on-premise. Mantém os 99.97% de disponibilidade que os hospitais parceiros leem na capa.",
+      },
+    },
   },
 };
 

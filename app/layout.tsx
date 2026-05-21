@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Fraunces, Manrope, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "./i18n/provider";
+import { Masthead } from "./components/Masthead";
+import { Nav } from "./components/Nav";
+import { Footer } from "./components/Footer";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -50,7 +53,12 @@ export default function RootLayout({
       className={`${fraunces.variable} ${manrope.variable} ${jetbrains.variable}`}
     >
       <body className="bg-bone text-ink font-body antialiased">
-        <I18nProvider>{children}</I18nProvider>
+        <I18nProvider>
+          <Masthead />
+          <Nav />
+          {children}
+          <Footer />
+        </I18nProvider>
       </body>
     </html>
   );
