@@ -341,7 +341,7 @@ const ptPT = {
     titleLine3: "no seu hospital.",
     body: "Uma demonstração de 30 minutos sobre os seus fluxos reais. Sem slideware. Conectamos a um sandbox dos seus dados, mostramos MediGuard, CodiCare e MediCall em acção, e deixamos um relatório escrito.",
     emailLabel: "Email clínico ou executivo",
-    emailPlaceholder: "dr.apelido@hospital.org",
+    emailPlaceholder: "pedro@phmcare.ai",
     hospitalLabel: "Hospital · serviço",
     hospitalPlaceholder: "Hospital São Bartolomeu, Cardiologia",
     ehrLabel: "EHR",
@@ -371,7 +371,7 @@ const ptPT = {
     newsletter: {
       label: "— Boletim · A Lança Clínica",
       body: "Uma edição mensal sobre raciocínio máquina aplicado a hospitais. Sem ruído, sem hype — apenas o que mudou.",
-      placeholder: "o-seu-email@hospital.pt",
+      placeholder: "pedro@phmcare.ai",
       meta: "1 edição · mês · cancelável sempre",
       submit: "Subscrever",
     },
@@ -477,7 +477,7 @@ const ptPT = {
     specimenFooter: "Ponte de Lima · disponível para conversa",
     footnoteLabel: "— Nota",
     footnoteBody:
-      "Estamos a recrutar para engenharia clínica, calibração e operações hospitalares. Carta de motivação directa: pedro@anvel.pt.",
+      "Estamos a recrutar para engenharia clínica, calibração e operações hospitalares. Carta de motivação directa: pedro@phmcare.ai.",
     members: {
       m1: {
         name: "Pedro Santos",

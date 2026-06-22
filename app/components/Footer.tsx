@@ -179,7 +179,7 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a className="ulink" href="#">
+                <a className="ulink" href="mailto:pedro@phmcare.ai">
                   {t("footer.columns.companyLinks.contact")}
                 </a>
               </li>
@@ -200,8 +200,12 @@ export function Footer() {
             <div className="mt-5 marginalia">
               {t("footer.columns.hqPhone")}
               <br />
-              <a className="ulink" href="mailto:pedro@anvel.pt">
-                pedro@anvel.pt
+              <a className="ulink" href="mailto:pedro@phmcare.ai">
+                pedro@phmcare.ai
+              </a>
+              <br />
+              <a className="ulink" href="mailto:mariana@phmcare.ai">
+                mariana@phmcare.ai
               </a>
             </div>
           </div>

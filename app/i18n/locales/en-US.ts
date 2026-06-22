@@ -345,7 +345,7 @@ const enUS: PtPT = {
     titleLine3: "in your hospital.",
     body: "A 30-minute demo on your real workflows. No slideware. We connect to a sandbox of your data, show MediGuard, CodiCare and MediCall in action, and leave a written report.",
     emailLabel: "Clinical or executive email",
-    emailPlaceholder: "dr.lastname@hospital.org",
+    emailPlaceholder: "pedro@phmcare.ai",
     hospitalLabel: "Hospital · service",
     hospitalPlaceholder: "St. Bartholomew's, Cardiology",
     ehrLabel: "EHR",
@@ -375,7 +375,7 @@ const enUS: PtPT = {
     newsletter: {
       label: "— Newsletter · The Clinical Lancet",
       body: "A monthly issue on machine reasoning applied to hospitals. No noise, no hype — only what changed.",
-      placeholder: "your-email@hospital.com",
+      placeholder: "pedro@phmcare.ai",
       meta: "1 issue · month · always cancellable",
       submit: "Subscribe",
     },
@@ -481,7 +481,7 @@ const enUS: PtPT = {
     specimenFooter: "Ponte de Lima · open to a conversation",
     footnoteLabel: "— Note",
     footnoteBody:
-      "We're hiring across clinical engineering, calibration and hospital operations. Direct intro letters: pedro@anvel.pt.",
+      "We're hiring across clinical engineering, calibration and hospital operations. Direct intro letters: pedro@phmcare.ai.",
     members: {
       m1: {
         name: "Pedro Santos",
