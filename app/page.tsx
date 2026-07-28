@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
    PHMCare AI — landing page
    Sister brand to the Vellum specimen at /index.html.
    Same Clinical Editorial system, calibrated for the Portuguese-speaking market
-   and the three products: MediGuard · CodiCare · MediCall.
+   and the three products: CodiCare · Escala · BedFlow.
    ────────────────────────────────────────────────────────────────────────── */
 
 type Validation = { name: string; valuation: string };
@@ -46,11 +46,6 @@ export default function Page() {
     t("hospitals.h6"),
   ];
 
-  const MEDIGUARD_VALIDATION: Validation[] = [
-    { name: "Epic Systems", valuation: "$60–80B" },
-    { name: "Oracle Health (Cerner)", valuation: "$250B+" },
-    { name: "MedAware", valuation: "$500–700M" },
-  ];
   const CODICARE_VALIDATION: Validation[] = [
     { name: "3M Health Info Systems", valuation: "$400B" },
     { name: "Optum", valuation: "$400B" },
@@ -58,12 +53,17 @@ export default function Page() {
     { name: "Ambience Healthcare", valuation: "$1–2B" },
     { name: "Fathom", valuation: "$400–800M" },
   ];
-  const MEDICALL_VALIDATION: Validation[] = [
-    { name: "Suki AI", valuation: "$500–700M" },
-    { name: "sully.ai", valuation: "$1B" },
-    { name: "K Health", valuation: "$900M–1.5B" },
-    { name: "Steer Health", valuation: "$300–600M" },
-    { name: "Assort Health", valuation: "$200–500M" },
+  const ESCALA_VALIDATION: Validation[] = [
+    { name: "UKG (Kronos)", valuation: "$22B" },
+    { name: "symplr", valuation: "$3B+" },
+    { name: "QGenda", valuation: "$1B+" },
+    { name: "RLDatix", valuation: "$1–2B" },
+  ];
+  const BEDFLOW_VALIDATION: Validation[] = [
+    { name: "TeleTracking", valuation: "$1B+" },
+    { name: "LeanTaaS", valuation: "$1B+" },
+    { name: "Qventus", valuation: "$400–800M" },
+    { name: "Care Logistics", valuation: "$200–400M" },
   ];
 
   return (
@@ -146,7 +146,7 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Right: hero specimen — MediGuard live alert */}
+          {/* Right: hero specimen — CodiCare live coding */}
           <aside className="col-span-12 lg:col-span-5 lg:pl-8 reveal">
             <div className="relative">
               <div className="absolute -top-3 -left-3 label text-ink-mute hidden lg:block">
@@ -165,88 +165,57 @@ export default function Page() {
                   </span>
                 </div>
 
-                {/* patient + drug */}
-                <div className="pt-4 flex items-baseline justify-between">
-                  <div>
-                    <div className="label text-ink-mute mb-1">
-                      {t("hero.specimen.patientLabel")}
-                    </div>
-                    <div className="display text-[24px]">
-                      {t("hero.specimen.patientName")}
-                    </div>
+                {/* document mock */}
+                <div className="mt-4 bg-bone-dark/40 border hairline rounded-sm p-4 text-[13.5px] leading-[1.6] text-ink-soft">
+                  <div className="text-ink-mute marginalia mb-2">
+                    {t("hero.specimen.recordHeader")}
                   </div>
-                  <div className="text-right">
-                    <div className="label text-ink-mute mb-1">
-                      {t("hero.specimen.severity")}
-                    </div>
-                    <div className="num text-[26px] text-clay-deep tracking-tight">
-                      {t("hero.specimen.severityHigh")}
-                    </div>
-                  </div>
+                  <p>
+                    {t("hero.specimen.recordPart1")}{" "}
+                    <span className="bg-clay-light/50 underline decoration-clay decoration-[1.5px] underline-offset-2 px-0.5">
+                      {t("hero.specimen.recordHighlight1")}
+                    </span>{" "}
+                    {t("hero.specimen.recordPart2")}{" "}
+                    <span className="bg-clay-light/50 underline decoration-clay decoration-[1.5px] underline-offset-2 px-0.5">
+                      {t("hero.specimen.recordHighlight2")}
+                    </span>
+                    {t("hero.specimen.recordPart3")}{" "}
+                    <span className="bg-clay-light/50 underline decoration-clay decoration-[1.5px] underline-offset-2 px-0.5">
+                      {t("hero.specimen.recordHighlight3")}
+                    </span>{" "}
+                    {t("hero.specimen.recordPart4")}
+                  </p>
                 </div>
 
-                {/* drug card */}
-                <div className="mt-5 rounded-sm bg-bone-dark/50 p-4 border hairline">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="label text-ink-mute">
-                        {t("hero.specimen.prescription")}
-                      </div>
-                      <div className="display text-[28px] mt-1">
-                        {t("hero.specimen.prescriptionDrug")}
-                      </div>
-                    </div>
-                    <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
-                      <circle
-                        cx="19"
-                        cy="19"
-                        r="17"
-                        stroke="#C2553D"
-                        strokeWidth="1.4"
-                      />
-                      <path
-                        d="M13 19h12M19 13v12"
-                        stroke="#C2553D"
-                        strokeWidth="1.4"
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                  </div>
-                  <div className="mt-3 grid grid-cols-2 gap-3 text-[12px]">
-                    <div className="flex items-center gap-2">
-                      <span className="num text-clay">↳</span>
-                      <span>
-                        {t("hero.specimen.allergyLabel")}:{" "}
-                        <span className="font-medium">
-                          {t("hero.specimen.allergyDrug")}
-                        </span>{" "}
-                        {t("hero.specimen.allergyYear")}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="num text-clay">↳</span>
-                      <span>
-                        {t("hero.specimen.interactionLabel")}:{" "}
-                        <span className="font-medium">
-                          {t("hero.specimen.interactionDrug")}
-                        </span>{" "}
-                        {t("hero.specimen.interactionConsequence")}
-                      </span>
-                    </div>
-                  </div>
+                {/* extracted codes */}
+                <div className="mt-5 space-y-2.5">
+                  <CodeChip
+                    code="I21.1"
+                    label={t("hero.specimen.code1Label")}
+                    confidence={0.96}
+                  />
+                  <CodeChip
+                    code="R07.4"
+                    label={t("hero.specimen.code2Label")}
+                    confidence={0.88}
+                  />
+                  <CodeChip
+                    code="R06.0"
+                    label={t("hero.specimen.code3Label")}
+                    confidence={0.82}
+                  />
                 </div>
 
-                {/* recommendation */}
+                {/* audit note */}
                 <div className="mt-5 border-l-2 border-clay pl-4">
                   <div className="label text-clay-deep mb-1.5">
                     {t("hero.specimen.recommendation")}
                   </div>
                   <p className="text-[15px] leading-snug text-ink-soft">
-                    {t("hero.specimen.recPart1")}{" "}
+                    {t("hero.specimen.recText")}{" "}
                     <span className="font-medium text-ink">
-                      {t("hero.specimen.recDrug")}
-                    </span>{" "}
-                    {t("hero.specimen.recPart2")}
+                      {t("hero.specimen.recEmphasis")}
+                    </span>
                   </p>
                   <div className="mt-3 marginalia">
                     {t("hero.specimen.source")}
@@ -256,10 +225,10 @@ export default function Page() {
                 <div className="mt-5 flex items-center justify-between">
                   <div className="flex gap-2">
                     <button className="px-3 py-1.5 text-[12px] rounded-full bg-ink text-bone-light">
-                      {t("hero.specimen.btnRetain")}
+                      {t("hero.specimen.btnAccept")}
                     </button>
                     <button className="px-3 py-1.5 text-[12px] rounded-full border hairline-strong text-ink-soft">
-                      {t("hero.specimen.btnJustify")}
+                      {t("hero.specimen.btnReview")}
                     </button>
                   </div>
                   <span className="num text-[11px] text-ink-mute">
@@ -398,27 +367,6 @@ export default function Page() {
               </div>
               <div className="col-span-10">
                 <h3 className="display text-[28px] md:text-[34px]">
-                  {t("problem.items.meds.title")}
-                </h3>
-                <p className="mt-3 text-[16px] leading-[1.65] text-ink-soft max-w-[62ch]">
-                  {t("problem.items.meds.bodyPart1")}{" "}
-                  <span className="text-ink font-medium">
-                    {t("problem.items.meds.bodyEmphasis")}
-                  </span>{" "}
-                  {t("problem.items.meds.bodyPart2")}
-                </p>
-                <div className="marginalia mt-4">
-                  {t("problem.items.meds.tag")}
-                </div>
-              </div>
-            </li>
-
-            <li className="grid grid-cols-12 gap-6 py-10 border-b hairline">
-              <div className="col-span-2 num text-clay text-[18px] pt-2">
-                ii.
-              </div>
-              <div className="col-span-10">
-                <h3 className="display text-[28px] md:text-[34px]">
                   {t("problem.items.coding.title")}
                 </h3>
                 <p className="mt-3 text-[16px] leading-[1.65] text-ink-soft max-w-[62ch]">
@@ -432,21 +380,42 @@ export default function Page() {
 
             <li className="grid grid-cols-12 gap-6 py-10 border-b hairline">
               <div className="col-span-2 num text-clay text-[18px] pt-2">
+                ii.
+              </div>
+              <div className="col-span-10">
+                <h3 className="display text-[28px] md:text-[34px]">
+                  {t("problem.items.rostering.title")}
+                </h3>
+                <p className="mt-3 text-[16px] leading-[1.65] text-ink-soft max-w-[62ch]">
+                  {t("problem.items.rostering.bodyPart1")}{" "}
+                  <span className="text-ink font-medium">
+                    {t("problem.items.rostering.bodyEmphasis")}
+                  </span>{" "}
+                  {t("problem.items.rostering.bodyPart2")}
+                </p>
+                <div className="marginalia mt-4">
+                  {t("problem.items.rostering.tag")}
+                </div>
+              </div>
+            </li>
+
+            <li className="grid grid-cols-12 gap-6 py-10 border-b hairline">
+              <div className="col-span-2 num text-clay text-[18px] pt-2">
                 iii.
               </div>
               <div className="col-span-10">
                 <h3 className="display text-[28px] md:text-[34px]">
-                  {t("problem.items.triage.title")}
+                  {t("problem.items.beds.title")}
                 </h3>
                 <p className="mt-3 text-[16px] leading-[1.65] text-ink-soft max-w-[62ch]">
-                  {t("problem.items.triage.bodyPart1")}{" "}
+                  {t("problem.items.beds.bodyPart1")}{" "}
                   <span className="text-ink font-medium">
-                    {t("problem.items.triage.bodyEmphasis")}
+                    {t("problem.items.beds.bodyEmphasis")}
                   </span>{" "}
-                  {t("problem.items.triage.bodyPart2")}
+                  {t("problem.items.beds.bodyPart2")}
                 </p>
                 <div className="marginalia mt-4">
-                  {t("problem.items.triage.tag")}
+                  {t("problem.items.beds.tag")}
                 </div>
               </div>
             </li>
@@ -615,34 +584,50 @@ export default function Page() {
           </p>
         </div>
 
-        {/* Product 01 — MediGuard */}
-        <article className="specimen mt-16 border hairline-strong rounded-sm p-8 md:p-10 bg-bone-light grid grid-cols-12 gap-8">
+        {/* Product 01 — CodiCare (flagship) */}
+        <article className="specimen mt-16 border-2 border-clay/70 rounded-sm p-8 md:p-10 bg-bone-light grid grid-cols-12 gap-8 shadow-[0_30px_80px_-50px_rgba(20,24,31,0.35)]">
           <div className="col-span-12 md:col-span-7">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <span className="label text-ink-mute">
-                {t("products.items.mediguard.codename")}
+                {t("products.items.codicare.codename")}
               </span>
-              <span className="pill">
-                <span className="dot" />
-                {t("products.items.mediguard.pill")}
-              </span>
+              <div className="flex items-center gap-2">
+                <span
+                  className="pill"
+                  style={{
+                    background: "#C2553D",
+                    borderColor: "#C2553D",
+                    color: "#FAF7F1",
+                  }}
+                >
+                  <span
+                    className="dot"
+                    style={{ background: "#FAF7F1" }}
+                  />
+                  {t("products.flagshipLabel")}
+                </span>
+                <span className="pill">
+                  <span className="dot" />
+                  {t("products.items.codicare.pill")}
+                </span>
+              </div>
             </div>
-            <h3 className="display mt-5 text-[clamp(36px,4vw,56px)]">
-              {t("products.items.mediguard.name")}
+            <h3 className="display mt-5 text-[clamp(40px,4.6vw,64px)]">
+              {t("products.items.codicare.name")}
             </h3>
-            <p className="display-italic text-clay-deep text-[20px] mt-2">
-              {t("products.items.mediguard.tagline")}
+            <p className="display-italic text-clay-deep text-[22px] mt-2">
+              {t("products.items.codicare.tagline")}
             </p>
 
             <p className="mt-6 text-[16px] leading-[1.65] text-ink-soft max-w-[58ch]">
-              {t("products.items.mediguard.body")}
+              {t("products.items.codicare.body")}
             </p>
 
             <ul className="mt-7 space-y-3 text-[15px] text-ink-soft">
               {[
-                t("products.items.mediguard.bullet1"),
-                t("products.items.mediguard.bullet2"),
-                t("products.items.mediguard.bullet3"),
+                t("products.items.codicare.bullet1"),
+                t("products.items.codicare.bullet2"),
+                t("products.items.codicare.bullet3"),
               ].map((b) => (
                 <li key={b} className="flex gap-3">
                   <span className="num text-clay mt-1">›</span> {b}
@@ -650,127 +635,11 @@ export default function Page() {
               ))}
             </ul>
 
-            <ValidationStrip items={MEDIGUARD_VALIDATION} />
+            <ValidationStrip items={CODICARE_VALIDATION} />
           </div>
 
-          {/* MediGuard specimen visual */}
+          {/* CodiCare specimen visual */}
           <div className="col-span-12 md:col-span-5">
-            <div className="rounded-sm bg-bone-dark/60 border hairline p-5 h-full flex flex-col">
-              <div className="flex items-center justify-between">
-                <span className="label text-ink-mute">
-                  {t("products.items.mediguard.specimen.header")}
-                </span>
-                <span className="num text-[11px] text-ink-mute">+38ms</span>
-              </div>
-
-              <div className="my-5">
-                <div className="display text-[32px] leading-none">
-                  Cefepime <span className="display-italic">2g IV</span>
-                </div>
-                <div className="label text-ink-mute mt-1">
-                  {t("products.items.mediguard.specimen.patient")}
-                </div>
-              </div>
-
-              {/* severity bar */}
-              <div className="mt-2">
-                <div className="flex items-center justify-between label text-ink-mute mb-1.5">
-                  <span>
-                    {t("products.items.mediguard.specimen.severity")}
-                  </span>
-                  <span className="text-clay-deep">
-                    {t("products.items.mediguard.specimen.severityHigh")}
-                  </span>
-                </div>
-                <div className="h-1.5 bg-bone rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-clay"
-                    style={{ width: "92%" }}
-                  />
-                </div>
-              </div>
-
-              {/* alert rows */}
-              <div className="mt-5 space-y-2.5">
-                <div className="flex items-start gap-3 p-3 bg-clay-light/30 border-l-2 border-clay rounded-sm">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    className="mt-0.5 shrink-0"
-                  >
-                    <path
-                      d="M8 1L15 14H1L8 1z"
-                      fill="none"
-                      stroke="#9E3E29"
-                      strokeWidth="1.3"
-                    />
-                    <path
-                      d="M8 6v3M8 11v.5"
-                      stroke="#9E3E29"
-                      strokeWidth="1.3"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  <div className="text-[12.5px] leading-snug">
-                    <div className="font-medium">
-                      {t("products.items.mediguard.specimen.allergyTitle")}
-                    </div>
-                    <div className="text-ink-mute marginalia mt-1">
-                      {t("products.items.mediguard.specimen.allergyMeta")}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 p-3 border hairline rounded-sm">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    className="mt-0.5 shrink-0"
-                  >
-                    <circle
-                      cx="8"
-                      cy="8"
-                      r="6.5"
-                      fill="none"
-                      stroke="#6B7E6E"
-                      strokeWidth="1.3"
-                    />
-                    <path
-                      d="M5 8h6"
-                      stroke="#6B7E6E"
-                      strokeWidth="1.3"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  <div className="text-[12.5px] leading-snug">
-                    <div className="font-medium">
-                      {t("products.items.mediguard.specimen.interactionTitle")}
-                    </div>
-                    <div className="text-ink-mute marginalia mt-1">
-                      {t("products.items.mediguard.specimen.interactionMeta")}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-auto pt-5 flex items-center justify-between border-t hairline">
-                <span className="num text-[11px] text-ink-mute">
-                  {t("products.items.mediguard.specimen.sources")}
-                </span>
-                <span className="num text-[11px] text-clay-deep">
-                  {t("products.items.mediguard.specimen.retain")}
-                </span>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        {/* Product 02 — CodiCare */}
-        <article className="specimen mt-8 border hairline-strong rounded-sm p-8 md:p-10 bg-bone-light grid grid-cols-12 gap-8">
-          <div className="col-span-12 md:col-span-5 order-2 md:order-1">
-            {/* CodiCare specimen */}
             <div className="rounded-sm bg-bone-dark/40 border hairline p-5 h-full">
               <div className="flex items-center justify-between mb-4">
                 <span className="label text-ink-mute">
@@ -835,33 +704,41 @@ export default function Page() {
               </div>
             </div>
           </div>
+        </article>
+
+        {/* Product 02 — Escala */}
+        <article className="specimen mt-8 border hairline-strong rounded-sm p-8 md:p-10 bg-bone-light grid grid-cols-12 gap-8">
+          <div className="col-span-12 md:col-span-5 order-2 md:order-1">
+            {/* Escala specimen — monthly roster grid */}
+            <RosterSpecimen />
+          </div>
 
           <div className="col-span-12 md:col-span-7 order-1 md:order-2">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <span className="label text-ink-mute">
-                {t("products.items.codicare.codename")}
+                {t("products.items.escala.codename")}
               </span>
               <span className="pill">
                 <span className="dot" />
-                {t("products.items.codicare.pill")}
+                {t("products.items.escala.pill")}
               </span>
             </div>
             <h3 className="display mt-5 text-[clamp(36px,4vw,56px)]">
-              {t("products.items.codicare.name")}
+              {t("products.items.escala.name")}
             </h3>
             <p className="display-italic text-clay-deep text-[20px] mt-2">
-              {t("products.items.codicare.tagline")}
+              {t("products.items.escala.tagline")}
             </p>
 
             <p className="mt-6 text-[16px] leading-[1.65] text-ink-soft max-w-[58ch]">
-              {t("products.items.codicare.body")}
+              {t("products.items.escala.body")}
             </p>
 
             <ul className="mt-7 space-y-3 text-[15px] text-ink-soft">
               {[
-                t("products.items.codicare.bullet1"),
-                t("products.items.codicare.bullet2"),
-                t("products.items.codicare.bullet3"),
+                t("products.items.escala.bullet1"),
+                t("products.items.escala.bullet2"),
+                t("products.items.escala.bullet3"),
               ].map((b) => (
                 <li key={b} className="flex gap-3">
                   <span className="num text-clay mt-1">›</span> {b}
@@ -869,38 +746,38 @@ export default function Page() {
               ))}
             </ul>
 
-            <ValidationStrip items={CODICARE_VALIDATION} />
+            <ValidationStrip items={ESCALA_VALIDATION} />
           </div>
         </article>
 
-        {/* Product 03 — MediCall */}
+        {/* Product 03 — BedFlow */}
         <article className="specimen mt-8 border hairline-strong rounded-sm p-8 md:p-10 bg-bone-light grid grid-cols-12 gap-8">
           <div className="col-span-12 md:col-span-7">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <span className="label text-ink-mute">
-                {t("products.items.medicall.codename")}
+                {t("products.items.bedflow.codename")}
               </span>
               <span className="pill">
                 <span className="dot" />
-                {t("products.items.medicall.pill")}
+                {t("products.items.bedflow.pill")}
               </span>
             </div>
             <h3 className="display mt-5 text-[clamp(36px,4vw,56px)]">
-              {t("products.items.medicall.name")}
+              {t("products.items.bedflow.name")}
             </h3>
             <p className="display-italic text-clay-deep text-[20px] mt-2">
-              {t("products.items.medicall.tagline")}
+              {t("products.items.bedflow.tagline")}
             </p>
 
             <p className="mt-6 text-[16px] leading-[1.65] text-ink-soft max-w-[58ch]">
-              {t("products.items.medicall.body")}
+              {t("products.items.bedflow.body")}
             </p>
 
             <ul className="mt-7 space-y-3 text-[15px] text-ink-soft">
               {[
-                t("products.items.medicall.bullet1"),
-                t("products.items.medicall.bullet2"),
-                t("products.items.medicall.bullet3"),
+                t("products.items.bedflow.bullet1"),
+                t("products.items.bedflow.bullet2"),
+                t("products.items.bedflow.bullet3"),
               ].map((b) => (
                 <li key={b} className="flex gap-3">
                   <span className="num text-clay mt-1">›</span> {b}
@@ -908,99 +785,12 @@ export default function Page() {
               ))}
             </ul>
 
-            <ValidationStrip items={MEDICALL_VALIDATION} />
+            <ValidationStrip items={BEDFLOW_VALIDATION} />
           </div>
 
-          {/* MediCall specimen */}
+          {/* BedFlow specimen — live occupancy */}
           <div className="col-span-12 md:col-span-5">
-            <div className="rounded-sm bg-bone-dark/60 border hairline p-5 h-full flex flex-col">
-              <div className="flex items-center justify-between">
-                <span className="label text-ink-mute flex items-center gap-2">
-                  <span className="pulse-dot w-1.5 h-1.5 rounded-full bg-clay" />
-                  {t("products.items.medicall.specimen.header")}
-                </span>
-                <span className="num text-[11px] text-ink-mute">02:14</span>
-              </div>
-
-              {/* waveform */}
-              <div className="mt-4 flex items-end gap-1 h-12">
-                {[
-                  0.3, 0.7, 0.5, 0.9, 0.6, 0.4, 0.85, 0.5, 0.3, 0.7, 0.95, 0.6,
-                  0.4, 0.7, 0.5, 0.8, 0.4, 0.6, 0.9, 0.5, 0.3, 0.7, 0.5, 0.85,
-                  0.4, 0.6, 0.7, 0.4,
-                ].map((h, i) => (
-                  <span
-                    key={i}
-                    className="flex-1 bg-ink rounded-full wave-bar"
-                    style={{
-                      height: `${h * 100}%`,
-                      animationDelay: `${i * 0.06}s`,
-                      transformOrigin: "center",
-                    }}
-                  />
-                ))}
-              </div>
-
-              {/* transcript bubble */}
-              <div className="mt-5 border-l-2 border-ink pl-4 py-1">
-                <div className="label text-ink-mute mb-1.5">
-                  {t("products.items.medicall.specimen.transcriptLabel")}
-                </div>
-                <p className="text-[14px] leading-[1.5] text-ink-soft">
-                  &ldquo;{t("products.items.medicall.specimen.transcriptPart1")}{" "}
-                  <span className="bg-clay-light/50 underline decoration-clay decoration-[1.5px] underline-offset-2 px-0.5">
-                    {t("products.items.medicall.specimen.transcriptHighlight1")}
-                  </span>{" "}
-                  {t("products.items.medicall.specimen.transcriptPart2")}{" "}
-                  <span className="bg-clay-light/50 underline decoration-clay decoration-[1.5px] underline-offset-2 px-0.5">
-                    {t("products.items.medicall.specimen.transcriptHighlight2")}
-                  </span>
-                  {t("products.items.medicall.specimen.transcriptPart3")}&rdquo;
-                </p>
-              </div>
-
-              {/* priority bar */}
-              <div className="mt-5">
-                <div className="flex items-center justify-between label text-ink-mute mb-2">
-                  <span>
-                    {t("products.items.medicall.specimen.priorityLabel")}
-                  </span>
-                  <span className="text-clay-deep">
-                    {t("products.items.medicall.specimen.priorityValue")}
-                  </span>
-                </div>
-                <div className="flex gap-1 h-2">
-                  <div className="flex-1 bg-sage rounded-full opacity-30" />
-                  <div className="flex-1 bg-sage rounded-full opacity-30" />
-                  <div className="flex-1 bg-clay-light rounded-full" />
-                  <div className="flex-1 bg-clay rounded-full" />
-                  <div className="flex-1 bg-bone rounded-full opacity-40" />
-                </div>
-              </div>
-
-              {/* scheduled slot */}
-              <div className="mt-auto pt-5 border-t hairline flex items-center justify-between">
-                <div>
-                  <div className="label text-ink-mute">
-                    {t("products.items.medicall.specimen.scheduledLabel")}
-                  </div>
-                  <div className="display text-[20px]">
-                    {t("products.items.medicall.specimen.scheduledWhen")}
-                    <span className="display-italic">
-                      {t("products.items.medicall.specimen.scheduledTime")}
-                    </span>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="label text-ink-mute">
-                    {t("products.items.medicall.specimen.serviceLabel")}
-                  </div>
-                  <div className="num text-[13px] text-ink">
-                    {t("products.items.medicall.specimen.serviceValue")}
-                  </div>
-                </div>
-              </div>
-            </div>
+            <OccupancySpecimen />
           </div>
         </article>
 
@@ -1133,16 +923,16 @@ export default function Page() {
             </p>
             <ul className="mt-5 space-y-2 text-[13px] text-ink-soft">
               <li className="flex justify-between border-b hairline pb-2">
-                <span>Abridge</span>
-                <span className="num text-ink-mute">$1–2B</span>
+                <span>3M HIS / Solventum</span>
+                <span className="num text-ink-mute">$400B</span>
               </li>
               <li className="flex justify-between border-b hairline pb-2">
-                <span>Ambience Healthcare</span>
-                <span className="num text-ink-mute">$1–2B</span>
+                <span>Optum</span>
+                <span className="num text-ink-mute">$400B</span>
               </li>
               <li className="flex justify-between">
-                <span>Suki AI</span>
-                <span className="num text-ink-mute">$500–700M</span>
+                <span>Fathom</span>
+                <span className="num text-ink-mute">$400–800M</span>
               </li>
             </ul>
           </div>
@@ -1159,18 +949,16 @@ export default function Page() {
             </p>
             <ul className="mt-5 space-y-2 text-[13px] text-ink-soft">
               <li className="flex justify-between border-b hairline pb-2">
-                <span>Nuance (Microsoft)</span>
-                <span className="num text-ink-mute">
-                  {t("advantage.msftSuffix")}
-                </span>
+                <span>UKG (Kronos)</span>
+                <span className="num text-ink-mute">$22B</span>
               </li>
               <li className="flex justify-between border-b hairline pb-2">
-                <span>K Health</span>
-                <span className="num text-ink-mute">$900M–1.5B</span>
+                <span>symplr</span>
+                <span className="num text-ink-mute">$3B+</span>
               </li>
               <li className="flex justify-between">
-                <span>sully.ai</span>
-                <span className="num text-ink-mute">$1B</span>
+                <span>QGenda</span>
+                <span className="num text-ink-mute">$1B+</span>
               </li>
             </ul>
           </div>
@@ -1187,16 +975,16 @@ export default function Page() {
             </p>
             <ul className="mt-5 space-y-2 text-[13px] text-ink-soft">
               <li className="flex justify-between border-b hairline pb-2">
-                <span>Epic Systems</span>
-                <span className="num text-ink-mute">$60–80B</span>
+                <span>TeleTracking</span>
+                <span className="num text-ink-mute">$1B+</span>
               </li>
               <li className="flex justify-between border-b hairline pb-2">
-                <span>Oracle Health (Cerner)</span>
-                <span className="num text-ink-mute">$250B+</span>
+                <span>LeanTaaS</span>
+                <span className="num text-ink-mute">$1B+</span>
               </li>
               <li className="flex justify-between">
-                <span>3M HIS / Solventum</span>
-                <span className="num text-ink-mute">$400B</span>
+                <span>Qventus</span>
+                <span className="num text-ink-mute">$400–800M</span>
               </li>
             </ul>
           </div>
@@ -1624,16 +1412,16 @@ export default function Page() {
                   p: t("colophon.images.problem"),
                 },
                 {
-                  s: t("colophon.imageSection.mediguard"),
-                  p: t("colophon.images.mediguard"),
-                },
-                {
                   s: t("colophon.imageSection.codicare"),
                   p: t("colophon.images.codicare"),
                 },
                 {
-                  s: t("colophon.imageSection.medicall"),
-                  p: t("colophon.images.medicall"),
+                  s: t("colophon.imageSection.escala"),
+                  p: t("colophon.images.escala"),
+                },
+                {
+                  s: t("colophon.imageSection.bedflow"),
+                  p: t("colophon.images.bedflow"),
                 },
                 {
                   s: t("colophon.imageSection.model"),
@@ -1696,6 +1484,209 @@ function ValidationStrip({ items }: { items: Validation[] }) {
             </span>
           </div>
         ))}
+      </div>
+    </div>
+  );
+}
+
+/* Escala — monthly roster grid specimen */
+function RosterSpecimen() {
+  const { t } = useTranslation();
+
+  const roster: { name: string; shifts: string[] }[] = [
+    { name: "A. Sá", shifts: ["M", "M", "T", "—", "N", "N", "—"] },
+    { name: "R. Melo", shifts: ["T", "T", "M", "M", "—", "—", "N"] },
+    { name: "J. Pina", shifts: ["N", "—", "—", "T", "T", "M", "M"] },
+    { name: "M. Reis", shifts: ["—", "N", "N", "M", "M", "T", "T"] },
+    { name: "C. Dias", shifts: ["M", "T", "M", "—", "N", "—", "M"] },
+  ];
+
+  const cellClass = (code: string) => {
+    switch (code) {
+      case "M":
+        return "bg-sage/25 text-ink";
+      case "T":
+        return "bg-clay-light/50 text-ink";
+      case "N":
+        return "bg-ink text-bone-light";
+      default:
+        return "bg-bone text-ink-mute";
+    }
+  };
+
+  return (
+    <div className="rounded-sm bg-bone-dark/40 border hairline p-5 h-full flex flex-col">
+      <div className="flex items-center justify-between">
+        <span className="label text-ink-mute">
+          {t("products.items.escala.specimen.header")}
+        </span>
+        <span className="num text-[11px] text-ink-mute">
+          {t("products.items.escala.specimen.meta")}
+        </span>
+      </div>
+
+      {/* grid */}
+      <div className="mt-5 space-y-1.5">
+        <div className="flex items-center gap-1.5">
+          <span className="w-14 shrink-0" />
+          {["1", "2", "3", "4", "5", "6", "7"].map((d) => (
+            <span
+              key={d}
+              className="num text-[10px] text-ink-mute flex-1 text-center"
+            >
+              {d}
+            </span>
+          ))}
+        </div>
+        {roster.map((r) => (
+          <div key={r.name} className="flex items-center gap-1.5">
+            <span className="w-14 shrink-0 text-[12px] text-ink truncate">
+              {r.name}
+            </span>
+            {r.shifts.map((code, i) => (
+              <span
+                key={i}
+                className={`num text-[11px] flex-1 text-center py-1 rounded-sm border hairline ${cellClass(
+                  code,
+                )}`}
+              >
+                {code}
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-4 marginalia text-ink-mute">
+        {t("products.items.escala.specimen.gridLegend")}
+      </div>
+
+      {/* stats */}
+      <div className="mt-5 pt-4 border-t hairline space-y-2.5">
+        <div className="flex items-center justify-between label text-ink-mute">
+          <span>{t("products.items.escala.specimen.coverageLabel")}</span>
+          <span className="text-sage">
+            {t("products.items.escala.specimen.coverageValue")}
+          </span>
+        </div>
+        <div className="flex items-center justify-between label text-ink-mute">
+          <span>{t("products.items.escala.specimen.balanceLabel")}</span>
+          <span className="text-ink">
+            {t("products.items.escala.specimen.balanceValue")}
+          </span>
+        </div>
+      </div>
+
+      <div className="mt-auto pt-5 flex items-center justify-between border-t hairline">
+        <span className="num text-[11px] text-ink-mute">
+          {t("products.items.escala.specimen.footerLeft")}
+        </span>
+        <span className="num text-[11px] text-clay-deep">
+          {t("products.items.escala.specimen.footerRight")}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/* BedFlow — live ward occupancy specimen */
+function OccupancySpecimen() {
+  const { t } = useTranslation();
+
+  const wards: { label: string; value: string; pct: number }[] = [
+    {
+      label: t("products.items.bedflow.specimen.ward1Label"),
+      value: t("products.items.bedflow.specimen.ward1Value"),
+      pct: 90,
+    },
+    {
+      label: t("products.items.bedflow.specimen.ward2Label"),
+      value: t("products.items.bedflow.specimen.ward2Value"),
+      pct: 75,
+    },
+    {
+      label: t("products.items.bedflow.specimen.ward3Label"),
+      value: t("products.items.bedflow.specimen.ward3Value"),
+      pct: 75,
+    },
+  ];
+
+  const legend: { dot: string; label: string }[] = [
+    { dot: "bg-sage", label: t("products.items.bedflow.specimen.statusFree") },
+    {
+      dot: "bg-clay",
+      label: t("products.items.bedflow.specimen.statusOccupied"),
+    },
+    {
+      dot: "bg-mist",
+      label: t("products.items.bedflow.specimen.statusCleaning"),
+    },
+    {
+      dot: "bg-ink",
+      label: t("products.items.bedflow.specimen.statusBlocked"),
+    },
+  ];
+
+  return (
+    <div className="rounded-sm bg-bone-dark/40 border hairline p-5 h-full flex flex-col">
+      <div className="flex items-center justify-between">
+        <span className="label text-ink-mute flex items-center gap-2">
+          <span className="pulse-dot w-1.5 h-1.5 rounded-full bg-sage" />
+          {t("products.items.bedflow.specimen.header")}
+        </span>
+        <span className="num text-[11px] text-ink-mute">
+          {t("products.items.bedflow.specimen.meta")}
+        </span>
+      </div>
+
+      {/* ward bars */}
+      <div className="mt-5 space-y-4">
+        {wards.map((w) => (
+          <div key={w.label}>
+            <div className="flex items-center justify-between text-[12.5px] mb-1.5">
+              <span className="text-ink-soft">{w.label}</span>
+              <span className="num text-ink-mute">{w.value}</span>
+            </div>
+            <div className="h-1.5 bg-bone rounded-full overflow-hidden">
+              <div
+                className="h-full bg-clay"
+                style={{ width: `${w.pct}%` }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* legend */}
+      <div className="mt-5 flex flex-wrap gap-x-4 gap-y-1.5">
+        {legend.map((l) => (
+          <span
+            key={l.label}
+            className="flex items-center gap-1.5 label text-ink-mute"
+          >
+            <span className={`w-1.5 h-1.5 rounded-full ${l.dot}`} />
+            {l.label}
+          </span>
+        ))}
+      </div>
+
+      {/* transfer request */}
+      <div className="mt-5 border-l-2 border-clay pl-4">
+        <div className="label text-clay-deep mb-1">
+          {t("products.items.bedflow.specimen.requestLabel")}
+        </div>
+        <div className="text-[13.5px] text-ink-soft">
+          {t("products.items.bedflow.specimen.requestValue")}
+        </div>
+      </div>
+
+      <div className="mt-auto pt-5 flex items-center justify-between border-t hairline">
+        <span className="num text-[11px] text-ink-mute">
+          {t("products.items.bedflow.specimen.footerLeft")}
+        </span>
+        <span className="num text-[11px] text-sage">
+          {t("products.items.bedflow.specimen.footerRight")}
+        </span>
       </div>
     </div>
   );

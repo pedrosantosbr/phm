@@ -91,17 +91,17 @@ export function Footer() {
             <ul className="space-y-3 text-[15px]">
               <li>
                 <Link className="ulink" href="/#produtos">
-                  MediGuard
-                </Link>
-              </li>
-              <li>
-                <Link className="ulink" href="/#produtos">
                   CodiCare
                 </Link>
               </li>
               <li>
                 <Link className="ulink" href="/#produtos">
-                  MediCall
+                  Escala
+                </Link>
+              </li>
+              <li>
+                <Link className="ulink" href="/#produtos">
+                  BedFlow
                 </Link>
               </li>
               <li>

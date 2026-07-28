@@ -29,37 +29,35 @@ const enUS: PtPT = {
     eyebrowMeta: "Filed under: medicine · machine reasoning · workflow",
     titleLine1: "Clinical intelligence,",
     titleLine2: "at the speed of the hospital.",
-    body: "PHMCare AI connects medication, voice and records into a single layer of clinical intelligence — cutting errors, administrative cost and waiting time. Without replacing the judgment of those who care.",
+    body: "PHMCare AI connects clinical coding, rostering and bed management into a single layer of hospital intelligence — cutting administrative cost, billing delays and waiting time. Without replacing the judgment of those who care.",
     ctaPrimary: "Request a demonstration",
     ctaGhost: "Read the pitch",
     complianceGolive: "Go-live in 14 days",
     specimen: {
-      label: "Specimen 01 / MediGuard",
-      header: "MediGuard · Pre-administration",
-      meta: "00:38s · Nurse 4-B",
-      patientLabel: "Patient · MRN 0–8814–73",
-      patientName: "Mrs. R. — 67 years",
-      severity: "Severity",
-      severityHigh: "High",
-      prescription: "Prescription",
-      prescriptionDrug: "Cefepime 2g IV",
-      allergyLabel: "Allergy",
-      allergyDrug: "cephalosporins",
-      allergyYear: "· 2019",
-      interactionLabel: "Interaction",
-      interactionDrug: "warfarin",
-      interactionConsequence: "· INR ↑",
-      recommendation: "Recommendation · evidence: A",
-      recPart1: "Hold dose. Consider",
-      recDrug: "aztreonam",
-      recPart2:
-        "as an alternative in a patient with documented β-lactam hypersensitivity.",
-      source: "Source: IDSA 2024 · Local protocol v3.2 · Clinical history",
-      btnRetain: "Hold dose",
-      btnJustify: "Justify and administer",
+      label: "Specimen 01 / CodiCare",
+      header: "CodiCare · Clinical coding",
+      meta: "discharge · 04.12",
+      recordHeader: "PROGRESS NOTE · 04.12.2026 · 14:22",
+      recordPart1: "Patient reports",
+      recordHighlight1: "chest pain",
+      recordPart2:
+        "with sudden onset, radiating to the left arm, associated with",
+      recordHighlight2: "exertional dyspnea",
+      recordPart3: ". The ECG shows",
+      recordHighlight3: "ST elevation",
+      recordPart4: "in the inferior wall.",
+      code1Label: "Acute myocardial infarction · inferior wall",
+      code2Label: "Chest pain, unspecified",
+      code3Label: "Dyspnea",
+      recommendation: "Audit · complete",
+      recText: "Three grounded codes — each linked to the source excerpt.",
+      recEmphasis: "Nothing invented, everything traceable.",
+      source: "Source: ICD-10 Vol. 2 · Local protocol v3.2 · Payer rules",
+      btnAccept: "Accept codes",
+      btnReview: "Review excerpts",
       latency: "latency 38ms",
       annotation:
-        "Live specimen — every recommendation carries a citation, measured latency and an audit trail. Nothing replaces clinical judgment; everything sharpens it.",
+        "Live specimen — every code carries an excerpt citation, a confidence level and an audit trail. The AI proposes; the coder decides.",
     },
   },
 
@@ -85,27 +83,28 @@ const enUS: PtPT = {
     source:
       "— Source: PHMCare AI internal benchmark 2025, n=1.4M clinical episodes, 22 institutions EU/BR.",
     items: {
-      meds: {
-        title: "Medication errors from missing context.",
-        bodyPart1:
-          "Allergies, interactions and contraindications live in different systems. At the bedside, nursing decides with",
-        bodyEmphasis: "fragments of the full picture",
-        bodyPart2: "— and every miss has real consequences.",
-        tag: "tag · medication · BCMA · hypersensitivity",
-      },
       coding: {
         title: "Manual coding: expensive, slow, unstable.",
         body: "ICD coding and clinical documentation are still done by eye — producing billing delays, avoidable denials and hours lost to audit work that never returns to the patient.",
         tag: "tag · icd · audit · billing · denials",
       },
-      triage: {
-        title: "Triage hostage to broken call centers.",
+      rostering: {
+        title: "Rosters built by hand, shift by shift.",
         bodyPart1:
-          "Clinical priority is decided in noisy rooms, by overworked people, without real-time support. The result is",
-        bodyEmphasis: "inconsistent triage",
+          "Monthly rosters are assembled in spreadsheets, by hand, by people who are already overloaded. The result is",
+        bodyEmphasis: "uneven coverage",
         bodyPart2:
-          "and wait times that punish first the ones who need it most.",
-        tag: "tag · manchester · ed · scheduling · voice",
+          "— nights and weekends piled on the same few, and hours lost rebuilding everything when someone calls in sick.",
+        tag: "tag · rostering · shifts · skills · coverage",
+      },
+      beds: {
+        title: "Blocked beds and patients waiting.",
+        bodyPart1:
+          "Occupancy lives on whiteboards and phone calls. With no real-time status for each bed, patients wait on gurneys while clean beds stay",
+        bodyEmphasis: "invisible to whoever decides",
+        bodyPart2:
+          "— and inter-ward transfers drag on for hours.",
+        tag: "tag · beds · occupancy · transfers · flow",
       },
       burnout: {
         title: "Professionals on the edge of exhaustion.",
@@ -124,7 +123,7 @@ const enUS: PtPT = {
     titleLine2: "Three instruments.",
     titleLine3: "A single record.",
     body1:
-      "PHMCare AI plugs into your existing EHR, listens to the voice, reads the records, watches the medication — and returns recommendations with citation, measured latency and an audit trail.",
+      "PHMCare AI plugs into your existing EHR, reads the records, builds the rosters and tracks every bed — and returns recommendations with citation, measured latency and an audit trail.",
     body2Line1: "Nothing replaces clinical judgment.",
     body2Line2: "Everything sharpens it.",
     pillars: {
@@ -134,7 +133,7 @@ const enUS: PtPT = {
       },
       cited: {
         title: "Cited by default.",
-        body: "Every output — alert, code, decision — carries a citation to source: primary literature, local protocol, clinical history. No black box.",
+        body: "Every output — code, roster, decision — carries a citation to source: official catalog, local protocol, service rules. No black box.",
       },
       calibrated: {
         title: "Calibrated to your reality.",
@@ -150,6 +149,7 @@ const enUS: PtPT = {
     titleLine2: "indexed by evidence.",
     body: "Each instrument is independent, interoperable, and integrates with the EHR via HL7 v2, FHIR R4 and SMART-on-FHIR. Start with one. Add the others as the team grows in confidence.",
     validationLabel: "— Category validated by",
+    flagshipLabel: "Flagship product",
     noteLabel: "— Note",
     notePart1:
       "Each of these categories is validated by more than a billion dollars of venture capital. But",
@@ -157,33 +157,8 @@ const enUS: PtPT = {
     notePart2:
       "— by legislation, by workflow, by reality on the ground. PHMCare AI was built precisely for that difference.",
     items: {
-      mediguard: {
-        codename: "Instrument 01 / MediGuard",
-        name: "MediGuard",
-        tagline: "Every dose, with the right context.",
-        body: "Operates at the moment of administration, scanning the patient's history in real time to alert nursing to allergy, interaction or contraindication risk — before the dose, at bedside verification.",
-        bullet1:
-          "Allergy and interaction checks in <50ms at the patient's bedside",
-        bullet2:
-          "Native integration with BCMA, e-prescribing and hospital pharmacy",
-        bullet3:
-          "Clinically graded alerts — zero-fatigue mode, calibrated per service",
-        pill: "Real-time safety",
-        specimen: {
-          header: "Verification · bedside",
-          patient: "Mrs. R. · 67y · MRN 0–8814–73",
-          severity: "Severity",
-          severityHigh: "High",
-          allergyTitle: "Allergy · cephalosporins",
-          allergyMeta: "Documented in 2019 · anaphylaxis",
-          interactionTitle: "Interaction · warfarin",
-          interactionMeta: "Risk of INR elevation",
-          sources: "14 verified sources",
-          retain: "HOLD DOSE",
-        },
-      },
       codicare: {
-        codename: "Instrument 02 / CodiCare",
+        codename: "Instrument 01 / CodiCare",
         name: "CodiCare",
         tagline: "Every chart, coded and audited — automatically.",
         body: "Automates chart review with clinical AI and OCR, proposing and validating ICD codes with direct citation to the source excerpt. Drastically reduces the time and cost of audit, billing and regulatory reporting.",
@@ -214,32 +189,60 @@ const enUS: PtPT = {
           suggested: "3 codes suggested",
         },
       },
-      medicall: {
-        codename: "Instrument 03 / MediCall",
-        name: "MediCall",
-        tagline: "Every call, triaged at the door.",
-        body: "Intelligent virtual assistant that answers urgent patient calls, collects relevant clinical information and schedules visits automatically — prioritizing cases by clinical severity and hospital availability, with pre-triage built in from the start.",
-        bullet1: "Voice pre-triage aligned with the Manchester protocol",
+      escala: {
+        codename: "Instrument 02 / Escala",
+        name: "Escala",
+        tagline: "Every shift, fairly covered.",
+        body: "Generates deterministic monthly rosters from each service's working-hours rules — respecting skills, specialties and work limits. Balances nights and weekends fairly, and rebuilds the whole roster in seconds when someone calls in sick.",
+        bullet1:
+          "Monthly roster generated from contracted hours and the service's shift catalog",
         bullet2:
-          "Scheduling by clinical priority and real-time availability",
+          "Automatic balancing of nights, weekends and skills across each professional",
         bullet3:
-          "24/7 in Portuguese, English and Spanish — natural voice, conversational latency",
-        pill: "Voice · clinical triage",
+          "Deterministic rebuild in seconds — no spreadsheets, no favoritism",
+        pill: "Rostering · workforce",
         specimen: {
-          header: "MediCall · in progress",
-          transcriptLabel: "Transcript · PT-PT",
-          transcriptPart1: "I've had",
-          transcriptHighlight1: "chest pain",
-          transcriptPart2: "since this morning, I'm 67 and I felt",
-          transcriptHighlight2: "shortness of breath",
-          transcriptPart3: "…",
-          priorityLabel: "Priority · Manchester",
-          priorityValue: "ORANGE · VERY URGENT",
-          scheduledLabel: "Scheduled",
-          scheduledWhen: "Today · ",
-          scheduledTime: "14:20",
-          serviceLabel: "Service",
-          serviceValue: "ED · Cardiology",
+          header: "Roster · April 2026",
+          meta: "Cardiology · 6 professionals",
+          gridLegend: "M morning · A afternoon · N night · — off",
+          rowsLabel: "Team",
+          coverageLabel: "Coverage",
+          coverageValue: "100% · no gaps",
+          balanceLabel: "Nights per professional",
+          balanceValue: "balanced · Δ 1",
+          footerLeft: "30 days generated",
+          footerRight: "0 conflicts",
+        },
+      },
+      bedflow: {
+        codename: "Instrument 03 / BedFlow",
+        name: "BedFlow",
+        tagline: "Every bed, with the right status.",
+        body: "Keeps the hospital's bed inventory and its occupancy lifecycle in real time — available, occupied, cleaning or blocked — with a per-ward occupancy summary. The foundation for allocating beds to inter-ward transfer requests, before the patient waits on a gurney.",
+        bullet1:
+          "Per-ward bed inventory with auditable status transitions",
+        bullet2:
+          "Real-time per-service occupancy summary — available · occupied · cleaning · blocked",
+        bullet3:
+          "Bed allocation for inter-ward transfer requests — active roadmap",
+        pill: "Flow · beds",
+        specimen: {
+          header: "Occupancy · real time",
+          meta: "3 wards · 48 beds",
+          ward1Label: "Cardiology · Ward A",
+          ward1Value: "18 / 20",
+          ward2Label: "Internal Medicine · Ward B",
+          ward2Value: "12 / 16",
+          ward3Label: "Surgery · Ward C",
+          ward3Value: "9 / 12",
+          statusFree: "Available",
+          statusOccupied: "Occupied",
+          statusCleaning: "Cleaning",
+          statusBlocked: "Blocked",
+          requestLabel: "Transfer request",
+          requestValue: "Ward B → Ward A · bed allocated",
+          footerLeft: "48 beds monitored",
+          footerRight: "5 free now",
         },
       },
     },
@@ -258,9 +261,9 @@ const enUS: PtPT = {
         body: "Annual cost wasted on system fragmentation, manual workflows and avoidable errors. PHMCare AI's direct address.",
       },
       valuation: {
-        title: "Valuation in clinical documentation alone.",
+        title: "Valuation in clinical operations alone.",
         bodyPart1:
-          "Companies like Abridge cross five billion in valuation. And that is only",
+          "Incumbents in coding, rostering and bed management cross a billion in valuation. And that is only",
         bodyEmphasis: "one",
         bodyPart2: "of the three axes where PHMCare AI operates.",
       },
@@ -281,18 +284,18 @@ const enUS: PtPT = {
     categories: {
       docs: {
         label: "— Category 01",
-        title: "Clinical documentation",
-        body: "Capture the physician's voice and generate the clinical note.",
+        title: "Clinical coding",
+        body: "Turn the chart into ICD codes and a billable episode.",
       },
       voice: {
         label: "— Category 02",
-        title: "Clinical voice AI",
-        body: "Converse, transcribe, schedule. Outside the EHR or via adapter.",
+        title: "Rostering & workforce",
+        body: "Build shifts and manage the team. Rigid, outside the clinical flow.",
       },
       systems: {
         label: "— Category 03",
-        title: "Clinical systems",
-        body: "EHRs and hospital platforms. Deep, slow to evolve.",
+        title: "Hospital flow & capacity",
+        body: "Manage beds and transfers. Expensive, hard to integrate.",
       },
     },
     msftSuffix: "part of MSFT",
@@ -303,15 +306,15 @@ const enUS: PtPT = {
   model: {
     eyebrow: "The Model",
     titleLine1: "SaaS per hospital,",
-    titleLine2: "usage for the voice.",
+    titleLine2: "usage for operations.",
     items: {
       saas: {
         title: "Clinical SaaS",
         body: "Per hospital, per bed or per healthcare professional. Pricing aligned with internal structure.",
       },
       consumption: {
-        title: "Usage · MediCall",
-        body: "Priced per call-minute and per completed triage. Scales with volume, no artificial ceiling.",
+        title: "Usage · operations",
+        body: "Priced per coded chart, per generated roster and per monitored bed-day. Scales with volume, no artificial ceiling.",
       },
       enterprise: {
         title: "Enterprise contracts",
@@ -327,7 +330,7 @@ const enUS: PtPT = {
     body: "Three products today. One layer tomorrow. An AI-native hospital operating system — coordinating clinical decision, operations and patient flow in real time.",
     todayLabel: "Today",
     todayBody:
-      "Medication safety · automatic coding · voice triage.",
+      "Clinical coding · intelligent rostering · bed management.",
     nextLabel: "Next",
     nextBody:
       "Automated clinical pathways · remote monitoring · intelligent formulary · patient flow management.",
@@ -343,7 +346,7 @@ const enUS: PtPT = {
     titleLine1: "Let's put",
     titleLine2: "PHMCare AI",
     titleLine3: "in your hospital.",
-    body: "A 30-minute demo on your real workflows. No slideware. We connect to a sandbox of your data, show MediGuard, CodiCare and MediCall in action, and leave a written report.",
+    body: "A 30-minute demo on your real workflows. No slideware. We connect to a sandbox of your data, show CodiCare, Escala and BedFlow in action, and leave a written report.",
     emailLabel: "Clinical or executive email",
     emailPlaceholder: "pedro@phmcare.ai",
     hospitalLabel: "Hospital · service",
@@ -367,9 +370,9 @@ const enUS: PtPT = {
   footer: {
     eyebrow: "End of issue",
     cities: "Ponte de Lima · Portugal",
-    body: "The AI operating system for hospitals. <em>MediGuard</em>, <em>CodiCare</em> and <em>MediCall</em> in a single layer of clinical intelligence — written with the same care it asks of the people who care.",
+    body: "The AI operating system for hospitals. <em>CodiCare</em>, <em>Escala</em> and <em>BedFlow</em> in a single layer of clinical intelligence — written with the same care it asks of the people who care.",
     bodyPart1: "The AI operating system for hospitals.",
-    bodyProducts: "MediGuard, CodiCare and MediCall",
+    bodyProducts: "CodiCare, Escala and BedFlow",
     bodyPart2:
       "in a single layer of clinical intelligence — written with the same care it asks of the people who care.",
     newsletter: {
@@ -438,12 +441,12 @@ const enUS: PtPT = {
         "Still life on a walnut table: a leather-bound clinical book ajar, a brass desk lamp pooling warm light, scattered badges, a fountain pen, a white coat. Cream + ink. NEJM-style. 45°, 50mm. 4K.",
       problem:
         "Macro of a stack of paper charts, one of them open with handwritten notes and lab values. Soft window light from the left, long shadows, subtle desaturation toward bone and ink tones. Communicates weight without alarm. Photojournalism, 100mm macro. 4K.",
-      mediguard:
-        "Abstract minimalist composition: a single thin clay-red line crossing a vast bone field, with one dramatic spike — like an EKG of an anomaly. Generous negative space. Editorial fine-art. Suggests a sign of consequence in a field of stillness. 4K.",
       codicare:
         "Top-down photograph: paper chart with highlighted keywords (thin clay underline), beside a brass ruler and small index cards with printed codes. Editorial product photography, sage and clay. 4K.",
-      medicall:
-        "Close-up of an audio waveform rendered in ink on linen — like a preserved recording. Ample negative space, one clay line marking the priority point. Museum-print aesthetic. 4K.",
+      escala:
+        "Top-down photograph: a monthly grid drawn by hand on cream paper, clay-ink shift marks laid out in a steady rhythm, a brass compass resting beside it. Suggests order and balance. Editorial archival. 4K.",
+      bedflow:
+        "Minimalist composition: a hospital ward floor plan in blueprint lines on warm bone, small rectangles filled in sage and clay marking occupied and free beds. Generous negative space. Editorial fine-art. 4K.",
       model:
         "Architectural diagram: hospital workflow drawn as blueprint lines on warm cream paper, brass dividing tools resting beside. Editorial top-down. No clutter. 4K.",
       cta: "Wide editorial photograph: hospital atrium with tall arched windows, a single white-coated figure walking with confidence toward the light. Dawn lighting, cream walls, terracotta accents on the floor. Contemplative, aspirational, no sci-fi. 4K.",
@@ -452,9 +455,9 @@ const enUS: PtPT = {
       hero: "§ Hero",
       trust: "§ Trust",
       problem: "§ Problem",
-      mediguard: "§ MediGuard",
       codicare: "§ CodiCare",
-      medicall: "§ MediCall",
+      escala: "§ Escala",
+      bedflow: "§ BedFlow",
       model: "§ Model / Vision",
       cta: "§ Final CTA",
     },
