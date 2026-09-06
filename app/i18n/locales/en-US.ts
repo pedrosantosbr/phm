@@ -8,13 +8,13 @@ const enUS: PtPT = {
   },
 
   nav: {
-    brandSuffix: "— Health",
-    products: "Products",
-    market: "Market",
-    advantage: "Advantage",
+    brandSuffix: "— Codex",
+    products: "Product",
+    market: "Context",
+    advantage: "Why Codex",
     team: "Team",
     login: "Sign in",
-    cta: "Request demo",
+    cta: "Schedule",
   },
 
   language: {
