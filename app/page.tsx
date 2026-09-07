@@ -10,8 +10,6 @@ import { useTranslation } from "react-i18next";
    and the three products: MediGuard · CodiCare · MediCall.
    ────────────────────────────────────────────────────────────────────────── */
 
-type Validation = { name: string; valuation: string };
-
 export default function Page() {
   const { t } = useTranslation();
 
@@ -44,26 +42,6 @@ export default function Page() {
     t("hospitals.h4"),
     t("hospitals.h5"),
     t("hospitals.h6"),
-  ];
-
-  const MEDIGUARD_VALIDATION: Validation[] = [
-    { name: "Epic Systems", valuation: "$60–80B" },
-    { name: "Oracle Health (Cerner)", valuation: "$250B+" },
-    { name: "MedAware", valuation: "$500–700M" },
-  ];
-  const CODICARE_VALIDATION: Validation[] = [
-    { name: "3M Health Info Systems", valuation: "$400B" },
-    { name: "Optum", valuation: "$400B" },
-    { name: "Abridge", valuation: "$1–2B" },
-    { name: "Ambience Healthcare", valuation: "$1–2B" },
-    { name: "Fathom", valuation: "$400–800M" },
-  ];
-  const MEDICALL_VALIDATION: Validation[] = [
-    { name: "Suki AI", valuation: "$500–700M" },
-    { name: "sully.ai", valuation: "$1B" },
-    { name: "K Health", valuation: "$900M–1.5B" },
-    { name: "Steer Health", valuation: "$300–600M" },
-    { name: "Assort Health", valuation: "$200–500M" },
   ];
 
   return (
@@ -718,8 +696,6 @@ export default function Page() {
                 </li>
               ))}
             </ul>
-
-            <ValidationStrip items={CODICARE_VALIDATION} />
           </div>
         </article>
 
@@ -1351,32 +1327,6 @@ export default function Page() {
 /* ──────────────────────────────────────────────────────────────────────────
    Local components
    ────────────────────────────────────────────────────────────────────────── */
-
-function ValidationStrip({ items }: { items: Validation[] }) {
-  const { t } = useTranslation();
-  return (
-    <div className="mt-10 pt-6 border-t hairline">
-      <div className="label text-ink-mute mb-4">
-        {t("products.validationLabel")}
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {items.map((it) => (
-          <div
-            key={it.name}
-            className="flex flex-col gap-0.5 px-3.5 py-2.5 border hairline-strong rounded-sm bg-bone"
-          >
-            <span className="text-[13px] text-ink leading-tight">
-              {it.name}
-            </span>
-            <span className="num text-[10px] text-ink-mute">
-              {it.valuation}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 function CodeChip({
   code,
