@@ -771,7 +771,7 @@ export default function Page() {
             <div className="bg-bone-light p-8">
               <div className="num text-[12px] text-clay">— 01</div>
               <div className="num display text-[clamp(48px,6vw,72px)] mt-3 leading-none">
-                $4B<span className="text-clay text-[28px] align-top">+</span>
+                €75<span className="text-clay text-[28px] align-top">.000</span>
               </div>
               <h3 className="display text-[20px] mt-4">
                 {t("market.cards.ineff.title")}
@@ -784,7 +784,7 @@ export default function Page() {
             <div className="bg-bone-light p-8">
               <div className="num text-[12px] text-clay">— 02</div>
               <div className="num display text-[clamp(48px,6vw,72px)] mt-3 leading-none">
-                $5B<span className="text-clay text-[28px] align-top">+</span>
+                667<span className="text-clay text-[28px] align-top">h</span>
               </div>
               <h3 className="display text-[20px] mt-4">
                 {t("market.cards.valuation.title")}
@@ -801,7 +801,7 @@ export default function Page() {
             <div className="bg-bone-light p-8">
               <div className="num text-[12px] text-clay">— 03</div>
               <div className="num display text-[clamp(48px,6vw,72px)] mt-3 leading-none">
-                ∞
+                +15<span className="text-clay text-[28px] align-top">%</span>
               </div>
               <h3 className="display text-[20px] mt-4">
                 {t("market.cards.infra.title")}
