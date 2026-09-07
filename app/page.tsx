@@ -852,20 +852,6 @@ export default function Page() {
             <p className="text-[14px] leading-[1.65] text-ink-soft mt-3">
               {t("advantage.categories.docs.body")}
             </p>
-            <ul className="mt-5 space-y-2 text-[13px] text-ink-soft">
-              <li className="flex justify-between border-b hairline pb-2">
-                <span>Abridge</span>
-                <span className="num text-ink-mute">$1–2B</span>
-              </li>
-              <li className="flex justify-between border-b hairline pb-2">
-                <span>Ambience Healthcare</span>
-                <span className="num text-ink-mute">$1–2B</span>
-              </li>
-              <li className="flex justify-between">
-                <span>Suki AI</span>
-                <span className="num text-ink-mute">$500–700M</span>
-              </li>
-            </ul>
           </div>
 
           <div className="bg-bone p-8">
@@ -878,22 +864,6 @@ export default function Page() {
             <p className="text-[14px] leading-[1.65] text-ink-soft mt-3">
               {t("advantage.categories.voice.body")}
             </p>
-            <ul className="mt-5 space-y-2 text-[13px] text-ink-soft">
-              <li className="flex justify-between border-b hairline pb-2">
-                <span>Nuance (Microsoft)</span>
-                <span className="num text-ink-mute">
-                  {t("advantage.msftSuffix")}
-                </span>
-              </li>
-              <li className="flex justify-between border-b hairline pb-2">
-                <span>K Health</span>
-                <span className="num text-ink-mute">$900M–1.5B</span>
-              </li>
-              <li className="flex justify-between">
-                <span>sully.ai</span>
-                <span className="num text-ink-mute">$1B</span>
-              </li>
-            </ul>
           </div>
 
           <div className="bg-bone p-8">
@@ -906,20 +876,6 @@ export default function Page() {
             <p className="text-[14px] leading-[1.65] text-ink-soft mt-3">
               {t("advantage.categories.systems.body")}
             </p>
-            <ul className="mt-5 space-y-2 text-[13px] text-ink-soft">
-              <li className="flex justify-between border-b hairline pb-2">
-                <span>Epic Systems</span>
-                <span className="num text-ink-mute">$60–80B</span>
-              </li>
-              <li className="flex justify-between border-b hairline pb-2">
-                <span>Oracle Health (Cerner)</span>
-                <span className="num text-ink-mute">$250B+</span>
-              </li>
-              <li className="flex justify-between">
-                <span>3M HIS / Solventum</span>
-                <span className="num text-ink-mute">$400B</span>
-              </li>
-            </ul>
           </div>
         </div>
 
