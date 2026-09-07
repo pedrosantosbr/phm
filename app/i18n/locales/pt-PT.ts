@@ -64,13 +64,13 @@ const ptPT = {
   trust: {
     label: "— O que Codex entrega",
     headlinePre: "Por cada 1.000 episódios",
-    headlineEmphasis: "você economiza",
-    headlinePost: "667 horas de trabalho manual.",
+    headlineEmphasis: "você economiza €75.000",
+    headlinePost: "em custo operacional.",
     stats: {
-      productsLabel: "Tempo economizado",
-      goliveLabel: "Horas (750h → 83h)",
-      uptimeLabel: "Completude de códigos",
-      latencyLabel: "Aumento de 15% em códigos",
+      productsLabel: "Custo operacional",
+      goliveLabel: "€150.000 → €75.000",
+      uptimeLabel: "Tempo economizado",
+      latencyLabel: "667 horas (9 semanas)",
     },
   },
 
@@ -253,29 +253,29 @@ const ptPT = {
   market: {
     eyebrow: "O que está em jogo",
     titlePre: "Por cada 1.000 episódios,",
-    titleEmphasis: "667 horas",
+    titleEmphasis: "€75.000",
     titlePost:
-      "desaparecem — quando Codex faz o trabalho manual.",
-    body: "Hospitais portugueses enfrentam codificadores esgotados, tempo perdido em procura manual, e completude incompleta. A IA que respeita decisão médica e proteção de dados não é luxo — é operação.",
+      "economizados em custo operacional — com Codex.",
+    body: "Hospitais portugueses enfrentam codificadores esgotados, tempo perdido em procura manual, e completude incompleta. A economia é real: menos horas, mais códigos, custos reduzidos 50%. A IA que respeita decisão médica e proteção de dados não é luxo — é operação.",
     cards: {
       ineff: {
-        title: "Tempo perdido",
-        body: "750 horas/1.000 episódios em análise manual. Com Codex: 83 horas. Economias: 667 horas = 9 semanas de trabalho, libertas para outros casos.",
+        title: "Custo operacional reduzido",
+        body: "Manual: €150.000 por 1.000 episódios. Com Codex: €75.000. Economia: €75.000 (50% redução). Isto é o que liberta para investir noutras áreas clínicas.",
       },
       valuation: {
-        title: "Completude melhorada",
+        title: "Tempo libertado",
         bodyPart1:
-          "Análise manual deixa 15% de códigos por sugerir. Codex identifica diagnósticos e procedimentos que a procura rápida perde.",
-        bodyEmphasis: "Resultado: mais receita",
-        bodyPart2: ", menos glosas, melhor faturação.",
+          "750 horas/1.000 episódios gastas em procura manual. Com Codex: 83 horas. Economias: 667 horas = 9 semanas de trabalho clínico, libertas para outros casos.",
+        bodyEmphasis: "Seu codificador",
+        bodyPart2: " processa 6x mais episódios no mesmo turno.",
       },
       infra: {
-        title: "Segurança garantida",
-        body: "Zero dados para fora do seu perímetro. Trilho de auditoria completo. Conformidade RGPD em acordo prévio. Tecnologia que hospitais confiam.",
+        title: "Completude + segurança",
+        body: "15% mais códigos sugeridos (diagnósticos e procedimentos que procura manual perde). Menos glosas. Dados no seu perímetro. Auditoria completa. Conformidade RGPD garantida.",
       },
     },
     sources:
-      "— Benchmark PHMCare AI, Julho 2026. Hospital português, 1.000 episódios, validação clínica.",
+      "— Benchmark PHMCare AI, Julho 2026. Hospital português, 1.000 episódios, validação clínica completa.",
   },
 
   advantage: {
