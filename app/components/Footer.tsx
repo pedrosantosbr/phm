@@ -84,6 +84,7 @@ export function Footer() {
           aria-label={t("footer.rodapeAria")}
           className="grid grid-cols-12 gap-8 pt-14"
         >
+          {/* COMMENTED OUT: Product links to be added later
           <div className="col-span-6 md:col-span-3">
             <div className="label text-ink-mute mb-5">
               {t("footer.columns.products")}
@@ -116,7 +117,9 @@ export function Footer() {
               </li>
             </ul>
           </div>
+          */}
 
+          {/* COMMENTED OUT: Resources links to be added later
           <div className="col-span-6 md:col-span-3">
             <div className="label text-ink-mute mb-5">
               {t("footer.columns.resources")}
@@ -149,7 +152,9 @@ export function Footer() {
               </li>
             </ul>
           </div>
+          */}
 
+          {/* COMMENTED OUT: Company links to be added later
           <div className="col-span-6 md:col-span-3">
             <div className="label text-ink-mute mb-5">
               {t("footer.columns.company")}
@@ -185,6 +190,7 @@ export function Footer() {
               </li>
             </ul>
           </div>
+          */}
 
           <div className="col-span-6 md:col-span-3">
             <div className="label text-ink-mute mb-5">
@@ -200,8 +206,8 @@ export function Footer() {
             <div className="mt-5 marginalia">
               {t("footer.columns.hqPhone")}
               <br />
-              <a className="ulink" href="mailto:pedro@anvel.pt">
-                pedro@anvel.pt
+              <a className="ulink" href="mailto:pedro@phmcare.ai">
+                pedro@phmcare.ai
               </a>
             </div>
           </div>
