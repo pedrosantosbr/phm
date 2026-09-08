@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Fraunces, Manrope, JetBrains_Mono } from "next/font/google";
+import { Newsreader, IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "./i18n/provider";
 import { Masthead } from "./components/Masthead";
 import { Nav } from "./components/Nav";
 import { Footer } from "./components/Footer";
 
-const fraunces = Fraunces({
+const newsreader = Newsreader({
   subsets: ["latin"],
   variable: "--font-display",
   weight: "variable",
@@ -14,10 +14,10 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
-const manrope = Manrope({
+const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   variable: "--font-body",
-  weight: "variable",
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -50,7 +50,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt"
-      className={`${fraunces.variable} ${manrope.variable} ${jetbrains.variable}`}
+      className={`${newsreader.variable} ${ibmPlexSans.variable} ${jetbrains.variable}`}
     >
       <body className="bg-bone text-ink font-body antialiased">
         <I18nProvider>
