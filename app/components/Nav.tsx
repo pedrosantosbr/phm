@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "../i18n/LanguageSwitcher";
-import { Arrow } from "./Arrow";
+import { Arrow, LogoMark } from "./Arrow";
 
 export function Nav() {
   const { t } = useTranslation();
@@ -32,6 +32,7 @@ export function Nav() {
       </a>
       <header id="top" className="container-page site-header">
         <Link href="/" className="brand" aria-label={t("nav.brandAria")}>
+          <LogoMark />
           <span className="name">{t("nav.brand")}</span>
           <span className="label product">{t("nav.product")}</span>
         </Link>
