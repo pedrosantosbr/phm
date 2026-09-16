@@ -84,7 +84,6 @@ export function Footer() {
           aria-label={t("footer.rodapeAria")}
           className="grid grid-cols-12 gap-8 pt-14"
         >
-          {/* COMMENTED OUT: Product links to be added later
           <div className="col-span-6 md:col-span-3">
             <div className="label text-ink-mute mb-5">
               {t("footer.columns.products")}
@@ -92,17 +91,17 @@ export function Footer() {
             <ul className="space-y-3 text-[15px]">
               <li>
                 <Link className="ulink" href="/#produtos">
-                  MediGuard
-                </Link>
-              </li>
-              <li>
-                <Link className="ulink" href="/#produtos">
                   CodiCare
                 </Link>
               </li>
               <li>
                 <Link className="ulink" href="/#produtos">
-                  MediCall
+                  Escala
+                </Link>
+              </li>
+              <li>
+                <Link className="ulink" href="/#produtos">
+                  BedFlow
                 </Link>
               </li>
               <li>
@@ -117,9 +116,7 @@ export function Footer() {
               </li>
             </ul>
           </div>
-          */}
 
-          {/* COMMENTED OUT: Resources links to be added later
           <div className="col-span-6 md:col-span-3">
             <div className="label text-ink-mute mb-5">
               {t("footer.columns.resources")}
@@ -152,9 +149,7 @@ export function Footer() {
               </li>
             </ul>
           </div>
-          */}
 
-          {/* COMMENTED OUT: Company links to be added later
           <div className="col-span-6 md:col-span-3">
             <div className="label text-ink-mute mb-5">
               {t("footer.columns.company")}
@@ -184,13 +179,12 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a className="ulink" href="#">
+                <a className="ulink" href="mailto:pedro@phmcare.ai">
                   {t("footer.columns.companyLinks.contact")}
                 </a>
               </li>
             </ul>
           </div>
-          */}
 
           <div className="col-span-6 md:col-span-3">
             <div className="label text-ink-mute mb-5">
@@ -208,6 +202,10 @@ export function Footer() {
               <br />
               <a className="ulink" href="mailto:pedro@phmcare.ai">
                 pedro@phmcare.ai
+              </a>
+              <br />
+              <a className="ulink" href="mailto:mariana@phmcare.ai">
+                mariana@phmcare.ai
               </a>
             </div>
           </div>

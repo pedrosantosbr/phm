@@ -4,13 +4,12 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
   type ReactNode,
 } from "react";
 import { I18nextProvider } from "react-i18next";
-import i18n, { DEFAULT_LOCALE, LOCALES, STORAGE_KEY, type Locale } from "./config";
+import i18n, { DEFAULT_LOCALE, type Locale } from "./config";
 
 type Ctx = {
   locale: Locale;
@@ -20,39 +19,14 @@ type Ctx = {
 
 const LocaleContext = createContext<Ctx | null>(null);
 
-const HTML_LANG: Record<Locale, string> = {
-  "pt-PT": "pt-PT",
-  "en-US": "en-US",
-};
-
-function isLocale(value: unknown): value is Locale {
-  return typeof value === "string" && (LOCALES as readonly string[]).includes(value);
-}
-
+// Locale is session-only by design: the page stores nothing in the browser.
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
-
-  useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (isLocale(stored) && stored !== locale) {
-      setLocaleState(stored);
-      i18n.changeLanguage(stored);
-      document.documentElement.lang = HTML_LANG[stored];
-      return;
-    }
-    document.documentElement.lang = HTML_LANG[locale];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const setLocale = useCallback((next: Locale) => {
     setLocaleState(next);
     i18n.changeLanguage(next);
-    document.documentElement.lang = HTML_LANG[next];
-    try {
-      window.localStorage.setItem(STORAGE_KEY, next);
-    } catch {
-      /* storage disabled — non-fatal */
-    }
+    document.documentElement.lang = next;
   }, []);
 
   const toggle = useCallback(() => {

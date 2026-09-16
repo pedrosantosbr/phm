@@ -6,7 +6,6 @@ import enUS from "./locales/en-US";
 export const LOCALES = ["pt-PT", "en-US"] as const;
 export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = "pt-PT";
-export const STORAGE_KEY = "phmcare.locale";
 
 if (!i18n.isInitialized) {
   i18n.use(initReactI18next).init({

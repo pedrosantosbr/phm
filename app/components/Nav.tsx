@@ -1,57 +1,83 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "../i18n/LanguageSwitcher";
+import { Arrow } from "./Arrow";
 
 export function Nav() {
   const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  const links = [
+    { href: "/#como-funciona", label: t("nav.how") },
+    { href: "/#painel", label: t("nav.dashboard") },
+    { href: "/#seguranca", label: t("nav.security") },
+  ];
+
   return (
-    <header className="container-page py-7 flex items-center justify-between">
-      <Link href="/" className="flex items-baseline gap-2">
-        <span className="display text-3xl">PHMCare AI</span>
-        <span className="label text-ink-mute hidden sm:inline">
-          {t("nav.brandSuffix")}
-        </span>
-      </Link>
-      <nav className="hidden lg:flex items-center gap-9 text-[15px] text-ink-soft">
-        <Link href="/#produtos" className="ulink">
-          {t("nav.products")}
+    <>
+      <a className="skip-link" href="#conteudo">
+        {t("nav.skip")}
+      </a>
+      <header id="top" className="container-page site-header">
+        <Link href="/" className="brand" aria-label={t("nav.brandAria")}>
+          <span className="name">{t("nav.brand")}</span>
+          <span className="label product">{t("nav.product")}</span>
         </Link>
-        <Link href="/#mercado" className="ulink">
-          {t("nav.market")}
-        </Link>
-        <Link href="/#vantagem" className="ulink">
-          {t("nav.advantage")}
-        </Link>
-        <Link href="/team" className="ulink">
-          {t("nav.team")}
-        </Link>
-      </nav>
-      <div className="flex items-center gap-4">
-        <LanguageSwitcher />
-        <a href="#" className="hidden text-[15px] text-ink-soft ulink">
-          {t("nav.login")}
-        </a>
-        <Link href="/#cta" className="btn-primary text-[14px] py-3 px-5">
-          {t("nav.cta")}
-          <svg
-            className="arrow"
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
+
+        <nav
+          id="nav-principal"
+          aria-label={t("nav.aria")}
+          className={`nav-links${open ? " open" : ""}`}
+        >
+          {links.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="ulink"
+              onClick={() => setOpen(false)}
+            >
+              {l.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="actions">
+          <LanguageSwitcher className="hidden sm:inline-flex" />
+          <button
+            type="button"
+            className="nav-toggle"
+            aria-expanded={open}
+            aria-controls="nav-principal"
+            onClick={() => setOpen((v) => !v)}
           >
-            <path
-              d="M1 7h12M8 2l5 5-5 5"
-              stroke="currentColor"
-              strokeWidth="1.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </Link>
-      </div>
-    </header>
+            <span>{t("nav.menu")}</span>
+            <svg viewBox="0 0 18 18" fill="none" aria-hidden="true">
+              <path
+                d="M2 5h14M2 9h14M2 13h14"
+                stroke="currentColor"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+              />
+            </svg>
+          </button>
+          <Link href="/#contacto" className="btn-primary sm">
+            {t("nav.cta")}
+            <Arrow />
+          </Link>
+        </div>
+      </header>
+    </>
   );
 }
