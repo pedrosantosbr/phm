@@ -1,40 +1,17 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-PT">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Vellum — Quiet intelligence at the bedside.</title>
-<meta name="description" content="Vellum is the clinical intelligence platform turning fragmented EHR data into proactive, evidence-graded recommendations — at the bedside, in real time." />
+<title>PHM Care — Codex · Do texto clínico ao GDH</title>
+<meta name="description" content="O Codex lê a documentação do episódio, propõe os códigos ICD-10-CM/PCS com a passagem clínica que os sustenta, agrupa em GDH e mostra o valor do episódio. O médico codificador valida e decide. Codificação clínica assistida por IA, desenhada para o SNS." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Manrope:wght@300..800&family=JetBrains+Mono:wght@400..600&display=swap" rel="stylesheet" />
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          bone: { DEFAULT: '#F4EFE6', light: '#FAF7F1', dark: '#E8E0CE' },
-          ink:  { DEFAULT: '#14181F', soft: '#2A2F38', mute: '#5A6068' },
-          clay: { DEFAULT: '#C2553D', deep: '#9E3E29', light: '#E8B5A6' },
-          sage: '#6B7E6E',
-          mist: '#E5DCC9',
-          line: 'rgba(20,24,31,0.12)',
-        },
-        fontFamily: {
-          display: ['Fraunces', 'Georgia', 'serif'],
-          body:    ['Manrope', 'system-ui', 'sans-serif'],
-          mono:    ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
-        },
-        letterSpacing: { tightest: '-0.04em', tighter2: '-0.025em' },
-      }
-    }
-  }
-</script>
-
 <style>
+  /* ───────────────────────────── Tokens ───────────────────────────── */
   :root {
     --bone:#F4EFE6; --bone-light:#FAF7F1; --bone-dark:#E8E0CE;
     --ink:#14181F; --ink-soft:#2A2F38; --ink-mute:#5A6068;
@@ -42,15 +19,37 @@
     --sage:#6B7E6E; --mist:#E5DCC9;
     --line: rgba(20,24,31,0.12);
     --line-strong: rgba(20,24,31,0.22);
+    --line-inv: rgba(244,239,230,0.18);
+    --line-inv-strong: rgba(244,239,230,0.35);
+    --fg-inv: #FAF7F1;
+    --fg-inv-soft: rgba(244,239,230,0.78);
+    --fg-inv-mute: rgba(244,239,230,0.62);
+    --display: 'Fraunces', Georgia, serif;
+    --body: 'Manrope', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
   }
-  html { scroll-behavior: smooth; }
+
+  /* ───────────────────────────── Reset ───────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   body {
+    margin: 0;
     background: var(--bone);
     color: var(--ink);
-    font-family: 'Manrope', system-ui, sans-serif;
+    font-family: var(--body);
     font-feature-settings: "ss01","ss02","cv11";
     -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    overflow-x: hidden;
   }
+  h1, h2, h3, h4, p, ul, ol, figure { margin: 0; }
+  ul, ol { padding: 0; list-style: none; }
+  a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  svg { display: block; }
+  ::selection { background: var(--clay-light); color: var(--ink); }
+
   /* Paper grain — subtle SVG noise overlay */
   body::after {
     content: '';
@@ -60,1347 +59,926 @@
     background-image: url("data:image/svg+xml;utf8,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.08 0 0 0 0 0.09 0 0 0 0 0.12 0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  .display { font-family:'Fraunces', Georgia, serif; font-feature-settings:"ss01","ss02"; font-variation-settings:"opsz" 144, "SOFT" 30; letter-spacing: -0.035em; line-height: 0.96; }
-  .display-italic { font-style: italic; font-variation-settings:"opsz" 144, "SOFT" 60; letter-spacing: -0.045em; }
-  .label { font-family:'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; }
-  .num { font-family:'JetBrains Mono', ui-monospace, monospace; font-feature-settings:"tnum"; }
-  .rule { height:1px; background: var(--line); }
-  .rule-strong { height:1px; background: var(--line-strong); }
-  .hairline { border-color: var(--line); }
-  .hairline-strong { border-color: var(--line-strong); }
+  /* Focus — visible everywhere, for keyboard navigation */
+  :focus-visible { outline: 2px solid var(--clay-deep); outline-offset: 3px; border-radius: 2px; }
+  .on-ink :focus-visible { outline-color: var(--clay-light); }
 
-  /* Containers */
-  .container-page { max-width: 1320px; margin-inline: auto; padding-inline: clamp(20px, 4vw, 56px); }
+  .skip-link {
+    position: absolute; left: 16px; top: -100px; z-index: 200;
+    background: var(--ink); color: var(--fg-inv);
+    padding: 10px 14px; border-radius: 999px; font-size: 14px;
+  }
+  .skip-link:focus { top: 12px; }
 
-  /* ECG ornament */
-  .ecg-stroke { stroke: var(--ink); stroke-width: 1; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-  .ecg-accent { stroke: var(--clay); }
+  /* ───────────────────────────── Type ───────────────────────────── */
+  .display {
+    font-family: var(--display); font-weight: 500;
+    font-feature-settings: "ss01","ss02";
+    font-variation-settings: "opsz" 144, "SOFT" 30;
+    letter-spacing: -0.035em; line-height: 0.98;
+  }
+  .display em, .display-italic {
+    font-style: italic; font-weight: 500;
+    font-variation-settings: "opsz" 144, "SOFT" 60;
+    letter-spacing: -0.045em;
+  }
+  .label {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    line-height: 1.5;
+  }
+  .mono { font-family: var(--mono); font-feature-settings: "tnum"; }
+  .marginalia {
+    color: var(--ink-mute); font-family: var(--mono);
+    font-size: 11px; letter-spacing: 0.08em; line-height: 1.6;
+  }
+  .lede { font-size: clamp(17px, 1.6vw, 20px); line-height: 1.55; color: var(--ink-soft); max-width: 58ch; }
+  .body-copy { font-size: 16px; line-height: 1.65; color: var(--ink-soft); }
+  .mute { color: var(--ink-mute); }
 
-  /* Buttons */
+  /* ───────────────────────────── Layout ───────────────────────────── */
+  .container { max-width: 1320px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 56px); }
+  .grid-12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(16px, 2.5vw, 32px); row-gap: 40px; }
+  .grid-12 > * { grid-column: span 12; }
+  @media (min-width: 900px) {
+    .lg-5 { grid-column: span 5; } .lg-6 { grid-column: span 6; } .lg-7 { grid-column: span 7; }
+    .lg-4 { grid-column: span 4; } .lg-8 { grid-column: span 8; } .lg-3 { grid-column: span 3; }
+    .lg-8.lg-start-2 { grid-column: 2 / span 8; }
+    .lg-5.lg-start-8 { grid-column: 8 / span 5; }
+    .lg-sticky { position: sticky; top: 96px; align-self: start; }
+  }
+  .section { padding-block: clamp(72px, 9vw, 144px); }
+  .rule { height: 1px; background: var(--line); }
+  .rule-strong { height: 1px; background: var(--line-strong); }
+  .accent-rule { height: 1px; background: linear-gradient(to right, var(--clay) 0, var(--clay) 56px, var(--line) 56px, var(--line) 100%); }
+
+  .eyebrow { display: flex; align-items: center; gap: 14px; color: var(--ink-mute); }
+  .eyebrow .bar { flex: 1; height: 1px; background: var(--line); min-width: 24px; }
+  .on-ink .eyebrow { color: var(--fg-inv-mute); }
+  .on-ink .eyebrow .bar { background: var(--line-inv); }
+
+  /* ───────────────────────────── Flow mark (recurring motif) ───────────────────────────── */
+  /* Four states joined by a line; the third — human validation — is a filled clay circle. */
+  .flow-mark { width: 64px; height: 12px; flex: none; }
+  .flow-mark .st { fill: none; stroke: currentColor; stroke-width: 1.2; }
+  .flow-mark .ln { stroke: currentColor; stroke-width: 1; opacity: .5; }
+  .flow-mark .hu { fill: var(--clay); stroke: none; }
+
+  /* ───────────────────────────── Buttons ───────────────────────────── */
   .btn-primary {
     background: var(--ink); color: var(--bone-light);
-    padding: 14px 22px; border-radius: 999px; display:inline-flex; align-items:center; gap:10px;
-    font-weight: 500; font-size: 15px; letter-spacing: -0.01em;
+    padding: 14px 22px; border-radius: 999px; display: inline-flex; align-items: center; gap: 10px;
+    font-weight: 500; font-size: 15px; letter-spacing: -0.01em; line-height: 1; white-space: nowrap;
     transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
     box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 8px 24px -12px rgba(20,24,31,0.45);
   }
   .btn-primary:hover { background: var(--clay-deep); transform: translateY(-1px); }
   .btn-primary .arrow { transition: transform .3s ease; }
   .btn-primary:hover .arrow { transform: translateX(3px); }
+  .btn-primary.sm { padding: 11px 18px; font-size: 14px; }
+  .btn-primary.inv { background: var(--clay-light); color: var(--ink); }
+  .btn-primary.inv:hover { background: var(--bone-light); }
 
   .btn-ghost {
-    color: var(--ink); padding: 14px 4px;
-    display:inline-flex; align-items:center; gap:10px;
+    color: var(--ink); padding: 14px 4px 12px;
+    display: inline-flex; align-items: center; gap: 10px;
     font-weight: 500; font-size: 15px; border-bottom: 1px solid var(--line-strong);
     transition: border-color .25s ease, color .25s ease;
   }
   .btn-ghost:hover { color: var(--clay-deep); border-color: var(--clay); }
 
-  /* Section number badge */
-  .sec-num {
-    font-family:'Fraunces', serif; font-style: italic;
-    font-variation-settings:"opsz" 144, "SOFT" 100;
-    color: var(--clay); letter-spacing: -0.04em;
+  .ulink {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px; background-repeat: no-repeat; background-position: 0 100%;
+    padding-bottom: 2px; transition: color .25s;
   }
-
-  /* Eyebrow row with rule */
-  .eyebrow {
-    display: flex; align-items: center; gap: 14px;
-    color: var(--ink-mute);
-  }
-  .eyebrow .bar { flex: 1; height:1px; background: var(--line); }
-
-  /* Marginalia */
-  .marginalia {
-    color: var(--ink-mute);
-    font-family:'JetBrains Mono', monospace;
-    font-size: 11px; letter-spacing: 0.08em; line-height: 1.6;
-  }
-
-  /* Pill */
-  .pill {
-    display:inline-flex; align-items:center; gap:8px;
-    padding: 6px 12px; border-radius: 999px;
-    border: 1px solid var(--line-strong);
-    background: rgba(255,255,255,0.4);
-    font-family:'JetBrains Mono', monospace;
-    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--ink-soft);
-  }
-  .pill .dot { width:6px; height:6px; border-radius:50%; background: var(--clay); display:inline-block; }
-  .pill .dot.sage { background: var(--sage); }
-
-  /* Card hover */
-  .specimen { transition: transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .4s ease, border-color .4s ease; }
-  .specimen:hover { transform: translateY(-3px); border-color: var(--ink-soft); box-shadow: 0 24px 60px -30px rgba(20,24,31,0.35); }
-
-  /* Animations */
-  @keyframes fade-up { from { opacity:0; transform: translateY(18px); } to { opacity:1; transform:none; } }
-  @keyframes draw    { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
-  @keyframes pulse-soft { 0%,100% { opacity: 0.55; } 50% { opacity: 1; } }
-  @keyframes blink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
-
-  .reveal { opacity:0; transform: translateY(16px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
-  .reveal.in { opacity:1; transform:none; }
-
-  .stagger > * { animation: fade-up .9s cubic-bezier(.2,.7,.2,1) both; }
-  .stagger > *:nth-child(1) { animation-delay: .05s; }
-  .stagger > *:nth-child(2) { animation-delay: .15s; }
-  .stagger > *:nth-child(3) { animation-delay: .25s; }
-  .stagger > *:nth-child(4) { animation-delay: .35s; }
-  .stagger > *:nth-child(5) { animation-delay: .45s; }
-  .stagger > *:nth-child(6) { animation-delay: .55s; }
-
-  .draw-path { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: draw 2.6s cubic-bezier(.5,.05,.2,1) .3s forwards; }
-  .pulse-dot { animation: pulse-soft 2.4s ease-in-out infinite; }
-  .blink-cursor { animation: blink 1.05s steps(1) infinite; }
-
-  /* Logo wall — set in serif italic for editorial feel */
-  .logo-mark {
-    font-family:'Fraunces', serif; font-style: italic;
-    font-variation-settings:"opsz" 144, "SOFT" 80;
-    font-weight: 400; letter-spacing: -0.02em;
-    color: var(--ink-soft);
-  }
-
-  /* Underline link */
-  .ulink { background-image: linear-gradient(currentColor,currentColor); background-size: 100% 1px; background-repeat: no-repeat; background-position: 0 100%; padding-bottom: 2px; transition: color .25s, background-size .25s; }
   .ulink:hover { color: var(--clay-deep); }
 
-  /* Decorative grid lines (very subtle) */
-  .grid-bg {
-    background-image:
-      linear-gradient(to right, rgba(20,24,31,0.05) 1px, transparent 1px);
-    background-size: 8.333% 100%;
+  /* ───────────────────────────── Header / nav ───────────────────────────── */
+  .site-header { padding-block: 22px; display: flex; align-items: center; justify-content: space-between; gap: 16px; position: relative; }
+  .brand { display: flex; align-items: baseline; gap: 10px; }
+  .brand .name { font-family: var(--display); font-size: clamp(22px, 6vw, 28px); white-space: nowrap; letter-spacing: -0.03em; font-variation-settings: "opsz" 144, "SOFT" 30; }
+  .brand .product { color: var(--ink-mute); }
+  @media (max-width: 420px) { .brand .product { display: none; } .btn-primary.sm { padding: 10px 14px; font-size: 13px; } }
+  .nav-links { display: none; align-items: center; gap: 36px; font-size: 15px; color: var(--ink-soft); }
+  .nav-toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink-soft); padding: 8px 4px; }
+  .nav-toggle svg { width: 18px; height: 18px; }
+  .site-header .actions { display: flex; align-items: center; gap: 18px; }
+  @media (min-width: 900px) {
+    .nav-links { display: flex; }
+    .nav-toggle { display: none; }
+  }
+  @media (max-width: 899px) {
+    .nav-links.open {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
+      position: absolute; left: 0; right: 0; top: 100%;
+      background: var(--bone-light); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line-strong);
+      padding: 12px clamp(16px, 4vw, 56px) 18px; z-index: 50;
+    }
+    .nav-links.open a { padding: 10px 0; font-size: 17px; }
   }
 
-  /* Accent rule */
-  .accent-rule { background: linear-gradient(to right, var(--clay) 0, var(--clay) 56px, var(--line) 56px, var(--line) 100%); height:1px; }
+  /* ───────────────────────────── Hero ───────────────────────────── */
+  .hero { padding-top: 40px; padding-bottom: clamp(72px, 9vw, 128px); }
+  .hero h1 { font-size: clamp(38px, 7vw, 100px); margin-top: 28px; }
+  .hero .lede { margin-top: 28px; }
+  .hero .ctas { margin-top: 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 20px 28px; }
+  .hero .microcopy { margin-top: 36px; max-width: 60ch; }
 
-  /* Form input */
+  /* Hero flow specimen — four states, abstract content, no data */
+  .flow-card {
+    border: 1px solid var(--line-strong); border-radius: 3px;
+    background: rgba(250,247,241,0.85);
+    padding: clamp(18px, 2.4vw, 28px);
+    box-shadow: 0 30px 80px -40px rgba(20,24,31,0.35);
+    position: relative;
+  }
+  .flow-card .head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+  .flow-card .head .label { color: var(--ink-mute); }
+  .flow-card .head .tag { color: var(--clay-deep); }
+  .states { position: relative; margin-top: 18px; display: grid; gap: 0; }
+  .state { position: relative; padding: 16px 0 16px 34px; }
+  .state + .state { border-top: 1px solid var(--line); }
+  .state::before {
+    content: ''; position: absolute; left: 6px; top: 22px;
+    width: 9px; height: 9px; border: 1.2px solid var(--ink); background: var(--bone-light); border-radius: 1px;
+  }
+  .state::after {
+    content: ''; position: absolute; left: 10px; top: 33px; bottom: -18px; width: 1px; background: var(--line-strong);
+  }
+  .state:last-child::after { display: none; }
+  .state .st-label { color: var(--ink-mute); }
+  .state .st-title { font-family: var(--display); font-size: 19px; letter-spacing: -0.02em; margin-top: 4px; font-variation-settings: "opsz" 48, "SOFT" 30; }
+  .bars { margin-top: 10px; display: grid; gap: 7px; }
+  .bar { height: 7px; border-radius: 2px; background: var(--bone-dark); }
+  .bar.clay { background: var(--clay-light); }
+  .bar.ink { background: rgba(20,24,31,0.28); }
+  .chips { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 9px; border: 1px solid var(--line-strong); border-radius: 999px;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em; color: var(--ink-soft);
+  }
+  .chip .sw { width: 22px; height: 6px; border-radius: 2px; background: var(--bone-dark); }
+  .quote-line { margin-top: 10px; padding-left: 10px; border-left: 2px solid var(--clay); display: grid; gap: 6px; }
+  .quote-line .bar { height: 6px; }
+  .human {
+    position: relative; margin: 0; padding: 12px 12px 12px 34px;
+    background: var(--bone); border: 1px dashed var(--clay); border-radius: 3px;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 14px;
+  }
+  .human::before { content: ''; position: absolute; left: 5px; top: 50%; transform: translateY(-50%); width: 11px; height: 11px; border-radius: 50%; background: var(--clay); }
+  .human .label { color: var(--clay-deep); }
+  .human .who { font-size: 13px; color: var(--ink-soft); }
+  .value-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+  .value-row .euro { font-family: var(--display); font-style: italic; font-size: 22px; color: var(--clay-deep); line-height: 1; }
+  .flow-note { margin-top: 18px; display: flex; gap: 12px; align-items: flex-start; }
+  .flow-note svg { flex: none; margin-top: 4px; }
+
+  /* ───────────────────────────── Como funciona (dark) ───────────────────────────── */
+  .on-ink { background: var(--ink); color: var(--fg-inv); }
+  .on-ink .lede, .on-ink .body-copy { color: var(--fg-inv-soft); }
+  .on-ink .mute { color: var(--fg-inv-mute); }
+  .on-ink .rule { background: var(--line-inv); }
+  .on-ink .display em { color: var(--clay-light); }
+
+  .steps { margin-top: clamp(40px, 5vw, 72px); display: grid; gap: 1px; background: var(--line-inv); border: 1px solid var(--line-inv); }
+  @media (min-width: 900px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .step { background: var(--ink); padding: clamp(24px, 3vw, 40px); display: flex; flex-direction: column; gap: 14px; }
+  .step .num {
+    font-family: var(--display); font-style: italic; font-size: clamp(44px, 5vw, 64px);
+    font-variation-settings: "opsz" 144, "SOFT" 100; letter-spacing: -0.04em; line-height: 1; color: var(--clay-light);
+  }
+  .step h3 { font-family: var(--display); font-size: clamp(24px, 2.6vw, 32px); letter-spacing: -0.03em; line-height: 1.05; font-weight: 500; margin-top: 4px; }
+  .step p { font-size: 16px; line-height: 1.65; color: var(--fg-inv-soft); }
+  .step .removes { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line-inv); display: grid; gap: 6px; }
+  .step .removes .label { color: var(--clay-light); }
+  .step .removes p { font-size: 15px; }
+  .step .tag-dev {
+    align-self: flex-start; display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--line-inv-strong); border-radius: 999px; padding: 5px 10px;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-inv-mute);
+  }
+  .step .tag-dev .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--clay-light); }
+
+  /* Step 03 — the human step, inverted */
+  .step.human-step { background: var(--bone); color: var(--ink); border-left: 4px solid var(--clay); }
+  .step.human-step .num { color: var(--clay-deep); }
+  .step.human-step p { color: var(--ink-soft); }
+  .step.human-step .removes { border-top-color: var(--line-strong); }
+  .step.human-step .removes .label { color: var(--clay-deep); }
+  .step.human-step .badge {
+    align-self: flex-start; display: inline-flex; align-items: center; gap: 8px;
+    background: var(--clay); color: var(--bone-light); border-radius: 999px; padding: 6px 12px;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .step.human-step .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--bone-light); }
+  .steps-close { margin-top: clamp(40px, 5vw, 64px); }
+  .steps-close p { font-family: var(--display); font-size: clamp(22px, 2.6vw, 32px); letter-spacing: -0.025em; line-height: 1.25; max-width: 34ch; font-weight: 400; }
+
+  /* ───────────────────────────── Porque agora ───────────────────────────── */
+  .reasons { border-top: 1px solid var(--line); }
+  .reason { padding-block: 34px; border-bottom: 1px solid var(--line); display: grid; gap: 12px; }
+  .reason h3 { font-family: var(--display); font-size: clamp(24px, 2.6vw, 32px); letter-spacing: -0.03em; line-height: 1.08; font-weight: 500; }
+  .reason p { max-width: 62ch; }
+  .reason .figure {
+    font-family: var(--mono); font-feature-settings: "tnum";
+    font-size: clamp(30px, 3.4vw, 40px); letter-spacing: -0.02em; line-height: 1; color: var(--clay-deep);
+  }
+  .reason .figure small { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mute); margin-left: 8px; }
+  .source { display: inline-flex; align-items: flex-start; gap: 8px; color: var(--ink-mute); font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; line-height: 1.5; }
+  .source::before { content: '—'; flex: none; }
+  .reasons-close { margin-top: 40px; padding: clamp(24px, 3vw, 36px); border: 1px solid var(--line-strong); background: var(--bone-light); border-radius: 3px; display: grid; gap: 14px; }
+  .reasons-close .figure { font-family: var(--mono); font-size: clamp(40px, 6vw, 72px); letter-spacing: -0.03em; line-height: 1; color: var(--clay-deep); }
+  .reasons-close p { font-size: 17px; line-height: 1.6; color: var(--ink-soft); max-width: 62ch; }
+
+  /* ───────────────────────────── Painel / Segurança cards ───────────────────────────── */
+  .cards { margin-top: clamp(36px, 4vw, 56px); display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  @media (min-width: 640px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .card { background: var(--bone); padding: clamp(22px, 2.6vw, 32px); display: grid; gap: 12px; align-content: start; }
+  .card h3 { font-family: var(--display); font-size: clamp(22px, 2.2vw, 26px); letter-spacing: -0.025em; line-height: 1.12; font-weight: 500; }
+  .card .k { color: var(--ink-mute); display: flex; align-items: center; gap: 10px; }
+  .card .k .flow-mark { width: 40px; height: 8px; }
+  .section-close { margin-top: 36px; font-family: var(--display); font-size: clamp(20px, 2.2vw, 26px); letter-spacing: -0.02em; line-height: 1.3; max-width: 40ch; font-weight: 400; color: var(--ink); }
+
+  /* ───────────────────────────── Equipa ───────────────────────────── */
+  .people { margin-top: clamp(36px, 4vw, 56px); display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  @media (min-width: 640px) { .people { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .person { background: var(--bone-light); padding: clamp(22px, 2.6vw, 32px); display: grid; gap: 8px; align-content: start; }
+  .person .name { font-family: var(--display); font-size: clamp(26px, 2.6vw, 32px); letter-spacing: -0.03em; line-height: 1.05; font-weight: 500; }
+  .person .role { color: var(--clay-deep); }
+  .support { margin-top: 32px; border-top: 1px solid var(--line-strong); }
+  .support li { display: grid; grid-template-columns: 24px 1fr; gap: 14px; padding-block: 18px; border-bottom: 1px solid var(--line); font-size: 16px; line-height: 1.6; color: var(--ink-soft); }
+  .support li::before { content: ''; width: 9px; height: 9px; margin-top: 8px; border: 1.2px solid var(--ink); border-radius: 1px; }
+
+  /* ───────────────────────────── CTA ───────────────────────────── */
+  .cta { background: var(--bone-dark); border-top: 1px solid var(--line-strong); }
+  .cta h2 { font-size: clamp(34px, 5vw, 64px); }
+  .cta .lede { margin-top: 24px; font-size: 17px; }
+  .form { display: grid; gap: 22px; }
+  .field { display: grid; gap: 8px; }
+  .field label { color: var(--ink-mute); }
   .vinput {
-    background: transparent; border: 0; border-bottom: 1px solid var(--line-strong);
-    color: var(--ink); padding: 14px 0; font-size: 16px; width: 100%;
-    transition: border-color .25s ease;
+    background: transparent; border: 0; border-bottom: 1px solid var(--line-strong); border-radius: 0;
+    color: var(--ink); padding: 12px 0; font-size: 16px; width: 100%; font-family: var(--body);
+    transition: border-color .25s ease; appearance: none; -webkit-appearance: none;
   }
-  .vinput:focus { outline: none; border-color: var(--ink); }
-  .vinput::placeholder { color: var(--ink-mute); }
-
-  /* Drop cap */
-  .dropcap::first-letter {
-    font-family:'Fraunces', serif; font-variation-settings:"opsz" 144, "SOFT" 30;
-    float: left; font-size: 4.6em; line-height: 0.85; padding: .08em .12em 0 0;
-    color: var(--clay); font-style: italic;
+  .vinput:focus { outline: none; border-color: var(--ink); box-shadow: 0 1px 0 var(--ink); }
+  .vinput::placeholder { color: var(--ink-mute); opacity: 1; }
+  .select-wrap { position: relative; }
+  .select-wrap::after {
+    content: ''; position: absolute; right: 4px; top: 50%; width: 8px; height: 8px;
+    border-right: 1.2px solid var(--ink); border-bottom: 1.2px solid var(--ink);
+    transform: translateY(-70%) rotate(45deg); pointer-events: none;
   }
+  select.vinput { padding-right: 28px; }
+  .form-status { min-height: 1.5em; font-size: 14px; color: var(--ink-soft); }
 
-  /* Misc */
-  .selection ::selection { background: var(--clay-light); color: var(--ink); }
-  ::selection { background: var(--clay-light); color: var(--ink); }
-  a { -webkit-tap-highlight-color: transparent; }
+  /* ───────────────────────────── Footer ───────────────────────────── */
+  .site-footer { padding-block: 64px 40px; }
+  .site-footer .cols { display: grid; gap: 32px; }
+  @media (min-width: 640px) { .site-footer .cols { grid-template-columns: 1.4fr 1fr 1fr; } }
+  .site-footer .brand .name { font-size: 34px; }
+  .site-footer address { font-style: normal; font-size: 15px; line-height: 1.65; color: var(--ink-soft); }
+  .site-footer ul { display: grid; gap: 10px; font-size: 15px; }
+  .site-footer .bottom { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--line-strong); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; color: var(--ink-mute); }
+
+  /* ───────────────────────────── Motion ───────────────────────────── */
+  @keyframes fade-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  .stagger > * { animation: fade-up .9s cubic-bezier(.2,.7,.2,1) both; }
+  .stagger > *:nth-child(2) { animation-delay: .1s; }
+  .stagger > *:nth-child(3) { animation-delay: .2s; }
+  .stagger > *:nth-child(4) { animation-delay: .3s; }
+  .stagger > *:nth-child(5) { animation-delay: .4s; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .stagger > * { animation: none; }
+    .btn-primary, .btn-primary .arrow { transition: none; }
+  }
 </style>
 </head>
 
-<body class="selection">
+<body>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     UTILITY BAR — journal masthead style metadata
-     ═══════════════════════════════════════════════════════════════════════════ -->
-<div class="hairline border-b">
-  <div class="container-page flex items-center justify-between py-2 label text-ink-mute">
-    <span>Vol. IV · Issue 12 · April 2026</span>
-    <span class="hidden md:inline">For health systems, by clinicians.</span>
-    <span class="flex items-center gap-2">
-      <span class="num">99.97%</span> uptime
-      <span class="inline-block w-px h-3 bg-line mx-1"></span>
-      <span class="pulse-dot inline-block w-1.5 h-1.5 rounded-full bg-clay"></span>
-      All systems operational
-    </span>
-  </div>
-</div>
+<a class="skip-link" href="#conteudo">Saltar para o conteúdo</a>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
+<!-- ══════════════════════════════════════════════════════════════════════════
      NAV
-     ═══════════════════════════════════════════════════════════════════════════ -->
-<header class="container-page py-7 flex items-center justify-between">
-  <a href="#" class="flex items-baseline gap-2">
-    <span class="display text-3xl">Vellum</span>
-    <span class="label text-ink-mute hidden sm:inline">— Health</span>
+     ══════════════════════════════════════════════════════════════════════════ -->
+<header class="container site-header">
+  <a href="#inicio" class="brand" aria-label="PHM Care — início">
+    <span class="name">PHM Care</span>
+    <span class="label product">Codex</span>
   </a>
-  <nav class="hidden lg:flex items-center gap-9 text-[15px] text-ink-soft">
-    <a href="#products" class="ulink">Products</a>
-    <a href="#how" class="ulink">Method</a>
-    <a href="#evidence" class="ulink">Evidence</a>
-    <a href="#colophon" class="ulink">Colophon</a>
+
+  <nav class="nav-links" id="nav-principal" aria-label="Navegação principal">
+    <a href="#como-funciona" class="ulink">Como funciona</a>
+    <a href="#painel" class="ulink">Painel</a>
+    <a href="#seguranca" class="ulink">Segurança</a>
+    <a href="#equipa" class="ulink">Equipa</a>
   </nav>
-  <div class="flex items-center gap-4">
-    <a href="#" class="hidden sm:inline-block text-[15px] text-ink-soft ulink">Sign in</a>
-    <a href="#cta" class="btn-primary text-[14px] py-3 px-5">Book a demo
-      <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+  <div class="actions">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-principal">
+      <span>Menu</span>
+      <svg viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+    </button>
+    <a href="#contacto" class="btn-primary sm">Falar connosco
+      <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
   </div>
 </header>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     I — HERO
-     ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="container-page pt-10 pb-24 lg:pb-32 relative">
-  <!-- accent rule -->
-  <div class="accent-rule mb-10"></div>
+<main id="conteudo" tabindex="-1">
 
-  <div class="grid grid-cols-12 gap-x-8 gap-y-12">
-    <!-- Left: copy -->
-    <div class="col-span-12 lg:col-span-7 stagger">
+<!-- ══════════════════════════════════════════════════════════════════════════
+     HERÓI — o produto
+     ══════════════════════════════════════════════════════════════════════════ -->
+<section id="inicio" class="container hero" aria-labelledby="h-hero">
+  <div class="accent-rule"></div>
+
+  <div class="grid-12" style="margin-top:40px">
+    <div class="lg-7 stagger">
       <div class="eyebrow label">
-        <span class="sec-num text-[28px] leading-none">I</span>
-        <span>The Clinical Intelligence Platform</span>
+        <svg class="flow-mark" viewBox="0 0 64 12" aria-hidden="true">
+          <line class="ln" x1="6" y1="6" x2="58" y2="6"/>
+          <rect class="st" x="1.5" y="1.5" width="9" height="9" fill="var(--bone)"/>
+          <rect class="st" x="19" y="1.5" width="9" height="9" fill="var(--bone)"/>
+          <circle class="hu" cx="41" cy="6" r="5"/>
+          <rect class="st" x="53.5" y="1.5" width="9" height="9" fill="var(--bone)"/>
+        </svg>
+        <span>Codificação clínica assistida por IA · ICD-10-CM/PCS · GDH</span>
         <span class="bar"></span>
-        <span class="hidden md:inline">Filed under: medicine · machine reasoning · workflow</span>
       </div>
 
-      <h1 class="display mt-8 text-[clamp(48px,7.5vw,108px)]">
-        Quiet intelligence<br/>
-        <span class="display-italic">at the bedside.</span>
+      <h1 id="h-hero" class="display">
+        Do texto clínico ao GDH,<br/>
+        <em>sem o caminho todo à mão.</em>
       </h1>
 
-      <p class="mt-8 text-[20px] leading-[1.55] text-ink-soft max-w-[58ch]">
-        Vellum reads your hospital's signal between the lines — turning fragmented EHR, telemetry, and lab data into
-        proactive, evidence-graded recommendations the moment they matter. Not a dashboard. A clinical layer.
+      <p class="lede">
+        O Codex lê a documentação do episódio, propõe os códigos ICD-10-CM/PCS com a passagem clínica que os sustenta, agrupa em GDH e mostra o valor do episódio no momento em que ele é codificado. O médico codificador valida e decide — deixa de começar em folha em branco e passa a começar em proposta fundamentada.
       </p>
 
-      <div class="mt-10 flex flex-wrap items-center gap-6">
-        <a href="#cta" class="btn-primary">
-          Book a demonstration
-          <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+      <div class="ctas">
+        <a href="#contacto" class="btn-primary">
+          Ver uma demonstração
+          <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a href="#evidence" class="btn-ghost">
-          Read the methodology
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1 12L12 1M5 1h7v7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <a href="#como-funciona" class="btn-ghost">
+          Como funciona
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.5 1v11M2 7.5l4.5 4.5L11 7.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
 
-      <div class="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 label text-ink-mute">
-        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sage"></span> SOC 2 Type II</span>
-        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sage"></span> HIPAA</span>
-        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sage"></span> HITRUST CSF</span>
-        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sage"></span> NIST 800-53</span>
-        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sage"></span> 220+ care sites</span>
-      </div>
-    </div>
-
-    <!-- Right: hero specimen card -->
-    <aside class="col-span-12 lg:col-span-5 lg:pl-8 reveal">
-      <div class="relative">
-        <!-- decorative corner mark -->
-        <div class="absolute -top-3 -left-3 label text-ink-mute hidden lg:block">Specimen 01 / Sentinel</div>
-
-        <div class="border hairline-strong rounded-sm bg-bone-light/80 backdrop-blur-sm p-6 md:p-7 shadow-[0_30px_80px_-40px_rgba(20,24,31,0.35)]">
-          <!-- header -->
-          <div class="flex items-center justify-between pb-4 border-b hairline">
-            <div class="flex items-center gap-2">
-              <span class="pulse-dot w-2 h-2 rounded-full bg-clay"></span>
-              <span class="label">Sentinel · Live</span>
-            </div>
-            <span class="num text-xs text-ink-mute">04:42 ago · ICU 4-B</span>
-          </div>
-          <!-- patient -->
-          <div class="pt-4 flex items-baseline justify-between">
-            <div>
-              <div class="label text-ink-mute mb-1">Patient · MRN 0–8814–73</div>
-              <div class="display text-[28px]">Mrs. R. — 67 y/o</div>
-            </div>
-            <div class="text-right">
-              <div class="label text-ink-mute mb-1">Risk score</div>
-              <div class="num text-[28px] text-clay-deep tracking-tight">0.84</div>
-            </div>
-          </div>
-
-          <!-- ECG specimen -->
-          <div class="mt-5 rounded-sm bg-bone-dark/50 p-4 border hairline overflow-hidden">
-            <svg viewBox="0 0 480 100" class="w-full h-[100px]">
-              <defs>
-                <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                  <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(20,24,31,0.06)" stroke-width="1"/>
-                </pattern>
-              </defs>
-              <rect width="480" height="100" fill="url(#grid)" />
-              <path d="M0 60 L60 60 L72 60 L78 38 L84 78 L90 50 L96 60 L160 60 L172 60 L178 36 L184 76 L190 50 L196 60 L260 60 L272 60 L278 30 L284 84 L290 46 L296 60 L360 60 L372 60 L378 12 L384 92 L390 38 L396 60 L480 60"
-                class="ecg-stroke draw-path"/>
-              <circle cx="384" cy="92" r="3.5" fill="#C2553D" />
-              <line x1="384" y1="0" x2="384" y2="100" stroke="rgba(194,85,61,0.35)" stroke-width="1" stroke-dasharray="2 3"/>
-            </svg>
-          </div>
-
-          <!-- recommendation -->
-          <div class="mt-5 border-l-2 border-clay pl-4">
-            <div class="label text-clay-deep mb-1.5">Recommendation · evidence: A</div>
-            <p class="text-[15px] leading-snug text-ink-soft">
-              Lactate trending up over 90 min. Consider sepsis workup per <span class="font-medium text-ink">SEP-3</span> bundle —
-              two-set blood culture, broad-spectrum within 60 min.
-            </p>
-            <div class="mt-3 flex items-center gap-3 label text-ink-mute">
-              <span>Cited: Singer 2016 · CMS SEP-1 · Local protocol v2.4</span>
-            </div>
-          </div>
-
-          <div class="mt-5 flex items-center justify-between">
-            <div class="flex gap-2">
-              <button class="px-3 py-1.5 text-[12px] rounded-full bg-ink text-bone-light">Acknowledge</button>
-              <button class="px-3 py-1.5 text-[12px] rounded-full border hairline-strong text-ink-soft">Defer 30m</button>
-            </div>
-            <span class="num text-[11px] text-ink-mute">latency 38ms</span>
-          </div>
-        </div>
-
-        <!-- annotation leader -->
-        <div class="hidden lg:flex items-start gap-3 mt-5 marginalia">
-          <svg width="40" height="14" viewBox="0 0 40 14"><path d="M0 7 H30 M30 7 L26 3 M30 7 L26 11" stroke="rgba(20,24,31,0.4)" stroke-width="1" fill="none"/></svg>
-          <span>Live specimen — every signal Vellum surfaces ships with its citation, latency, and audit trail. Nothing replaces clinical judgment; everything sharpens it.</span>
-        </div>
-      </div>
-    </aside>
-  </div>
-
-  <!-- decorative ECG rule across bottom -->
-  <div class="mt-24 opacity-60">
-    <svg viewBox="0 0 1200 24" class="w-full h-6" preserveAspectRatio="none">
-      <path d="M0 12 L500 12 L520 12 L530 4 L540 20 L550 12 L1200 12" class="ecg-stroke" />
-    </svg>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     TRUST / SOCIAL PROOF
-     ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="border-y hairline bg-bone-light/60">
-  <div class="container-page py-14">
-
-    <div class="grid grid-cols-12 gap-8 items-end">
-      <div class="col-span-12 md:col-span-5">
-        <div class="label text-ink-mute mb-3">— Adopted by</div>
-        <p class="display text-[28px] md:text-[34px] leading-[1.05] text-ink">
-          Health systems delivering<br/>
-          <span class="display-italic text-clay-deep">14 million</span> patient encounters every year.
-        </p>
-      </div>
-      <div class="col-span-12 md:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-5 md:pl-10 md:border-l hairline">
-        <div class="logo-mark text-[22px]">Beaumont Mercy</div>
-        <div class="logo-mark text-[22px]">St. Albright Health</div>
-        <div class="logo-mark text-[22px]">Cleric Children's</div>
-        <div class="logo-mark text-[22px]">Northgate Network</div>
-        <div class="logo-mark text-[22px]">Verity Care</div>
-        <div class="logo-mark text-[22px]">Provident Group</div>
-      </div>
-    </div>
-
-    <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 border-t hairline pt-8">
-      <div>
-        <div class="num display text-[44px] text-ink leading-none">220<span class="text-clay">+</span></div>
-        <div class="label text-ink-mute mt-2">Care sites deployed</div>
-      </div>
-      <div>
-        <div class="num display text-[44px] text-ink leading-none">18M</div>
-        <div class="label text-ink-mute mt-2">Encounters analyzed</div>
-      </div>
-      <div>
-        <div class="num display text-[44px] text-ink leading-none">99.97<span class="text-clay text-[26px] align-top">%</span></div>
-        <div class="label text-ink-mute mt-2">Platform uptime · 24mo</div>
-      </div>
-      <div>
-        <div class="num display text-[44px] text-ink leading-none">38<span class="text-clay text-[26px] align-top">ms</span></div>
-        <div class="label text-ink-mute mt-2">Median decision latency</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     II — PROBLEM
-     ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="container-page py-28 lg:py-36">
-  <div class="grid grid-cols-12 gap-x-8">
-    <div class="col-span-12 lg:col-span-5 lg:sticky lg:top-24 self-start">
-      <div class="eyebrow label">
-        <span class="sec-num text-[28px] leading-none">II</span>
-        <span>The Problem</span>
-        <span class="bar"></span>
-      </div>
-
-      <h2 class="display mt-8 text-[clamp(40px,5.5vw,72px)]">
-        Modern medicine is<br/>
-        data-rich and<br/>
-        <span class="display-italic">intelligence-poor.</span>
-      </h2>
-
-      <p class="dropcap mt-10 text-[17px] leading-[1.7] text-ink-soft max-w-[42ch]">
-        An average inpatient stay generates more than 80,000 discrete data points. Most are read by no one. The few that are read are read late.
-        Care is delivered by exhausted humans operating across systems that were never designed to talk to each other.
+      <p class="microcopy marginalia">
+        Desenhado para o sistema de financiamento hospitalar português: ICD-10-CM/PCS, agrupamento APR-DRG, valorização por peso relativo e ligação ao SIMH (em desenvolvimento).
       </p>
-
-      <div class="marginalia mt-8 max-w-[40ch]">
-        — Source: Vellum 2025 internal benchmark across 14 academic & community sites; Tier-1 EHR systems; n=2.1M encounters.
-      </div>
     </div>
 
-    <ol class="col-span-12 lg:col-span-7 lg:pl-12 space-y-0 lg:border-l hairline">
-      <!-- Item -->
-      <li class="grid grid-cols-12 gap-6 py-10 border-b hairline">
-        <div class="col-span-2 num text-clay text-[18px] pt-2">i.</div>
-        <div class="col-span-10">
-          <h3 class="display text-[28px] md:text-[34px]">Information without intelligence.</h3>
-          <p class="mt-3 text-[16px] leading-[1.65] text-ink-soft max-w-[62ch]">
-            Clinicians spend <span class="text-ink font-medium">49% of their time</span> on documentation and chart review — most of it past tense.
-            The signal lives in the present, but the system only describes the past.
-          </p>
-          <div class="marginalia mt-4">tag · cognitive-load · attention</div>
+    <!-- Visual do herói: fluxo em quatro estados, sem dados -->
+    <figure class="lg-5 reveal" aria-label="Representação ilustrativa do fluxo do Codex em quatro estados, com validação humana entre o segundo e o terceiro">
+      <div class="flow-card">
+        <div class="head">
+          <span class="label">Fluxo de um episódio</span>
+          <span class="label tag">Exemplo ilustrativo</span>
         </div>
-      </li>
 
-      <li class="grid grid-cols-12 gap-6 py-10 border-b hairline">
-        <div class="col-span-2 num text-clay text-[18px] pt-2">ii.</div>
-        <div class="col-span-10">
-          <h3 class="display text-[28px] md:text-[34px]">Risk found in retrospect.</h3>
-          <p class="mt-3 text-[16px] leading-[1.65] text-ink-soft max-w-[62ch]">
-            Sepsis, deterioration, and readmission patterns are well understood — usually after the event.
-            The window for intervention closes before pattern recognition catches up.
-          </p>
-          <div class="marginalia mt-4">tag · latency · decompensation · M&amp;M</div>
-        </div>
-      </li>
+        <div class="states">
+          <div class="state">
+            <div class="label st-label">Estado um</div>
+            <div class="st-title">Documentação do episódio</div>
+            <div class="bars" aria-hidden="true">
+              <div class="bar" style="width:92%"></div>
+              <div class="bar" style="width:78%"></div>
+              <div class="bar" style="width:86%"></div>
+            </div>
+            <div class="chips" aria-hidden="true">
+              <span class="chip">Relatório de alta</span>
+              <span class="chip">Notas de evolução</span>
+              <span class="chip">Registo de bloco</span>
+            </div>
+          </div>
 
-      <li class="grid grid-cols-12 gap-6 py-10 border-b hairline">
-        <div class="col-span-2 num text-clay text-[18px] pt-2">iii.</div>
-        <div class="col-span-10">
-          <h3 class="display text-[28px] md:text-[34px]">Workflows held together by hand.</h3>
-          <p class="mt-3 text-[16px] leading-[1.65] text-ink-soft max-w-[62ch]">
-            Care coordination still depends on pages, sticky notes, and shift handoffs.
-            Critical context is lost in translation between teams, systems, and units.
-          </p>
-          <div class="marginalia mt-4">tag · coordination · handoff · sbar</div>
-        </div>
-      </li>
+          <div class="state">
+            <div class="label st-label">Estado dois</div>
+            <div class="st-title">Códigos propostos, com justificação</div>
+            <div class="chips" aria-hidden="true">
+              <span class="chip">Diagnóstico principal <span class="sw"></span></span>
+              <span class="chip">Secundários <span class="sw"></span><span class="sw"></span></span>
+              <span class="chip">Procedimentos <span class="sw"></span></span>
+            </div>
+            <div class="quote-line" aria-hidden="true">
+              <div class="bar clay" style="width:88%"></div>
+              <div class="bar clay" style="width:64%"></div>
+            </div>
+            <div class="marginalia" style="margin-top:8px">↗ passagem do processo clínico · documento de origem</div>
+          </div>
 
-      <li class="grid grid-cols-12 gap-6 py-10">
-        <div class="col-span-2 num text-clay text-[18px] pt-2">iv.</div>
-        <div class="col-span-10">
-          <h3 class="display text-[28px] md:text-[34px]">Compliance as a tax, not a feature.</h3>
-          <p class="mt-3 text-[16px] leading-[1.65] text-ink-soft max-w-[62ch]">
-            Quality measures and regulatory reporting consume hours of clinical time, often through retrofitted dashboards
-            nobody trusts and everybody must use.
-          </p>
-          <div class="marginalia mt-4">tag · cms · joint-commission · qa</div>
+          <div class="human" role="note">
+            <span class="label">Validação humana</span>
+            <span class="who">O médico codificador aceita, altera, acrescenta ou recusa.</span>
+          </div>
+
+          <div class="state" style="border-top:0">
+            <div class="label st-label">Estado três</div>
+            <div class="st-title">GDH e severidade</div>
+            <div class="chips" aria-hidden="true">
+              <span class="chip">GDH <span class="sw"></span></span>
+              <span class="chip">Nível de severidade <span class="sw"></span></span>
+            </div>
+            <div class="bars" aria-hidden="true">
+              <div class="bar ink" style="width:56%"></div>
+            </div>
+          </div>
+
+          <div class="state">
+            <div class="label st-label">Estado quatro</div>
+            <div class="st-title">Valor do episódio</div>
+            <div class="value-row" aria-hidden="true">
+              <span class="euro">€</span>
+              <div class="bar ink" style="width:44%; height:9px"></div>
+            </div>
+            <div class="marginalia" style="margin-top:8px">a partir do peso relativo</div>
+          </div>
         </div>
-      </li>
-    </ol>
+      </div>
+
+      <figcaption class="flow-note marginalia">
+        <svg width="40" height="14" viewBox="0 0 40 14" aria-hidden="true"><path d="M0 7 H30 M30 7 L26 3 M30 7 L26 11" stroke="rgba(20,24,31,0.4)" stroke-width="1" fill="none"/></svg>
+        <span>Exemplo ilustrativo. Sem dados de doentes: as barras representam texto, não valores.</span>
+      </figcaption>
+    </figure>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     III — SOLUTION
-     ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="bg-ink text-bone-light relative overflow-hidden">
-  <!-- decorative ECG line at top -->
-  <div class="absolute top-0 left-0 right-0 opacity-30">
-    <svg viewBox="0 0 1200 40" class="w-full h-10" preserveAspectRatio="none">
-      <path d="M0 20 L500 20 L520 20 L530 8 L540 32 L550 20 L1200 20" stroke="#E8B5A6" stroke-width="1" fill="none"/>
-    </svg>
-  </div>
-
-  <div class="container-page py-28 lg:py-36">
-    <div class="grid grid-cols-12 gap-8">
-      <div class="col-span-12 lg:col-span-7">
-        <div class="eyebrow label" style="color:rgba(244,239,230,0.6)">
-          <span class="sec-num text-[28px] leading-none" style="color:#E8B5A6">III</span>
-          <span>The Platform</span>
-          <span class="bar" style="background:rgba(244,239,230,0.2)"></span>
-        </div>
-
-        <h2 class="display mt-8 text-[clamp(40px,6vw,80px)]" style="color:#FAF7F1">
-          One layer between<br/>
-          your data and<br/>
-          <span class="display-italic" style="color:#E8B5A6">every decision.</span>
-        </h2>
-      </div>
-
-      <div class="col-span-12 lg:col-span-5 lg:pt-16">
-        <p class="text-[18px] leading-[1.65]" style="color:rgba(244,239,230,0.78)">
-          Vellum connects to your existing EHR, telemetry, and labs — then surfaces clinically meaningful patterns the moment they emerge.
-          Every recommendation cites its evidence. Every action leaves an audit trail.
-        </p>
-        <p class="mt-5 text-[18px] leading-[1.65]" style="color:rgba(244,239,230,0.78)">
-          Nothing replaces clinical judgment.<br/>
-          <span class="display-italic" style="color:#E8B5A6">Everything sharpens it.</span>
-        </p>
-      </div>
-    </div>
-
-    <!-- Capability triad -->
-    <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 md:divide-x" style="--tw-divide-opacity:0.18; border-color:rgba(244,239,230,0.18)">
-      <div class="md:pr-10">
-        <div class="num text-[12px]" style="color:#E8B5A6">— 01</div>
-        <h3 class="display mt-3 text-[28px]">Federated by design.</h3>
-        <p class="mt-3 text-[15px] leading-[1.65]" style="color:rgba(244,239,230,0.7)">
-          Your data never leaves your perimeter. Models are deployed inside your VPC or on-premise; we never see PHI.
-        </p>
-      </div>
-      <div class="md:px-10" style="border-color:rgba(244,239,230,0.18)">
-        <div class="num text-[12px]" style="color:#E8B5A6">— 02</div>
-        <h3 class="display mt-3 text-[28px]">Evidence-graded.</h3>
-        <p class="mt-3 text-[15px] leading-[1.65]" style="color:rgba(244,239,230,0.7)">
-          Every output traces to source guidelines, primary literature, and your local protocols. No black box. No hallucinated citations.
-        </p>
-      </div>
-      <div class="md:pl-10" style="border-color:rgba(244,239,230,0.18)">
-        <div class="num text-[12px]" style="color:#E8B5A6">— 03</div>
-        <h3 class="display mt-3 text-[28px]">Clinically calibrated.</h3>
-        <p class="mt-3 text-[15px] leading-[1.65]" style="color:rgba(244,239,230,0.7)">
-          Tuned to your protocols, formulary, and acuity mix — not a generic model bolted on after the fact.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     IV — PRODUCTS
-     ═══════════════════════════════════════════════════════════════════════════ -->
-<section id="products" class="container-page py-28 lg:py-36">
-
-  <div class="eyebrow label">
-    <span class="sec-num text-[28px] leading-none">IV</span>
-    <span>The Suite — four instruments, one record.</span>
-    <span class="bar"></span>
-    <span class="hidden md:inline">Methodology open · models validated</span>
-  </div>
-
-  <div class="grid grid-cols-12 gap-8 mt-8">
-    <h2 class="display col-span-12 lg:col-span-9 text-[clamp(40px,6vw,84px)]">
-      Built for clinicians,<br/>
-      <span class="display-italic">indexed by evidence.</span>
-    </h2>
-    <p class="col-span-12 lg:col-span-3 lg:pt-6 text-[15px] leading-[1.65] text-ink-soft">
-      Each Vellum instrument is independently deployable and integrates with your EHR through HL7 v2, FHIR R4, and SMART-on-FHIR.
-    </p>
-  </div>
-
-  <!-- Product 01 — Sentinel -->
-  <article class="specimen mt-16 border hairline-strong rounded-sm p-8 md:p-10 bg-bone-light grid grid-cols-12 gap-8">
-    <div class="col-span-12 md:col-span-7">
-      <div class="flex items-center justify-between">
-        <span class="label text-ink-mute">Instrument 01 / Sentinel</span>
-        <span class="pill"><span class="dot"></span>Live monitoring</span>
-      </div>
-      <h3 class="display mt-5 text-[clamp(36px,4vw,56px)]">Sentinel</h3>
-      <p class="display-italic text-clay-deep text-[20px] mt-2">Catch deterioration before the chart does.</p>
-
-      <p class="mt-6 text-[16px] leading-[1.65] text-ink-soft max-w-[58ch]">
-        Sentinel watches every patient continuously. It triangulates vitals, labs, and nursing notes against curated decompensation models —
-        flagging risk hours before it becomes visible to the human eye.
-      </p>
-
-      <ul class="mt-7 space-y-3 text-[15px] text-ink-soft">
-        <li class="flex gap-3"><span class="num text-clay mt-1">›</span> Real-time deterioration scoring on every inpatient.</li>
-        <li class="flex gap-3"><span class="num text-clay mt-1">›</span> Early sepsis &amp; cardiac event signals validated against AUROC &gt; 0.91.</li>
-        <li class="flex gap-3"><span class="num text-clay mt-1">›</span> Clinician-tunable alert thresholds; zero alert-fatigue mode.</li>
-      </ul>
-
-      <a href="#cta" class="btn-ghost mt-8">See Sentinel in action
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1 12L12 1M5 1h7v7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-      </a>
-    </div>
-
-    <!-- Specimen visual -->
-    <div class="col-span-12 md:col-span-5">
-      <div class="rounded-sm bg-bone-dark/60 border hairline p-5 h-full flex flex-col justify-between">
-        <div class="flex items-center justify-between">
-          <span class="label text-ink-mute">Ward telemetry · 4-B</span>
-          <span class="num text-[11px] text-ink-mute">04:42 ago</span>
-        </div>
-        <div class="my-4">
-          <svg viewBox="0 0 360 130" class="w-full h-[130px]">
-            <defs>
-              <pattern id="grid2" width="18" height="18" patternUnits="userSpaceOnUse">
-                <path d="M 18 0 L 0 0 0 18" fill="none" stroke="rgba(20,24,31,0.07)" stroke-width="1"/>
-              </pattern>
-            </defs>
-            <rect width="360" height="130" fill="url(#grid2)"/>
-            <path d="M0 80 L60 80 L72 80 L78 50 L84 100 L90 64 L96 80 L160 80 L172 80 L178 48 L184 102 L190 64 L196 80 L260 80 L272 80 L278 38 L284 110 L290 60 L296 80 L360 80"
-              class="ecg-stroke"/>
-            <path d="M0 80 L284 110" stroke="rgba(194,85,61,0.0)" stroke-width="1" fill="none"/>
-            <circle cx="284" cy="110" r="4" fill="#C2553D"/>
-            <line x1="284" y1="0" x2="284" y2="130" stroke="rgba(194,85,61,0.35)" stroke-width="1" stroke-dasharray="2 3"/>
-            <text x="290" y="14" font-family="JetBrains Mono" font-size="9" fill="#9E3E29">anomaly · t-3.5h</text>
+<!-- ══════════════════════════════════════════════════════════════════════════
+     I — COMO FUNCIONA (coração da página)
+     ══════════════════════════════════════════════════════════════════════════ -->
+<section id="como-funciona" class="on-ink" aria-labelledby="h-como">
+  <div class="container section">
+    <div class="grid-12">
+      <div class="lg-7">
+        <div class="eyebrow label">
+          <svg class="flow-mark" viewBox="0 0 64 12" aria-hidden="true">
+            <line class="ln" x1="6" y1="6" x2="58" y2="6"/>
+            <rect class="st" x="1.5" y="1.5" width="9" height="9" fill="var(--ink)"/>
+            <rect class="st" x="19" y="1.5" width="9" height="9" fill="var(--ink)"/>
+            <circle class="hu" cx="41" cy="6" r="5"/>
+            <rect class="st" x="53.5" y="1.5" width="9" height="9" fill="var(--ink)"/>
           </svg>
+          <span>Como funciona</span>
+          <span class="bar"></span>
         </div>
-        <div class="grid grid-cols-3 gap-2 text-center pt-3 border-t hairline">
-          <div><div class="num display text-[22px]">112</div><div class="label text-ink-mute">HR</div></div>
-          <div><div class="num display text-[22px] text-clay-deep">92<span class="text-[14px]">%</span></div><div class="label text-ink-mute">SpO₂</div></div>
-          <div><div class="num display text-[22px]">38.6</div><div class="label text-ink-mute">°C</div></div>
-        </div>
+        <h2 id="h-como" class="display" style="font-size:clamp(36px,5.6vw,76px); margin-top:28px">
+          Quatro passos, <em>um deles humano por desenho.</em>
+        </h2>
       </div>
-    </div>
-  </article>
-
-  <!-- Product 02 — Cadence -->
-  <article class="specimen mt-8 border hairline-strong rounded-sm p-8 md:p-10 bg-bone-light grid grid-cols-12 gap-8">
-    <div class="col-span-12 md:col-span-5 order-2 md:order-1">
-      <div class="rounded-sm border-l-2 border-clay pl-5 bg-bone-dark/30 p-5 h-full">
-        <div class="label text-ink-mute mb-2">Cadence · in-EHR recommendation</div>
-        <p class="display text-[22px] leading-tight text-ink">
-          Suggest <span class="display-italic text-clay-deep">cefepime 2g IV q8h</span> over piperacillin-tazobactam.
+      <div class="lg-5" style="align-self:end">
+        <p class="lede">
+          A codificação é acto médico e continua a sê-lo. O Codex não substitui o passo da decisão: prepara tudo o que o antecede e executa tudo o que o segue.
         </p>
-        <p class="text-[14px] leading-[1.6] text-ink-soft mt-3">
-          Patient with documented penicillin anaphylaxis (2019). ICU-acquired Pseudomonas suspected per BAL gram stain.
-        </p>
-        <div class="mt-4 flex flex-wrap gap-2">
-          <span class="pill"><span class="dot sage"></span>Evidence A</span>
-          <span class="pill">IDSA 2024</span>
-          <span class="pill">Local v3.2</span>
-        </div>
-        <div class="mt-5 pt-4 border-t hairline grid grid-cols-2 text-[12px] text-ink-mute">
-          <span>Citations · 4</span>
-          <span class="text-right">Personalized · 12 vars</span>
-        </div>
       </div>
     </div>
 
-    <div class="col-span-12 md:col-span-7 order-1 md:order-2">
-      <div class="flex items-center justify-between">
-        <span class="label text-ink-mute">Instrument 02 / Cadence</span>
-        <span class="pill"><span class="dot"></span>Decision support</span>
-      </div>
-      <h3 class="display mt-5 text-[clamp(36px,4vw,56px)]">Cadence</h3>
-      <p class="display-italic text-clay-deep text-[20px] mt-2">The right answer, at the right moment, with its citation.</p>
-
-      <p class="mt-6 text-[16px] leading-[1.65] text-ink-soft max-w-[58ch]">
-        Cadence sits inside the clinician's existing workflow. When a decision point emerges — antibiotic choice, imaging order,
-        anticoagulation — Cadence offers an evidence-graded recommendation drawn from your formulary, the patient's record, and current guidelines.
-      </p>
-
-      <ul class="mt-7 space-y-3 text-[15px] text-ink-soft">
-        <li class="flex gap-3"><span class="num text-clay mt-1">›</span> Inline recommendations in EHR — no app-switching.</li>
-        <li class="flex gap-3"><span class="num text-clay mt-1">›</span> Every output cites primary literature &amp; local protocols.</li>
-        <li class="flex gap-3"><span class="num text-clay mt-1">›</span> Personalizes to comorbidities, allergies, &amp; pharmacogenomics in real time.</li>
-      </ul>
-
-      <a href="#cta" class="btn-ghost mt-8">See Cadence in action
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1 12L12 1M5 1h7v7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-      </a>
-    </div>
-  </article>
-
-  <!-- Product 03 — Stratify -->
-  <article class="specimen mt-8 border hairline-strong rounded-sm p-8 md:p-10 bg-bone-light grid grid-cols-12 gap-8">
-    <div class="col-span-12 md:col-span-7">
-      <div class="flex items-center justify-between">
-        <span class="label text-ink-mute">Instrument 03 / Stratify</span>
-        <span class="pill"><span class="dot"></span>Risk &amp; cohorts</span>
-      </div>
-      <h3 class="display mt-5 text-[clamp(36px,4vw,56px)]">Stratify</h3>
-      <p class="display-italic text-clay-deep text-[20px] mt-2">Population-level risk, patient-level clarity.</p>
-
-      <p class="mt-6 text-[16px] leading-[1.65] text-ink-soft max-w-[58ch]">
-        Stratify continuously stratifies your panel — readmission, no-show, deterioration, complication — and surfaces which patients need
-        attention now and which can wait. Designed for ambulatory, inpatient, and post-discharge use.
-      </p>
-
-      <ul class="mt-7 space-y-3 text-[15px] text-ink-soft">
-        <li class="flex gap-3"><span class="num text-clay mt-1">›</span> 30+ validated risk models, ready out of the box.</li>
-        <li class="flex gap-3"><span class="num text-clay mt-1">›</span> Cohort builder for QI, research, and payer reporting.</li>
-        <li class="flex gap-3"><span class="num text-clay mt-1">›</span> Daily prioritized worklists for case management &amp; transitions.</li>
-      </ul>
-
-      <a href="#cta" class="btn-ghost mt-8">See Stratify in action
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1 12L12 1M5 1h7v7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-      </a>
-    </div>
-
-    <div class="col-span-12 md:col-span-5">
-      <div class="rounded-sm bg-bone-dark/60 border hairline p-5 h-full">
-        <div class="flex items-center justify-between mb-4">
-          <span class="label text-ink-mute">Cohort · medicine ward</span>
-          <span class="num text-[11px] text-ink-mute">n = 84</span>
+    <ol class="steps">
+      <li class="step reveal">
+        <div class="num" aria-hidden="true">01</div>
+        <h3><span class="label mute" style="display:block; margin-bottom:8px">Passo um</span>Lê o episódio inteiro</h3>
+        <p>Relatórios de alta, notas de evolução, resultados, registos de bloco. O Codex reúne e lê a documentação dispersa do episódio antes de o codificador a abrir.</p>
+        <div class="removes">
+          <span class="label">Tira do caminho</span>
+          <p>A recolha e a leitura integral de documentação espalhada por vários sistemas e formatos.</p>
         </div>
-        <!-- Constellation viz -->
-        <svg viewBox="0 0 320 200" class="w-full h-[200px]">
-          <!-- background dots (low risk) -->
-          <g fill="rgba(20,24,31,0.35)">
-            <circle cx="20" cy="40" r="2"/><circle cx="48" cy="100" r="2"/><circle cx="78" cy="60" r="2"/>
-            <circle cx="110" cy="150" r="2"/><circle cx="135" cy="80" r="2"/><circle cx="160" cy="120" r="2"/>
-            <circle cx="200" cy="40" r="2"/><circle cx="230" cy="170" r="2"/><circle cx="260" cy="90" r="2"/>
-            <circle cx="290" cy="30" r="2"/><circle cx="55" cy="170" r="2"/><circle cx="90" cy="20" r="2"/>
-            <circle cx="180" cy="180" r="2"/><circle cx="220" cy="120" r="2"/><circle cx="250" cy="50" r="2"/>
-            <circle cx="290" cy="150" r="2"/><circle cx="32" cy="130" r="2"/><circle cx="120" cy="40" r="2"/>
-            <circle cx="155" cy="170" r="2"/><circle cx="200" cy="100" r="2"/><circle cx="270" cy="130" r="2"/>
-          </g>
-          <!-- medium risk (sage) -->
-          <g fill="#6B7E6E">
-            <circle cx="80" cy="110" r="3.5"/><circle cx="170" cy="60" r="3.5"/><circle cx="240" cy="110" r="3.5"/>
-            <circle cx="60" cy="80" r="3.5"/><circle cx="190" cy="150" r="3.5"/>
-          </g>
-          <!-- high risk (clay) — emphasized -->
-          <g fill="#C2553D">
-            <circle cx="142" cy="110" r="6.5">
-              <animate attributeName="r" values="6.5;8;6.5" dur="2.4s" repeatCount="indefinite"/>
-            </circle>
-            <circle cx="142" cy="110" r="14" fill="none" stroke="#C2553D" stroke-width="1" opacity="0.4"/>
-          </g>
-          <line x1="142" y1="110" x2="270" y2="30" stroke="rgba(20,24,31,0.5)" stroke-width="0.6" stroke-dasharray="2 3"/>
-          <text x="276" y="28" font-family="JetBrains Mono" font-size="9" fill="#1A1F2E">Mr. K · 0.91 · sepsis ↑</text>
-        </svg>
-        <div class="mt-3 grid grid-cols-3 gap-2 text-center pt-3 border-t hairline">
-          <div><div class="num display text-[22px] text-clay-deep">3</div><div class="label text-ink-mute">High</div></div>
-          <div><div class="num display text-[22px] text-sage">11</div><div class="label text-ink-mute">Med</div></div>
-          <div><div class="num display text-[22px]">70</div><div class="label text-ink-mute">Low</div></div>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- Product 04 — Conduit -->
-  <article class="specimen mt-8 border hairline-strong rounded-sm p-8 md:p-10 bg-bone-light grid grid-cols-12 gap-8">
-    <div class="col-span-12 md:col-span-5 order-2 md:order-1">
-      <div class="rounded-sm bg-bone-dark/60 border hairline p-5 h-full">
-        <div class="flex items-center justify-between mb-4">
-          <span class="label text-ink-mute">Pathway · CHF discharge</span>
-          <span class="num text-[11px] text-ink-mute">v 4.1</span>
-        </div>
-        <svg viewBox="0 0 320 220" class="w-full h-[220px]">
-          <!-- nodes -->
-          <g>
-            <rect x="20" y="20" width="120" height="34" rx="3" fill="#FAF7F1" stroke="#14181F" stroke-width="1"/>
-            <text x="80" y="42" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#14181F">DISCHARGE READY</text>
-
-            <rect x="180" y="20" width="120" height="34" rx="3" fill="#FAF7F1" stroke="#14181F" stroke-width="1"/>
-            <text x="240" y="42" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#14181F">MED RECONCILIATION</text>
-
-            <rect x="180" y="92" width="120" height="34" rx="3" fill="#C2553D" stroke="#9E3E29" stroke-width="1"/>
-            <text x="240" y="114" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#FAF7F1">SCHEDULE FOLLOW-UP · 7d</text>
-
-            <rect x="20" y="92" width="120" height="34" rx="3" fill="#FAF7F1" stroke="#14181F" stroke-width="1"/>
-            <text x="80" y="114" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#14181F">PATIENT ED · CHF</text>
-
-            <rect x="100" y="164" width="120" height="34" rx="3" fill="#FAF7F1" stroke="#14181F" stroke-width="1"/>
-            <text x="160" y="186" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#14181F">RPM ENROLLMENT</text>
-          </g>
-          <!-- edges -->
-          <g stroke="#14181F" stroke-width="1" fill="none">
-            <path d="M140 37 L180 37"/>
-            <path d="M240 54 L240 92"/>
-            <path d="M180 109 L140 109"/>
-            <path d="M80 126 L80 145 L160 145 L160 164"/>
-            <path d="M220 164 L220 145 L160 145"/>
-          </g>
-          <!-- arrows -->
-          <g fill="#14181F">
-            <polygon points="178,37 172,34 172,40"/>
-            <polygon points="240,94 237,88 243,88"/>
-            <polygon points="142,109 148,106 148,112"/>
-          </g>
-        </svg>
-      </div>
-    </div>
-
-    <div class="col-span-12 md:col-span-7 order-1 md:order-2">
-      <div class="flex items-center justify-between">
-        <span class="label text-ink-mute">Instrument 04 / Conduit</span>
-        <span class="pill"><span class="dot"></span>Workflow automation</span>
-      </div>
-      <h3 class="display mt-5 text-[clamp(36px,4vw,56px)]">Conduit</h3>
-      <p class="display-italic text-clay-deep text-[20px] mt-2">Care plans that move themselves forward.</p>
-
-      <p class="mt-6 text-[16px] leading-[1.65] text-ink-soft max-w-[58ch]">
-        Conduit turns evidence-based pathways into living workflows. When a patient meets criteria, the next step happens — a consult is requested,
-        a med is suggested, a follow-up is scheduled — all with full clinical oversight and override.
-      </p>
-
-      <ul class="mt-7 space-y-3 text-[15px] text-ink-soft">
-        <li class="flex gap-3"><span class="num text-clay mt-1">›</span> Drag-and-build pathway editor for clinical leads.</li>
-        <li class="flex gap-3"><span class="num text-clay mt-1">›</span> HL7 / FHIR / SMART-on-FHIR native; bi-directional EHR write-back.</li>
-        <li class="flex gap-3"><span class="num text-clay mt-1">›</span> Full audit trail; every automated action signable &amp; reviewable.</li>
-      </ul>
-
-      <a href="#cta" class="btn-ghost mt-8">See Conduit in action
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1 12L12 1M5 1h7v7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-      </a>
-    </div>
-  </article>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     V — HOW IT WORKS
-     ═══════════════════════════════════════════════════════════════════════════ -->
-<section id="how" class="bg-bone-light border-y hairline">
-  <div class="container-page py-28 lg:py-36">
-    <div class="eyebrow label">
-      <span class="sec-num text-[28px] leading-none">V</span>
-      <span>The Method — from data to decision</span>
-      <span class="bar"></span>
-    </div>
-
-    <div class="grid grid-cols-12 gap-8 mt-8">
-      <h2 class="display col-span-12 lg:col-span-8 text-[clamp(40px,5.5vw,72px)]">
-        A two-week deployment.<br/>
-        <span class="display-italic">A standard of care, intact.</span>
-      </h2>
-      <p class="col-span-12 lg:col-span-4 lg:pt-8 text-[15px] leading-[1.65] text-ink-soft">
-        Vellum is built to slot into the systems and rhythms you already have. We bring the models. You keep the standard of care.
-      </p>
-    </div>
-
-    <ol class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-line">
-      <li class="bg-bone-light p-7 md:p-8">
-        <div class="flex items-baseline justify-between">
-          <span class="num display italic text-[40px] text-clay">01</span>
-          <span class="label text-ink-mute">~ Day 1–3</span>
-        </div>
-        <h3 class="display text-[24px] mt-4">Connect.</h3>
-        <p class="text-[14px] leading-[1.65] text-ink-soft mt-3">
-          Secure HL7 v2, FHIR R4, and direct DB integration. Two-week deployment, no rip-and-replace.
-        </p>
       </li>
-      <li class="bg-bone-light p-7 md:p-8">
-        <div class="flex items-baseline justify-between">
-          <span class="num display italic text-[40px] text-clay">02</span>
-          <span class="label text-ink-mute">~ Day 4–9</span>
+
+      <li class="step reveal">
+        <div class="num" aria-hidden="true">02</div>
+        <h3><span class="label mute" style="display:block; margin-bottom:8px">Passo dois</span>Propõe os códigos, com a passagem que os sustenta</h3>
+        <p>Diagnóstico principal, secundários e procedimentos em ICD-10-CM/PCS. Cada sugestão traz a frase do processo clínico que a fundamenta, com ligação ao documento de origem.</p>
+        <div class="removes">
+          <span class="label">Tira do caminho</span>
+          <p>A procura da evidência para sustentar — ou recusar — cada código. E deixa a justificação escrita, que é o que a auditoria interna precisa e que hoje raramente existe.</p>
         </div>
-        <h3 class="display text-[24px] mt-4">Calibrate.</h3>
-        <p class="text-[14px] leading-[1.65] text-ink-soft mt-3">
-          Clinical leads tune Vellum to local protocols, formulary, and acuity mix. Override every default; audit every change.
-        </p>
       </li>
-      <li class="bg-bone-light p-7 md:p-8">
-        <div class="flex items-baseline justify-between">
-          <span class="num display italic text-[40px] text-clay">03</span>
-          <span class="label text-ink-mute">~ Day 10–14</span>
+
+      <li class="step human-step reveal">
+        <span class="badge"><span class="dot"></span>Passo humano — não automático</span>
+        <div class="num" aria-hidden="true">03</div>
+        <h3><span class="label mute" style="display:block; margin-bottom:8px">Passo três</span>O codificador valida</h3>
+        <p>Aceitar, alterar, acrescentar, recusar. A decisão é sempre do médico codificador, e cada intervenção fica registada.</p>
+        <div class="removes">
+          <span class="label">Porque é assim</span>
+          <p>A codificação é acto médico no enquadramento português, e o artigo 1.º-C do Código dos Contratos Públicos, aditado pelo Decreto-Lei n.º 177/2026, inscreve na lei o princípio de supervisão e contributo humano no uso de IA pela Administração.</p>
         </div>
-        <h3 class="display text-[24px] mt-4">Surface.</h3>
-        <p class="text-[14px] leading-[1.65] text-ink-soft mt-3">
-          Recommendations land where clinicians already are: EHR sidebar, paging system, mobile, dictation.
-        </p>
       </li>
-      <li class="bg-bone-light p-7 md:p-8">
-        <div class="flex items-baseline justify-between">
-          <span class="num display italic text-[40px] text-clay">04</span>
-          <span class="label text-ink-mute">Continuous</span>
+
+      <li class="step reveal">
+        <div class="num" aria-hidden="true">04</div>
+        <h3><span class="label mute" style="display:block; margin-bottom:8px">Passo quatro</span>Agrupa, valoriza e devolve ao sistema</h3>
+        <p>Sobre os códigos validados, o Codex aplica o agrupamento, devolve o GDH e o nível de severidade, e apresenta a leitura do valor do episódio a partir do peso relativo.</p>
+        <span class="tag-dev"><span class="dot"></span>Ligação ao SIMH · em desenvolvimento</span>
+        <div class="removes">
+          <span class="label">Tira do caminho</span>
+          <p>A transcrição manual de códigos entre sistemas — e o erro que lhe anda associado. E encurta a distância entre codificar e saber o que o episódio vale, que hoje é de meses.</p>
         </div>
-        <h3 class="display text-[24px] mt-4">Audit.</h3>
-        <p class="text-[14px] leading-[1.65] text-ink-soft mt-3">
-          Every prediction, recommendation, and automated action is traceable. Built for The Joint Commission, CMS, and your QA committee.
-        </p>
       </li>
     </ol>
+
+    <div class="steps-close grid-12">
+      <div class="lg-8 lg-start-2 reveal">
+        <div class="rule" style="margin-bottom:28px"></div>
+        <p>O ganho não está em cada passo isolado. Está em o codificador chegar ao episódio com o trabalho de preparação feito, e em a instituição saber o que tem codificado enquanto ainda há margem para agir.</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     VI — BENEFITS
-     ═══════════════════════════════════════════════════════════════════════════ -->
-<section id="evidence" class="container-page py-28 lg:py-36">
-  <div class="grid grid-cols-12 gap-8">
-    <div class="col-span-12 lg:col-span-5">
+<!-- ══════════════════════════════════════════════════════════════════════════
+     II — PORQUE AGORA (contexto)
+     ══════════════════════════════════════════════════════════════════════════ -->
+<section id="porque-agora" class="container section" aria-labelledby="h-agora">
+  <div class="grid-12">
+    <div class="lg-5 lg-sticky">
       <div class="eyebrow label">
-        <span class="sec-num text-[28px] leading-none">VI</span>
-        <span>The Evidence</span>
+        <svg class="flow-mark" viewBox="0 0 64 12" aria-hidden="true">
+          <line class="ln" x1="6" y1="6" x2="58" y2="6"/>
+          <rect class="st" x="1.5" y="1.5" width="9" height="9" fill="var(--bone)"/>
+          <rect class="st" x="19" y="1.5" width="9" height="9" fill="var(--bone)"/>
+          <circle class="hu" cx="41" cy="6" r="5"/>
+          <rect class="st" x="53.5" y="1.5" width="9" height="9" fill="var(--bone)"/>
+        </svg>
+        <span>Porque agora</span>
         <span class="bar"></span>
       </div>
-      <h2 class="display mt-8 text-[clamp(40px,5.5vw,72px)]">
-        Numbers from the<br/>
-        <span class="display-italic">field, not the deck.</span>
+      <h2 id="h-agora" class="display" style="font-size:clamp(36px,5.2vw,68px); margin-top:28px">
+        O volume sobe, <em>a capacidade não pode subir com ele.</em>
       </h2>
-      <p class="mt-6 text-[16px] leading-[1.65] text-ink-soft max-w-[44ch]">
-        Aggregated outcomes across 22 deployed health systems, 14 months of post-go-live data,
-        independently validated by each site's QI committee.
+      <p class="body-copy" style="margin-top:28px; max-width:44ch; font-size:17px">
+        A codificação clínica é hoje um dos pontos mais estreitos da cadeia que liga o registo clínico ao financiamento hospitalar — e está a ficar mais estreito por razões que nenhuma instituição controla.
       </p>
-      <div class="marginalia mt-6 max-w-[42ch]">
-        — Methodology: pre/post comparison, matched cohorts, p&lt;0.01.<br/>
-        Full validation studies on the Resources page.
-      </div>
     </div>
 
-    <div class="col-span-12 lg:col-span-7 lg:pl-8">
-      <div class="grid grid-cols-2 gap-px bg-line border hairline">
-        <div class="bg-bone p-8">
-          <div class="label text-ink-mute">Clinical hours returned</div>
-          <div class="num display text-[clamp(56px,8vw,96px)] mt-2 leading-none">8.4<span class="text-clay text-[36px] align-top">/wk</span></div>
-          <p class="text-[14px] text-ink-soft mt-3 leading-[1.6]">Per clinician, on documentation, chart review, and routine ordering.</p>
-        </div>
-        <div class="bg-bone p-8">
-          <div class="label text-ink-mute">Preventable harm</div>
-          <div class="num display text-[clamp(56px,8vw,96px)] mt-2 leading-none">23<span class="text-clay text-[36px] align-top">% ↓</span></div>
-          <p class="text-[14px] text-ink-soft mt-3 leading-[1.6]">Reduction in pilot cohorts across sepsis, falls, and pressure-injury events.</p>
-        </div>
-        <div class="bg-bone p-8">
-          <div class="label text-ink-mute">30-day readmission</div>
-          <div class="num display text-[clamp(56px,8vw,96px)] mt-2 leading-none">18<span class="text-clay text-[36px] align-top">% ↓</span></div>
-          <p class="text-[14px] text-ink-soft mt-3 leading-[1.6]">CHF, COPD, and post-surgical cohorts on Conduit-managed pathways.</p>
-        </div>
-        <div class="bg-bone p-8">
-          <div class="label text-ink-mute">Compliance &amp; safety</div>
-          <div class="num display text-[clamp(28px,3vw,40px)] mt-2 leading-tight">SOC 2 II<br/>HIPAA · HITRUST<br/>NIST 800-53</div>
-          <p class="text-[14px] text-ink-soft mt-3 leading-[1.6]">Independently audited; every action traceable end-to-end.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    <div class="lg-7">
+      <ul class="reasons">
+        <li class="reason reveal">
+          <div class="figure">30 <small>dias após a alta</small></div>
+          <h3>O prazo é exigente por desenho</h3>
+          <p class="body-copy">O Acordo Modificativo ao Contrato-Programa fixa 30 dias após a alta para codificar, agrupar e auditar cada episódio. É um prazo curto para um processo que exige leitura integral de documentação clínica por um médico codificador, e a pressão sobre ele é estrutural: aplica-se a todos, todos os meses, sobre todo o volume.</p>
+          <span class="source">Fonte: Acordo Modificativo ao Contrato-Programa, Cláusula 5.ª, n.º 2 — ACSS</span>
+        </li>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     VII — TESTIMONIALS
-     ═══════════════════════════════════════════════════════════════════════════ -->
-<section class="bg-bone-light border-y hairline">
-  <div class="container-page py-28 lg:py-36">
+        <li class="reason reveal">
+          <div class="figure">1,4 % <small>de reforço de pessoal sem termo em 2026</small></div>
+          <h3>O recurso é escasso e está contingentado</h3>
+          <p class="body-copy">O médico codificador é recurso especializado e escasso. O Quadro Global de Referência do SNS para 2026-2028 limita o reforço de pessoal sem termo a 1,4 % em 2026 para todo o SNS. A resposta ao volume não pode vir de mais pessoas.</p>
+          <span class="source">Fonte: Despacho n.º 10981-A/2026</span>
+        </li>
 
-    <div class="eyebrow label">
-      <span class="sec-num text-[28px] leading-none">VII</span>
-      <span>From the floor</span>
-      <span class="bar"></span>
-    </div>
+        <li class="reason reveal">
+          <div class="figure" style="font-family:var(--display); font-style:italic; font-variation-settings:'opsz' 144,'SOFT' 100; letter-spacing:-0.03em">Quatro <small>indicadores construídos a partir da codificação</small></div>
+          <h3>E o output da codificação pesa mais do que pesava</h3>
+          <p class="body-copy">Quatro dos indicadores pelos quais cada ULS é avaliada até 2028 são construídos a partir do resultado da codificação — entre eles a hospitalização domiciliária em GDH, cuja meta mais do que duplica. A codificação deixou de ser trabalho administrativo de retaguarda e passou a ser a fonte de dados por onde a instituição é medida.</p>
+          <span class="source">Fonte: Despacho n.º 10981-A/2026</span>
+        </li>
+      </ul>
 
-    <h2 class="display mt-8 text-[clamp(36px,5vw,64px)] max-w-[20ch]">
-      What clinicians say after the <span class="display-italic">first ninety days.</span>
-    </h2>
-
-    <div class="grid grid-cols-12 gap-8 mt-16">
-
-      <figure class="col-span-12 md:col-span-4 border-t hairline-strong pt-7">
-        <span class="label text-clay">— Beaumont Mercy Health</span>
-        <blockquote class="display text-[26px] leading-[1.18] mt-5">
-          "We stopped chasing data and started <span class="display-italic">reading</span> it. Vellum is the first system that talks to our clinicians in their language, on their time."
-        </blockquote>
-        <figcaption class="mt-7 text-[14px] text-ink-soft">
-          <div class="font-medium text-ink">Dr. Naomi Halverson, MD, MPH</div>
-          <div class="text-ink-mute">Chief Medical Officer · Beaumont Mercy Health</div>
-        </figcaption>
-      </figure>
-
-      <figure class="col-span-12 md:col-span-4 border-t hairline-strong pt-7">
-        <span class="label text-clay">— Northgate Network</span>
-        <blockquote class="display text-[26px] leading-[1.18] mt-5">
-          "Our nursing teams used to drown in alerts. Now they get one signal that <span class="display-italic">matters</span>. Our sepsis response window shortened by 47 minutes."
-        </blockquote>
-        <figcaption class="mt-7 text-[14px] text-ink-soft">
-          <div class="font-medium text-ink">Lena Okonkwo, RN, MSN</div>
-          <div class="text-ink-mute">Director of Nursing · Northgate Network</div>
-        </figcaption>
-      </figure>
-
-      <figure class="col-span-12 md:col-span-4 border-t hairline-strong pt-7">
-        <span class="label text-clay">— St. Albright Health</span>
-        <blockquote class="display text-[26px] leading-[1.18] mt-5">
-          "Cadence is the closest thing to a senior consultant on every floor. It cites its evidence, it knows our formulary, and <span class="display-italic">it never gets tired.</span>"
-        </blockquote>
-        <figcaption class="mt-7 text-[14px] text-ink-soft">
-          <div class="font-medium text-ink">Dr. Marcus Penrose, MD</div>
-          <div class="text-ink-mute">Director of Cardiology · St. Albright Health</div>
-        </figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     VIII — FINAL CTA
-     ═══════════════════════════════════════════════════════════════════════════ -->
-<section id="cta" class="bg-ink text-bone-light relative overflow-hidden">
-  <div class="absolute inset-0 opacity-[0.06] pointer-events-none">
-    <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" class="w-full h-full">
-      <defs>
-        <pattern id="dgrid" width="24" height="24" patternUnits="userSpaceOnUse">
-          <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#FAF7F1" stroke-width="0.5"/>
-        </pattern>
-      </defs>
-      <rect width="600" height="400" fill="url(#dgrid)"/>
-    </svg>
-  </div>
-
-  <div class="container-page py-28 lg:py-36 relative">
-
-    <div class="eyebrow label" style="color:rgba(244,239,230,0.6)">
-      <span class="sec-num text-[28px] leading-none" style="color:#E8B5A6">VIII</span>
-      <span>See it in your environment</span>
-      <span class="bar" style="background:rgba(244,239,230,0.2)"></span>
-    </div>
-
-    <div class="grid grid-cols-12 gap-8 mt-8">
-      <div class="col-span-12 lg:col-span-7">
-        <h2 class="display text-[clamp(48px,8vw,108px)]" style="color:#FAF7F1">
-          Bring quiet<br/>
-          intelligence to<br/>
-          <span class="display-italic" style="color:#E8B5A6">your floor.</span>
-        </h2>
-        <p class="mt-8 text-[18px] leading-[1.6] max-w-[52ch]" style="color:rgba(244,239,230,0.78)">
-          A 30-minute working demonstration, on your real workflows. No slideware. We connect to a sandbox of your data,
-          show recommendations on three of your most common decision points, and leave you with a written readout.
-        </p>
-      </div>
-
-      <form class="col-span-12 lg:col-span-5 lg:pl-8 lg:border-l" style="border-color:rgba(244,239,230,0.18)" onsubmit="event.preventDefault(); alert('Demo request received. A clinical lead will reach out within 24 hours.');">
-        <label class="label block mb-2" style="color:rgba(244,239,230,0.6)">Clinician / executive email</label>
-        <input class="vinput" style="color:#FAF7F1; border-color: rgba(244,239,230,0.35);" type="email" required placeholder="pedro@phmcare.ai" />
-
-        <label class="label block mt-7 mb-2" style="color:rgba(244,239,230,0.6)">Health system</label>
-        <input class="vinput" style="color:#FAF7F1; border-color: rgba(244,239,230,0.35);" type="text" required placeholder="St. Albright Health, Cardiology" />
-
-        <label class="label block mt-7 mb-2" style="color:rgba(244,239,230,0.6)">EHR</label>
-        <select class="vinput appearance-none" style="color:#FAF7F1; border-color: rgba(244,239,230,0.35); background-color: transparent;">
-          <option style="color:#14181F">Epic</option>
-          <option style="color:#14181F">Cerner / Oracle Health</option>
-          <option style="color:#14181F">Meditech</option>
-          <option style="color:#14181F">Allscripts / Veradigm</option>
-          <option style="color:#14181F">Other</option>
-        </select>
-
-        <button type="submit" class="mt-10 btn-primary" style="background:#E8B5A6; color:#14181F;">
-          Request a demonstration
-          <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-
-        <p class="label mt-5" style="color:rgba(244,239,230,0.5)">
-          Reply within 24 hrs · BAA on signature · No PHI required for demo
-        </p>
-      </form>
-    </div>
-
-    <div class="mt-24 grid grid-cols-1 md:grid-cols-3 gap-8 pt-10 border-t" style="border-color:rgba(244,239,230,0.18)">
-      <div>
-        <div class="num display text-[44px] leading-none" style="color:#FAF7F1">14d</div>
-        <div class="label mt-2" style="color:rgba(244,239,230,0.55)">From contract to first signal</div>
-      </div>
-      <div>
-        <div class="num display text-[44px] leading-none" style="color:#FAF7F1">0</div>
-        <div class="label mt-2" style="color:rgba(244,239,230,0.55)">PHI leaves your perimeter</div>
-      </div>
-      <div>
-        <div class="num display text-[44px] leading-none" style="color:#FAF7F1">∞</div>
-        <div class="label mt-2" style="color:rgba(244,239,230,0.55)">Override authority — clinician always wins</div>
+      <div class="reasons-close reveal">
+        <div class="figure">23,12 %</div>
+        <p>Nacionalmente, 23,12 % dos episódios do SNS estão por codificar. É a medida da distância entre o que o processo actual consegue dar e o que lhe está a ser pedido — e é o espaço onde a codificação assistida faz diferença.</p>
+        <span class="source">Fonte: Base de Dados de Morbilidade Hospitalar — ACSS</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     FOOTER
-     ═══════════════════════════════════════════════════════════════════════════ -->
-<footer class="bg-bone">
-  <div class="container-page py-20">
-    <div class="grid grid-cols-12 gap-8">
-      <div class="col-span-12 lg:col-span-5">
-        <div class="display text-[44px] leading-none">Vellum</div>
-        <p class="mt-5 text-[15px] leading-[1.65] text-ink-soft max-w-[44ch]">
-          Vellum is the clinical intelligence layer for modern medicine. Built by clinicians, engineers, and machine-reasoning
-          researchers who believe healthcare deserves software written with the same care it asks of its people.
-        </p>
-        <div class="mt-7 flex flex-wrap items-center gap-3">
-          <span class="pill"><span class="dot sage"></span>SOC 2 Type II</span>
-          <span class="pill"><span class="dot sage"></span>HIPAA</span>
-          <span class="pill"><span class="dot sage"></span>HITRUST CSF</span>
-          <span class="pill"><span class="dot sage"></span>GDPR</span>
+<!-- ══════════════════════════════════════════════════════════════════════════
+     III — O PAINEL
+     ══════════════════════════════════════════════════════════════════════════ -->
+<section id="painel" class="container section" style="border-top:1px solid var(--line)" aria-labelledby="h-painel">
+  <div class="grid-12">
+    <div class="lg-7">
+      <div class="eyebrow label">
+        <svg class="flow-mark" viewBox="0 0 64 12" aria-hidden="true">
+          <line class="ln" x1="6" y1="6" x2="58" y2="6"/>
+          <rect class="st" x="1.5" y="1.5" width="9" height="9" fill="var(--bone)"/>
+          <rect class="st" x="19" y="1.5" width="9" height="9" fill="var(--bone)"/>
+          <circle class="hu" cx="41" cy="6" r="5"/>
+          <rect class="st" x="53.5" y="1.5" width="9" height="9" fill="var(--bone)"/>
+        </svg>
+        <span>Para quem responde pelo contrato-programa</span>
+        <span class="bar"></span>
+      </div>
+      <h2 id="h-painel" class="display" style="font-size:clamp(36px,5.2vw,68px); margin-top:28px">
+        A vista que hoje só existe <em>depois do apuramento.</em>
+      </h2>
+    </div>
+    <div class="lg-5" style="align-self:end">
+      <p class="lede">Acima do trabalho episódio a episódio, o Codex entrega à gestão a leitura em tempo real do que está codificado, do que falta e do que isso representa.</p>
+    </div>
+  </div>
+
+  <ul class="cards">
+    <li class="card reveal">
+      <span class="k label">Prazo</span>
+      <h3>Prazo, em tempo real</h3>
+      <p class="body-copy">Quantos episódios estão dentro dos 30 dias, quantos estão fora e quantos vão sair esta semana, por serviço e por responsável. A informação chega enquanto ainda há margem para agir, e não no apuramento.</p>
+    </li>
+    <li class="card reveal">
+      <span class="k label">Pendente</span>
+      <h3>O que o stock por codificar representa</h3>
+      <p class="body-copy">Cada episódio por codificar é índice de <em>case-mix</em> que ainda não entrou no apuramento. O painel põe valor em euros no que está pendente.</p>
+    </li>
+    <li class="card reveal">
+      <span class="k label">Produção</span>
+      <h3>Realizado contra contratado</h3>
+      <p class="body-copy">O Apêndice II fixa a produção contratada por linha. O painel compara realizado com contratado, por banda e por serviço, ao mês.</p>
+    </li>
+    <li class="card reveal">
+      <span class="k label">Auditoria</span>
+      <h3>Auditoria contínua, não por amostra</h3>
+      <p class="body-copy">O motor vê todos os episódios: divergências entre código proposto e validado, documentação insuficiente para sustentar o GDH, padrões por serviço. A auditoria deixa de ser trabalho de amostragem <em>a posteriori</em>.</p>
+    </li>
+  </ul>
+
+  <p class="section-close reveal">Nenhuma destas quatro vistas existe quando a codificação é entregue a um prestador externo. É a diferença entre comprar capacidade e ter a cadeia toda instrumentada.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     IV — SEGURANÇA
+     ══════════════════════════════════════════════════════════════════════════ -->
+<section id="seguranca" class="container section" style="border-top:1px solid var(--line)" aria-labelledby="h-seg">
+  <div class="grid-12">
+    <div class="lg-5 lg-sticky">
+      <div class="eyebrow label">
+        <svg class="flow-mark" viewBox="0 0 64 12" aria-hidden="true">
+          <line class="ln" x1="6" y1="6" x2="58" y2="6"/>
+          <rect class="st" x="1.5" y="1.5" width="9" height="9" fill="var(--bone)"/>
+          <rect class="st" x="19" y="1.5" width="9" height="9" fill="var(--bone)"/>
+          <circle class="hu" cx="41" cy="6" r="5"/>
+          <rect class="st" x="53.5" y="1.5" width="9" height="9" fill="var(--bone)"/>
+        </svg>
+        <span>Segurança</span>
+        <span class="bar"></span>
+      </div>
+      <h2 id="h-seg" class="display" style="font-size:clamp(36px,5.2vw,68px); margin-top:28px">
+        Dados de saúde tratados <em>como o que são.</em>
+      </h2>
+      <p class="body-copy" style="margin-top:28px; max-width:44ch; font-size:17px">
+        A instituição é responsável pelo tratamento; a PHM Care actua como subcontratante, com contrato de subcontratação nos termos do artigo 28.º do RGPD. Dados de saúde são categoria especial do artigo 9.º, e o produto é construído a partir dessa restrição e não à volta dela.
+      </p>
+    </div>
+
+    <div class="lg-7">
+      <ul class="cards" style="margin-top:0">
+        <li class="card reveal">
+          <h3>Contrato de subcontratação art. 28.º RGPD</h3>
+          <p class="body-copy">Objecto e duração, instruções documentadas, confidencialidade, segurança, sub-subcontratação só com autorização, devolução ou eliminação no final, direito de auditoria.</p>
+        </li>
+        <li class="card reveal">
+          <h3>Os vossos dados não treinam modelos</h3>
+          <p class="body-copy">Compromisso contratual, não política interna.</p>
+        </li>
+        <li class="card reveal">
+          <h3>Rasto de auditoria completo</h3>
+          <p class="body-copy">Cada sugestão com a passagem clínica que a sustenta e o registo de quem validou, o quê e quando.</p>
+        </li>
+        <li class="card reveal">
+          <h3>Supervisão humana como requisito, não como opção</h3>
+          <p class="body-copy">É o passo 03 do fluxo, e está alinhado com o artigo 1.º-C do Código dos Contratos Públicos.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     V — EQUIPA E ACOMPANHAMENTO
+     ══════════════════════════════════════════════════════════════════════════ -->
+<section id="equipa" class="container section" style="border-top:1px solid var(--line)" aria-labelledby="h-equipa">
+  <div class="grid-12">
+    <div class="lg-7">
+      <div class="eyebrow label">
+        <svg class="flow-mark" viewBox="0 0 64 12" aria-hidden="true">
+          <line class="ln" x1="6" y1="6" x2="58" y2="6"/>
+          <rect class="st" x="1.5" y="1.5" width="9" height="9" fill="var(--bone)"/>
+          <rect class="st" x="19" y="1.5" width="9" height="9" fill="var(--bone)"/>
+          <circle class="hu" cx="41" cy="6" r="5"/>
+          <rect class="st" x="53.5" y="1.5" width="9" height="9" fill="var(--bone)"/>
+        </svg>
+        <span>Equipa e acompanhamento</span>
+        <span class="bar"></span>
+      </div>
+      <h2 id="h-equipa" class="display" style="font-size:clamp(36px,5.2vw,68px); margin-top:28px">
+        Uma equipa pequena, <em>e os dois fundadores em cada implementação.</em>
+      </h2>
+    </div>
+    <div class="lg-5" style="align-self:end">
+      <p class="lede">A navegação do enquadramento de contratação pública e do RGPD é competência interna da empresa, não serviço que subcontratamos. Num mercado onde o ciclo de venda é um procedimento pré-contratual, isso poupa tempo dos dois lados.</p>
+    </div>
+  </div>
+
+  <ul class="people">
+    <li class="person reveal">
+      <span class="label role">Tecnologia</span>
+      <span class="name">Pedro Santos</span>
+      <p class="body-copy">Engenheiro sénior de TI com foco em inteligência artificial. Responsável pelo motor, pela arquitectura e pelo modelo de custo.</p>
+    </li>
+    <li class="person reveal">
+      <span class="label role">Domínio e regulação</span>
+      <span class="name">Mariana</span>
+      <p class="body-copy">Administradora Hospitalar e jurista, com pós-graduação em Direito Médico e mestrado em Direito das Empresas e Negócios.</p>
+    </li>
+  </ul>
+
+  <div class="grid-12" style="margin-top:0">
+    <div class="lg-8 lg-start-2">
+      <ul class="support reveal">
+        <li>Implementação acompanhada, com âmbito, duração e métricas de aceitação definidos à partida.</li>
+        <li>Formação e apoio directo ao serviço de codificação. A ferramenta é para quem codifica, e é com eles que a afinamos.</li>
+        <li>Interlocutor único, com conhecimento do domínio. Sem nível 1, nível 2 e bilhete de suporte.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     CTA
+     ══════════════════════════════════════════════════════════════════════════ -->
+<section id="contacto" class="cta" aria-labelledby="h-cta">
+  <div class="container section">
+    <div class="grid-12">
+      <div class="lg-6">
+        <div class="eyebrow label">
+          <svg class="flow-mark" viewBox="0 0 64 12" aria-hidden="true">
+            <line class="ln" x1="6" y1="6" x2="58" y2="6"/>
+            <rect class="st" x="1.5" y="1.5" width="9" height="9" fill="var(--bone-dark)"/>
+            <rect class="st" x="19" y="1.5" width="9" height="9" fill="var(--bone-dark)"/>
+            <circle class="hu" cx="41" cy="6" r="5"/>
+            <rect class="st" x="53.5" y="1.5" width="9" height="9" fill="var(--bone-dark)"/>
+          </svg>
+          <span>Demonstração</span>
+          <span class="bar"></span>
         </div>
+        <h2 id="h-cta" class="display" style="margin-top:28px">Vejam o Codex a correr <em>sobre um episódio.</em></h2>
+        <p class="lede">Uma sessão de 30 minutos, sobre um caso real anonimizado ou sobre um exemplo nosso, consoante preferirem. Mostramos o percurso completo — documentação, códigos propostos com justificação, validação, GDH e valor do episódio — e respondemos às perguntas de integração e de proteção de dados na mesma conversa.</p>
+        <p class="lede" style="margin-top:16px">Se quiserem, levamos também o dimensionamento da vossa instituição, calculado a partir de documentos públicos.</p>
       </div>
 
-      <div class="col-span-6 md:col-span-3 lg:col-span-2">
-        <div class="label text-ink-mute mb-5">Product</div>
-        <ul class="space-y-3 text-[15px]">
-          <li><a class="ulink" href="#">Sentinel</a></li>
-          <li><a class="ulink" href="#">Cadence</a></li>
-          <li><a class="ulink" href="#">Stratify</a></li>
-          <li><a class="ulink" href="#">Conduit</a></li>
-          <li><a class="ulink" href="#">Integrations</a></li>
-          <li><a class="ulink" href="#">Security</a></li>
+      <div class="lg-5 lg-start-8">
+        <form class="form" id="form-demo" novalidate>
+          <div class="field">
+            <label class="label" for="f-nome">Nome</label>
+            <input class="vinput" id="f-nome" name="nome" type="text" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label class="label" for="f-inst">Instituição</label>
+            <input class="vinput" id="f-inst" name="instituicao" type="text" autocomplete="organization" required />
+          </div>
+          <div class="field">
+            <label class="label" for="f-email">Email institucional</label>
+            <input class="vinput" id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required />
+          </div>
+          <div class="field">
+            <label class="label" for="f-funcao">Função</label>
+            <div class="select-wrap">
+              <select class="vinput" id="f-funcao" name="funcao" required>
+                <option value="" selected>Seleccione</option>
+                <option>Conselho de administração</option>
+                <option>Direcção clínica</option>
+                <option>Serviço de codificação</option>
+                <option>Sistemas de informação</option>
+                <option>Outra</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <button type="submit" class="btn-primary" style="margin-top:8px">
+              Marcar demonstração
+              <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+          <p class="label mute">Resposta em 48 horas úteis. Nenhum dado clínico é necessário para agendar.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     RODAPÉ
+     ══════════════════════════════════════════════════════════════════════════ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="cols">
+      <div>
+        <div class="brand"><span class="name">PHM Care</span></div>
+        <address style="margin-top:14px">
+          PHM Care, Lda<br/>
+          Rua General Norton de Matos, 527<br/>
+          4990-118 Ponte de Lima, Portugal
+        </address>
+      </div>
+      <div>
+        <div class="label mute" style="margin-bottom:14px">Legal</div>
+        <ul>
+          <li><a class="ulink" href="/privacidade">Política de Privacidade</a></li>
         </ul>
       </div>
-
-      <div class="col-span-6 md:col-span-3 lg:col-span-2">
-        <div class="label text-ink-mute mb-5">Resources</div>
-        <ul class="space-y-3 text-[15px]">
-          <li><a class="ulink" href="#">Methodology</a></li>
-          <li><a class="ulink" href="#">Validation studies</a></li>
-          <li><a class="ulink" href="#">White papers</a></li>
-          <li><a class="ulink" href="#">Press</a></li>
-          <li><a class="ulink" href="#">Trust center</a></li>
+      <div>
+        <div class="label mute" style="margin-bottom:14px">Contacto</div>
+        <ul>
+          <li><a class="ulink" href="mailto:pedro@phmcare.ai">pedro@phmcare.ai</a></li>
+          <li><a class="ulink" href="#contacto">Marcar demonstração</a></li>
         </ul>
-      </div>
-
-      <div class="col-span-12 md:col-span-6 lg:col-span-3">
-        <div class="label text-ink-mute mb-5">Company</div>
-        <ul class="space-y-3 text-[15px]">
-          <li><a class="ulink" href="#">About</a></li>
-          <li><a class="ulink" href="#">Clinical advisory board</a></li>
-          <li><a class="ulink" href="#">Careers — we're hiring</a></li>
-          <li><a class="ulink" href="mailto:pedro@phmcare.ai">Contact</a></li>
-        </ul>
-        <div class="mt-7 marginalia">
-          Boston · Lisbon · Singapore<br/>
-          151 Tremont St, Floor 7
-        </div>
-        <div class="mt-4 marginalia">
-          <a class="ulink" href="mailto:pedro@phmcare.ai">pedro@phmcare.ai</a><br/>
-          <a class="ulink" href="mailto:mariana@phmcare.ai">mariana@phmcare.ai</a>
-        </div>
       </div>
     </div>
 
-    <div class="rule-strong my-12"></div>
-
-    <div class="flex flex-wrap items-center justify-between gap-6 label text-ink-mute">
-      <span>© 2026 Vellum Health, Inc. — Built with care for the people who provide it.</span>
-      <span class="flex items-center gap-5">
-        <a class="ulink" href="#">Privacy</a>
-        <a class="ulink" href="#">Terms</a>
-        <a class="ulink" href="#">Notice of privacy practices</a>
-        <a class="ulink" href="#colophon">Colophon</a>
-      </span>
+    <div class="bottom label">
+      <span>© 2026 PHM Care, Lda</span>
+      <a class="ulink" href="#inicio">↑ Topo</a>
     </div>
   </div>
 </footer>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     COLOPHON — brand reference, image direction, deliverables
-     (this is the editorial back-matter that doubles as the brand guide)
-     ═══════════════════════════════════════════════════════════════════════════ -->
-<section id="colophon" class="bg-bone-dark/40 border-t hairline-strong">
-  <div class="container-page py-24">
-
-    <div class="eyebrow label">
-      <span class="sec-num text-[28px] leading-none">¶</span>
-      <span>Colophon — about this issue</span>
-      <span class="bar"></span>
-      <span class="hidden md:inline">Issue 12 · April 2026</span>
-    </div>
-
-    <h2 class="display mt-8 text-[clamp(36px,5vw,64px)] max-w-[24ch]">
-      A specimen of the <span class="display-italic">Vellum</span> brand system.
-    </h2>
-    <p class="mt-5 text-[15px] leading-[1.65] text-ink-soft max-w-[60ch]">
-      Everything below — the names considered, the palette, the type, the photographic direction — was selected to communicate
-      one thing: clinical authority delivered with human warmth.
-    </p>
-
-    <!-- Names considered -->
-    <div class="mt-16">
-      <div class="label text-ink-mute mb-6">— Names considered</div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border hairline">
-        <div class="bg-bone p-8">
-          <div class="num text-[12px] text-clay">01 / chosen</div>
-          <h3 class="display text-[44px] mt-2">Vellum</h3>
-          <p class="text-[14px] leading-[1.65] text-ink-soft mt-3">
-            From the parchment on which medicine first inscribed itself. Short, abstract, archival. Two syllables, soft consonants,
-            owns its category.
-          </p>
-        </div>
-        <div class="bg-bone p-8">
-          <div class="num text-[12px] text-clay">02 / alternate</div>
-          <h3 class="display text-[44px] mt-2">Kairos</h3>
-          <p class="text-[14px] leading-[1.65] text-ink-soft mt-3">
-            Greek: the right moment. The opportune intervention. Carries the temporal precision Vellum's monitoring product is built around.
-          </p>
-        </div>
-        <div class="bg-bone p-8">
-          <div class="num text-[12px] text-clay">03 / alternate</div>
-          <h3 class="display text-[44px] mt-2">Lumen</h3>
-          <p class="text-[14px] leading-[1.65] text-ink-soft mt-3">
-            A unit of light, and the inside of a vessel. A double medical resonance: visibility and circulation. Slightly more clinical, slightly less editorial.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Palette -->
-    <div class="mt-16">
-      <div class="label text-ink-mute mb-6">— Palette</div>
-      <div class="grid grid-cols-2 md:grid-cols-6 gap-px bg-line border hairline">
-        <div class="p-6" style="background:#F4EFE6">
-          <div class="aspect-square rounded-sm border hairline" style="background:#F4EFE6"></div>
-          <div class="num text-[11px] mt-3 text-ink">#F4EFE6</div>
-          <div class="label text-ink-mute">Bone</div>
-        </div>
-        <div class="p-6 bg-bone-light">
-          <div class="aspect-square rounded-sm" style="background:#FAF7F1"></div>
-          <div class="num text-[11px] mt-3 text-ink">#FAF7F1</div>
-          <div class="label text-ink-mute">Bone-light</div>
-        </div>
-        <div class="p-6 bg-bone">
-          <div class="aspect-square rounded-sm" style="background:#14181F"></div>
-          <div class="num text-[11px] mt-3 text-ink">#14181F</div>
-          <div class="label text-ink-mute">Ink</div>
-        </div>
-        <div class="p-6 bg-bone">
-          <div class="aspect-square rounded-sm" style="background:#C2553D"></div>
-          <div class="num text-[11px] mt-3 text-ink">#C2553D</div>
-          <div class="label text-ink-mute">Clay</div>
-        </div>
-        <div class="p-6 bg-bone">
-          <div class="aspect-square rounded-sm" style="background:#6B7E6E"></div>
-          <div class="num text-[11px] mt-3 text-ink">#6B7E6E</div>
-          <div class="label text-ink-mute">Sage</div>
-        </div>
-        <div class="p-6 bg-bone">
-          <div class="aspect-square rounded-sm" style="background:#E5DCC9"></div>
-          <div class="num text-[11px] mt-3 text-ink">#E5DCC9</div>
-          <div class="label text-ink-mute">Mist</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Type -->
-    <div class="mt-16">
-      <div class="label text-ink-mute mb-6">— Typography</div>
-      <div class="grid grid-cols-12 gap-px bg-line border hairline">
-        <div class="col-span-12 md:col-span-7 bg-bone p-10">
-          <span class="num text-[12px] text-clay">Display · Fraunces (variable, opsz)</span>
-          <div class="display text-[88px] leading-none mt-4">Aa</div>
-          <div class="display-italic text-[88px] leading-none mt-2 text-clay-deep">Aa</div>
-          <p class="text-[13px] leading-[1.65] text-ink-soft mt-6 max-w-[44ch]">
-            Fraunces is a contrast-rich variable serif with optical-size and softness axes — set heavy for headlines, italic for accents,
-            light for editorial annotations. Carries the authority of a medical journal without its coldness.
-          </p>
-        </div>
-        <div class="col-span-12 md:col-span-5 bg-bone p-10">
-          <span class="num text-[12px] text-clay">Body · Manrope &nbsp;·&nbsp; Mono · JetBrains Mono</span>
-          <div class="text-[44px] mt-4 font-body" style="font-weight:300">Aa</div>
-          <div class="num text-[28px] mt-1">Aa 0123 ↑↓</div>
-          <p class="text-[13px] leading-[1.65] text-ink-soft mt-6 max-w-[36ch]">
-            Manrope handles long-form copy with a humanist warmth that geometric grotesques can't match.
-            JetBrains Mono carries clinical metadata, latencies, and identifiers.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Image direction -->
-    <div class="mt-16">
-      <div class="label text-ink-mute mb-6">— Image direction (AI-prompt brief, per section)</div>
-      <div class="border hairline">
-
-        <div class="grid grid-cols-12 gap-6 p-7 border-b hairline">
-          <div class="col-span-12 md:col-span-3 num text-clay text-[12px]">§ Hero</div>
-          <p class="col-span-12 md:col-span-9 text-[14px] leading-[1.7] text-ink-soft">
-            "Editorial photograph of a quiet hospital corridor at dawn. Soft volumetric morning light filtering through tall arched windows.
-            A single nurse station glowing in the distance with subtle monitor light. No people in the foreground. Color palette: warm bone, ink charcoal,
-            muted clay accents. Shot on Mamiya 7 medium-format film, 80mm lens, shallow depth of field. Calm, contemplative, archival editorial. Ultra-realistic, 4K."
-          </p>
-        </div>
-
-        <div class="grid grid-cols-12 gap-6 p-7 border-b hairline">
-          <div class="col-span-12 md:col-span-3 num text-clay text-[12px]">§ Trust</div>
-          <p class="col-span-12 md:col-span-9 text-[14px] leading-[1.7] text-ink-soft">
-            "Top-down still life on a walnut conference table: a leather-bound clinical journal half open, a brass desk lamp casting a warm pool of light,
-            scattered hospital ID badges, a fountain pen, a folded white coat. Color palette warm cream and deep ink. Editorial photography in the style of The New England Journal of Medicine.
-            45-degree angle, 50mm lens. 4K."
-          </p>
-        </div>
-
-        <div class="grid grid-cols-12 gap-6 p-7 border-b hairline">
-          <div class="col-span-12 md:col-span-3 num text-clay text-[12px]">§ Problem</div>
-          <p class="col-span-12 md:col-span-9 text-[14px] leading-[1.7] text-ink-soft">
-            "Macro photograph of a stack of paper medical charts, one open showing handwritten notes and printed lab values. Soft window light from the left, long shadows,
-            slight desaturation toward bone and ink tones. Conveys overwhelm without alarm. Editorial photojournalism, 100mm macro. 4K."
-          </p>
-        </div>
-
-        <div class="grid grid-cols-12 gap-6 p-7 border-b hairline">
-          <div class="col-span-12 md:col-span-3 num text-clay text-[12px]">§ Solution</div>
-          <p class="col-span-12 md:col-span-9 text-[14px] leading-[1.7] text-ink-soft">
-            "Close-up of a clinician's hands above a tablet showing a minimalist recommendation interface — clean cards, hairline borders, sage and clay UI accents.
-            Warm desk lamp, brass details. No neon, no purple, no holograms. Editorial product photography, top-down, shallow depth of field. 4K."
-          </p>
-        </div>
-
-        <div class="grid grid-cols-12 gap-6 p-7 border-b hairline">
-          <div class="col-span-12 md:col-span-3 num text-clay text-[12px]">§ Sentinel</div>
-          <p class="col-span-12 md:col-span-9 text-[14px] leading-[1.7] text-ink-soft">
-            "Abstract minimalist composition: a single thin clay-red line crossing a vast bone-colored field, the line peaks once dramatically — like an EKG anomaly.
-            Generous negative space. Fine-art editorial. Suggests one signal of consequence in a field of stillness. 4K."
-          </p>
-        </div>
-
-        <div class="grid grid-cols-12 gap-6 p-7 border-b hairline">
-          <div class="col-span-12 md:col-span-3 num text-clay text-[12px]">§ Cadence</div>
-          <p class="col-span-12 md:col-span-9 text-[14px] leading-[1.7] text-ink-soft">
-            "Stylized still life: a clinician's hand holds a stylus over a tablet displaying a clean recommendation card with citations. Warm desk lamp, brass divider,
-            cream paper notebook beside. Top-down editorial product photography, sage and clay UI accents, no clutter. 4K."
-          </p>
-        </div>
-
-        <div class="grid grid-cols-12 gap-6 p-7 border-b hairline">
-          <div class="col-span-12 md:col-span-3 num text-clay text-[12px]">§ Stratify</div>
-          <p class="col-span-12 md:col-span-9 text-[14px] leading-[1.7] text-ink-soft">
-            "Abstract data visualization rendered as analog ink on linen — a patient cohort represented as a constellation of dots,
-            with one bright clay-colored dot pulled forward into focus. Museum-quality print aesthetic. Editorial illustration, no photorealism. 4K."
-          </p>
-        </div>
-
-        <div class="grid grid-cols-12 gap-6 p-7 border-b hairline">
-          <div class="col-span-12 md:col-span-3 num text-clay text-[12px]">§ Conduit</div>
-          <p class="col-span-12 md:col-span-9 text-[14px] leading-[1.7] text-ink-soft">
-            "Architectural diagram: a hospital workflow rendered as elegant blueprint lines on warm cream paper, brass divider tools resting beside the page,
-            soft directional shadows. Editorial top-down. 4K."
-          </p>
-        </div>
-
-        <div class="grid grid-cols-12 gap-6 p-7 border-b hairline">
-          <div class="col-span-12 md:col-span-3 num text-clay text-[12px]">§ Method (How it works)</div>
-          <p class="col-span-12 md:col-span-9 text-[14px] leading-[1.7] text-ink-soft">
-            "Side-on photograph of a clinical workstation with multiple monitors showing minimalist dashboards in cream and ink. Gentle morning light.
-            A stethoscope and notebook on the desk. Editorial newspaper photography, 35mm lens, ultra-realistic. 4K."
-          </p>
-        </div>
-
-        <div class="grid grid-cols-12 gap-6 p-7 border-b hairline">
-          <div class="col-span-12 md:col-span-3 num text-clay text-[12px]">§ Testimonials</div>
-          <p class="col-span-12 md:col-span-9 text-[14px] leading-[1.7] text-ink-soft">
-            "Three black-and-white portraits of clinicians, neutral expressions, eye contact, soft north-facing window light. Hasselblad medium format, 80mm.
-            Quiet, dignified, in the style of Yousuf Karsh. Subtly tinted toward warm bone in post. 4K."
-          </p>
-        </div>
-
-        <div class="grid grid-cols-12 gap-6 p-7">
-          <div class="col-span-12 md:col-span-3 num text-clay text-[12px]">§ Final CTA</div>
-          <p class="col-span-12 md:col-span-9 text-[14px] leading-[1.7] text-ink-soft">
-            "Wide editorial photograph of a hospital atrium with tall arched windows; a single figure in white coat walking confidently toward the light.
-            Dawn lighting, warm cream walls, terracotta floor accents. Contemplative, aspirational, no overt sci-fi. 4K."
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bottom note -->
-    <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 marginalia">
-      <span>Set in Fraunces (display, 9–144pt opsz) and Manrope (body, 300–800wt). Mono in JetBrains Mono. Composed in 12-column editorial grid, hairlines at 1px / 12% ink.</span>
-      <span class="md:text-right">Printed on screen. Made with care · 2026.</span>
-    </div>
-
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     SCROLL REVEAL
-     ═══════════════════════════════════════════════════════════════════════════ -->
 <script>
-  // Reveal on scroll for `.reveal` elements
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in');
-        io.unobserve(e.target);
+  (function () {
+    // Revelação ao rolar
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var reveals = document.querySelectorAll('.reveal');
+    if (reduce || !('IntersectionObserver' in window)) {
+      reveals.forEach(function (el) { el.classList.add('in'); });
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
+      reveals.forEach(function (el) { io.observe(el); });
+    }
+
+    // Menu em ecrãs estreitos
+    var toggle = document.querySelector('.nav-toggle');
+    var nav = document.getElementById('nav-principal');
+    toggle.addEventListener('click', function () {
+      var open = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && nav.classList.contains('open')) {
+        nav.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); toggle.focus();
       }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
 
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-  // Smooth-pad headers for anchor scrolling
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      const id = a.getAttribute('href');
-      if (id && id.length > 1) {
-        const target = document.querySelector(id);
-        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-      }
+    // Ligações âncora: rolar e mover o foco para o destino, para que o teclado continue de lá
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var id = a.getAttribute('href');
+        if (!id || id.length < 2) return;
+        var target = document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+        nav.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false');
+        target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+        target.focus({ preventScroll: true });
+        history.replaceState(null, '', id);
+      });
     });
-  });
+
+    // Formulário: sem servidor por trás, abre o cliente de email com o pedido preenchido
+    var form = document.getElementById('form-demo');
+    var status = document.getElementById('form-status');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      status.textContent = '';
+      if (!form.checkValidity()) {
+        var first = form.querySelector(':invalid');
+        status.textContent = 'Preencha todos os campos, com um email institucional válido.';
+        if (first) first.focus();
+        return;
+      }
+      var v = function (n) { return form.elements[n].value.trim(); };
+      var subject = 'Pedido de demonstração — ' + v('instituicao');
+      var body = [
+        'Nome: ' + v('nome'),
+        'Instituição: ' + v('instituicao'),
+        'Email institucional: ' + v('email'),
+        'Função: ' + v('funcao'),
+        '',
+        'Gostaria de marcar uma demonstração do Codex.'
+      ].join('\n');
+      window.location.href = 'mailto:pedro@phmcare.ai?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      status.textContent = 'O seu cliente de email vai abrir com o pedido preenchido. Se não abrir, escreva para pedro@phmcare.ai.';
+    });
+  })();
 </script>
 
 </body>

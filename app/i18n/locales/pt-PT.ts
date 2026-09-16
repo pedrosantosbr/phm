@@ -1,18 +1,27 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   PHM Care — Codex · texto da landing page (pt-PT)
+   Fonte de verdade: landing-page-phm-care-copy.md (v2.0, 16/09/2026).
+   Não acrescentar números sem fonte pública citável ao lado.
+   ────────────────────────────────────────────────────────────────────────── */
+
 const ptPT = {
-  masthead: {
-    edition: "Vol. I · Edição 01 · Abril 2026",
-    tagline: "Construída com clínicos, para clínicos.",
-    uptimeStatus: "Operacional",
+  meta: {
+    title: "PHM Care — Codex · Do texto clínico ao GDH",
+    description:
+      "O Codex lê a documentação do episódio, propõe os códigos ICD-10-CM/PCS com a passagem clínica que os sustenta, agrupa em GDH e mostra o valor do episódio. O médico codificador valida e decide. Codificação clínica assistida por IA, desenhada para o SNS.",
   },
 
   nav: {
-    brandSuffix: "— Health",
-    products: "Produtos",
-    market: "Mercado",
-    advantage: "Vantagem",
-    team: "Equipa",
-    login: "Iniciar sessão",
-    cta: "Pedir demo",
+    brand: "PHM Care",
+    product: "Codex",
+    brandAria: "PHM Care — início",
+    aria: "Navegação principal",
+    how: "Como funciona",
+    dashboard: "Painel",
+    security: "Segurança",
+    cta: "Falar connosco",
+    menu: "Menu",
+    skip: "Saltar para o conteúdo",
   },
 
   language: {
@@ -23,350 +32,228 @@ const ptPT = {
   },
 
   hero: {
-    eyebrow: "O sistema operativo de IA para hospitais",
-    eyebrowMeta: "Filed under: medicina · raciocínio máquina · fluxo",
-    titleLine1: "Inteligência clínica,",
-    titleLine2: "à velocidade do hospital.",
-    body: "A PHMCare AI liga codificação clínica, escalas e gestão de camas numa única camada de inteligência hospitalar — reduzindo custos administrativos, atrasos de faturamento e tempos de espera. Sem substituir o critério de quem cuida.",
-    ctaPrimary: "Pedir demonstração",
-    ctaGhost: "Ler o pitch",
-    complianceGolive: "Go-live em 14 dias",
-    specimen: {
-      label: "Specimen 01 / CodiCare",
-      header: "CodiCare · Codificação clínica",
-      meta: "alta · 12.04",
-      recordHeader: "EVOLUÇÃO · 12.04.2026 · 14:22",
-      recordPart1: "Doente refere",
-      recordHighlight1: "dor torácica",
-      recordPart2:
-        "de início súbito, com irradiação para o membro superior esquerdo, associada a",
-      recordHighlight2: "dispneia em esforço",
-      recordPart3: ". O ECG mostra",
-      recordHighlight3: "elevação de ST",
-      recordPart4: "em parede inferior.",
-      code1Label: "Enfarte agudo do miocárdio · parede inferior",
-      code2Label: "Dor torácica não especificada",
-      code3Label: "Dispneia",
-      recommendation: "Auditoria · concluída",
-      recText: "Três códigos fundamentados — cada um ligado ao excerto de origem.",
-      recEmphasis: "Nada inventado, tudo rastreável.",
-      source: "Fonte: CID-10 Vol. 2 · Protocolo local v3.2 · Regras do pagador",
-      btnAccept: "Aceitar códigos",
-      btnReview: "Rever excertos",
-      latency: "latência 38ms",
-      annotation:
-        "Specimen ao vivo — cada código traz citação do excerto, nível de confiança e trilho de auditoria. A IA propõe; o codificador decide.",
+    eyebrow: "Codificação clínica assistida por IA · ICD-10-CM/PCS · GDH",
+    titleLine1: "Do texto clínico ao GDH,",
+    titleLine2: "sem o caminho todo à mão.",
+    body: "O Codex lê a documentação do episódio, propõe os códigos ICD-10-CM/PCS com a passagem clínica que os sustenta, agrupa em GDH e mostra o valor do episódio no momento em que ele é codificado. O médico codificador valida e decide — deixa de começar em folha em branco e passa a começar em proposta fundamentada.",
+    ctaPrimary: "Ver uma demonstração",
+    ctaGhost: "Como funciona",
+    microcopy:
+      "Desenhado para o sistema de financiamento hospitalar português: ICD-10-CM/PCS, agrupamento APR-DRG, valorização por peso relativo e ligação ao SIMH (em desenvolvimento).",
+    flow: {
+      aria: "Representação ilustrativa do fluxo do Codex em quatro estados, com validação humana entre o segundo e o terceiro",
+      header: "Fluxo de um episódio",
+      tag: "Exemplo ilustrativo",
+      s1Label: "Estado um",
+      s1Title: "Documentação do episódio",
+      s1Chip1: "Relatório de alta",
+      s1Chip2: "Notas de evolução",
+      s1Chip3: "Registo de bloco",
+      s2Label: "Estado dois",
+      s2Title: "Códigos propostos, com justificação",
+      s2Chip1: "Diagnóstico principal",
+      s2Chip2: "Secundários",
+      s2Chip3: "Procedimentos",
+      s2Note: "↗ passagem do processo clínico · documento de origem",
+      humanLabel: "Validação humana",
+      humanWho: "O médico codificador aceita, altera, acrescenta ou recusa.",
+      s3Label: "Estado três",
+      s3Title: "GDH e severidade",
+      s3Chip1: "GDH",
+      s3Chip2: "Nível de severidade",
+      s4Label: "Estado quatro",
+      s4Title: "Valor do episódio",
+      s4Note: "a partir do peso relativo",
+      caption:
+        "Exemplo ilustrativo. Sem dados de doentes: as barras representam texto, não valores.",
     },
   },
 
-  trust: {
-    label: "— Construído com",
-    headlinePre: "Hospitais que servem mais de",
-    headlineEmphasis: "14 milhões",
-    headlinePost: "de atendimentos anuais.",
-    stats: {
-      productsLabel: "Produtos · uma camada",
-      goliveLabel: "Do contrato à primeira recomendação",
-      uptimeLabel: "Disponibilidade · 24m",
-      latencyLabel: "Latência mediana de decisão",
+  how: {
+    eyebrow: "Como funciona",
+    titleLine1: "Quatro passos,",
+    titleLine2: "um deles humano por desenho.",
+    body: "A codificação é acto médico e continua a sê-lo. O Codex não substitui o passo da decisão: prepara tudo o que o antecede e executa tudo o que o segue.",
+    removes: "Tira do caminho",
+    because: "Porque é assim",
+    humanBadge: "Passo humano — não automático",
+    simhTag: "Ligação ao SIMH · em desenvolvimento",
+    steps: {
+      s1: {
+        num: "01",
+        label: "Passo um",
+        title: "Lê o episódio inteiro",
+        body: "Relatórios de alta, notas de evolução, resultados, registos de bloco. O Codex reúne e lê a documentação dispersa do episódio antes de o codificador a abrir.",
+        removes:
+          "A recolha e a leitura integral de documentação espalhada por vários sistemas e formatos.",
+      },
+      s2: {
+        num: "02",
+        label: "Passo dois",
+        title: "Propõe os códigos, com a passagem que os sustenta",
+        body: "Diagnóstico principal, secundários e procedimentos em ICD-10-CM/PCS. Cada sugestão traz a frase do processo clínico que a fundamenta, com ligação ao documento de origem.",
+        removes:
+          "A procura da evidência para sustentar — ou recusar — cada código. E deixa a justificação escrita, que é o que a auditoria interna precisa e que hoje raramente existe.",
+      },
+      s3: {
+        num: "03",
+        label: "Passo três",
+        title: "O codificador valida",
+        body: "Aceitar, alterar, acrescentar, recusar. A decisão é sempre do médico codificador, e cada intervenção fica registada.",
+        because:
+          "A codificação é acto médico no enquadramento português, e o artigo 1.º-C do Código dos Contratos Públicos, aditado pelo Decreto-Lei n.º 177/2026, inscreve na lei o princípio de supervisão e contributo humano no uso de IA pela Administração.",
+      },
+      s4: {
+        num: "04",
+        label: "Passo quatro",
+        title: "Agrupa, valoriza e devolve ao sistema",
+        body: "Sobre os códigos validados, o Codex aplica o agrupamento, devolve o GDH e o nível de severidade, e apresenta a leitura do valor do episódio a partir do peso relativo.",
+        removes:
+          "A transcrição manual de códigos entre sistemas — e o erro que lhe anda associado. E encurta a distância entre codificar e saber o que o episódio vale, que hoje é de meses.",
+      },
+    },
+    close:
+      "O ganho não está em cada passo isolado. Está em o codificador chegar ao episódio com o trabalho de preparação feito, e em a instituição saber o que tem codificado enquanto ainda há margem para agir.",
+  },
+
+  why: {
+    eyebrow: "Porque agora",
+    titleLine1: "O volume sobe,",
+    titleLine2: "a capacidade não pode subir com ele.",
+    body: "A codificação clínica é hoje um dos pontos mais estreitos da cadeia que liga o registo clínico ao financiamento hospitalar — e está a ficar mais estreito por razões que nenhuma instituição controla.",
+    r1: {
+      figure: "30",
+      figureUnit: "dias após a alta",
+      title: "O prazo é exigente por desenho",
+      body: "O Acordo Modificativo ao Contrato-Programa fixa 30 dias após a alta para codificar, agrupar e auditar cada episódio. É um prazo curto para um processo que exige leitura integral de documentação clínica por um médico codificador, e a pressão sobre ele é estrutural: aplica-se a todos, todos os meses, sobre todo o volume.",
+      source:
+        "Fonte: Acordo Modificativo ao Contrato-Programa, Cláusula 5.ª, n.º 2 — ACSS",
+    },
+    r2: {
+      figure: "1,4 %",
+      figureUnit: "de reforço de pessoal sem termo em 2026",
+      title: "O recurso é escasso e está contingentado",
+      body: "O médico codificador é recurso especializado e escasso. O Quadro Global de Referência do SNS para 2026-2028 limita o reforço de pessoal sem termo a 1,4 % em 2026 para todo o SNS. A resposta ao volume não pode vir de mais pessoas.",
+      source: "Fonte: Despacho n.º 10981-A/2026",
+    },
+    r3: {
+      figure: "Quatro",
+      figureUnit: "indicadores construídos a partir da codificação",
+      title: "E o output da codificação pesa mais do que pesava",
+      body: "Quatro dos indicadores pelos quais cada ULS é avaliada até 2028 são construídos a partir do resultado da codificação — entre eles a hospitalização domiciliária em GDH, cuja meta mais do que duplica. A codificação deixou de ser trabalho administrativo de retaguarda e passou a ser a fonte de dados por onde a instituição é medida.",
+      source: "Fonte: Despacho n.º 10981-A/2026",
+    },
+    close: {
+      figure: "23,12 %",
+      body: "Nacionalmente, 23,12 % dos episódios do SNS estão por codificar. É a medida da distância entre o que o processo actual consegue dar e o que lhe está a ser pedido — e é o espaço onde a codificação assistida faz diferença.",
+      source: "Fonte: Base de Dados de Morbilidade Hospitalar — ACSS",
     },
   },
 
-  problem: {
-    eyebrow: "O Problema",
-    titleLine1: "Hospitais com sistemas",
-    titleLine2: "fragmentados.",
-    titleLine3: "As pessoas pagam a conta.",
-    body: "Cada hospital é uma constelação de sistemas que não se falam. Os profissionais são a cola — e estão a partir. Os doentes esperam. Os custos administrativos crescem. O risco evitável passa por baixo do radar.",
-    source:
-      "— Fonte: benchmark interno PHMCare AI 2025, n=1.4M episódios clínicos, 22 instituições EU/BR.",
-    items: {
-      coding: {
-        title: "Codificação manual: cara, lenta, instável.",
-        body: "A codificação CID e a documentação clínica continuam a ser feitas a olho — produzindo atrasos no faturamento, glosas evitáveis e horas perdidas em auditoria que não devolve nada ao doente.",
-        tag: "tag · cid · auditoria · faturamento · glosas",
-      },
-      rostering: {
-        title: "Escalas montadas à mão, turno a turno.",
-        bodyPart1:
-          "As escalas mensais são montadas em folhas de cálculo, à mão, por quem já está sobrecarregado. O resultado é",
-        bodyEmphasis: "cobertura desigual",
-        bodyPart2:
-          "— noites e fins de semana concentrados nos mesmos, e horas perdidas a refazer tudo quando alguém falta.",
-        tag: "tag · escalas · turnos · competências · cobertura",
-      },
-      beds: {
-        title: "Camas bloqueadas e doentes à espera.",
-        bodyPart1:
-          "A ocupação vive em quadros brancos e telefonemas. Sem estado em tempo real de cada cama, os doentes esperam em macas enquanto camas limpas ficam",
-        bodyEmphasis: "invisíveis para quem decide",
-        bodyPart2:
-          "— e as transferências entre serviços arrastam-se por horas.",
-        tag: "tag · camas · ocupação · transferências · fluxo",
-      },
-      burnout: {
-        title: "Profissionais à beira da exaustão.",
-        bodyPart1: "Médicos e enfermeiros passam até",
-        bodyEmphasis: "49% do tempo",
-        bodyPart2:
-          "em documentação e revisão de prontuários. O sinal vive no presente — o sistema só descreve o passado.",
-        tag: "tag · burnout · documentação · cognitiva",
-      },
+  dashboard: {
+    eyebrow: "Para quem responde pelo contrato-programa",
+    titleLine1: "A vista que hoje só existe",
+    titleLine2: "depois do apuramento.",
+    body: "Acima do trabalho episódio a episódio, o Codex entrega à gestão a leitura em tempo real do que está codificado, do que falta e do que isso representa.",
+    c1: {
+      k: "Prazo",
+      title: "Prazo, em tempo real",
+      body: "Quantos episódios estão dentro dos 30 dias, quantos estão fora e quantos vão sair esta semana, por serviço e por responsável. A informação chega enquanto ainda há margem para agir, e não no apuramento.",
     },
+    c2: {
+      k: "Pendente",
+      title: "O que o stock por codificar representa",
+      bodyPart1: "Cada episódio por codificar é índice de ",
+      bodyEm: "case-mix",
+      bodyPart2:
+        " que ainda não entrou no apuramento. O painel põe valor em euros no que está pendente.",
+    },
+    c3: {
+      k: "Produção",
+      title: "Realizado contra contratado",
+      body: "O Apêndice II fixa a produção contratada por linha. O painel compara realizado com contratado, por banda e por serviço, ao mês.",
+    },
+    c4: {
+      k: "Auditoria",
+      title: "Auditoria contínua, não por amostra",
+      bodyPart1:
+        "O motor vê todos os episódios: divergências entre código proposto e validado, documentação insuficiente para sustentar o GDH, padrões por serviço. A auditoria deixa de ser trabalho de amostragem ",
+      bodyEm: "a posteriori",
+      bodyPart2: ".",
+    },
+    close:
+      "Nenhuma destas quatro vistas existe quando a codificação é entregue a um prestador externo. É a diferença entre comprar capacidade e ter a cadeia toda instrumentada.",
   },
 
-  platform: {
-    eyebrow: "A Plataforma",
-    titleLine1: "Uma camada horizontal.",
-    titleLine2: "Três instrumentos.",
-    titleLine3: "Um único registo.",
-    body1:
-      "A PHMCare AI integra-se ao seu EHR existente, lê os prontuários, monta as escalas e acompanha cada cama — e devolve recomendações com citação, latência medida e trilho de auditoria.",
-    body2Line1: "Nada substitui o critério clínico.",
-    body2Line2: "Tudo o afia.",
-    pillars: {
-      federated: {
-        title: "Federada por design.",
-        body: "Os dados nunca saem do seu perímetro. Os modelos correm dentro do seu VPC ou on-premise. PHI nunca é exposto.",
-      },
-      cited: {
-        title: "Citada por padrão.",
-        body: "Cada saída — código, escala, decisão — traz citação à fonte: catálogo oficial, protocolo local, regras do serviço. Sem caixa preta.",
-      },
-      calibrated: {
-        title: "Calibrada à sua realidade.",
-        body: "Protocolos, formulário, regras do pagador e legislação local. PT, BR e EU. Calibração feita com a sua equipa clínica.",
-      },
+  security: {
+    eyebrow: "Segurança",
+    titleLine1: "Dados de saúde tratados",
+    titleLine2: "como o que são.",
+    body: "A instituição é responsável pelo tratamento; a PHM Care actua como subcontratante, com contrato de subcontratação nos termos do artigo 28.º do RGPD. Dados de saúde são categoria especial do artigo 9.º, e o produto é construído a partir dessa restrição e não à volta dela.",
+    p1: {
+      title: "Contrato de subcontratação art. 28.º RGPD",
+      body: "Objecto e duração, instruções documentadas, confidencialidade, segurança, sub-subcontratação só com autorização, devolução ou eliminação no final, direito de auditoria.",
     },
-  },
-
-  products: {
-    eyebrow: "Os Instrumentos — três produtos, um único registo.",
-    eyebrowMeta: "Independentes · interligados · audit-ready",
-    titleLine1: "Construídos por clínicos,",
-    titleLine2: "indexados pela evidência.",
-    body: "Cada instrumento é independente, interligável, e integra com o EHR via HL7 v2, FHIR R4 e SMART-on-FHIR. Comece por um. Acrescente os outros à medida que a equipa cresce de confiança.",
-    validationLabel: "— Categoria validada por",
-    flagshipLabel: "Produto principal",
-    noteLabel: "— Nota",
-    notePart1: "Cada uma destas categorias está validada por mais de mil milhões de dólares de capital de risco. Mas",
-    noteEmphasis: "cada hospital é único",
-    notePart2:
-      "— pela legislação, pelo fluxo, pela realidade do terreno. A PHMCare AI foi construída precisamente para essa diferença.",
-    items: {
-      codicare: {
-        codename: "Instrumento 01 / CodiCare",
-        name: "CodiCare",
-        tagline: "Cada prontuário, codificado e auditado — automaticamente.",
-        body: "Automatiza a análise de prontuários médicos com IA e OCR clínico, sugerindo e validando códigos CID com citação directa do excerto fonte. Reduz drasticamente o tempo e o custo dos processos de auditoria, faturamento e relatório regulatório.",
-        bullet1:
-          "Sugestão de CID-10 / CID-11 com citação do excerto fonte e nível de confiança",
-        bullet2:
-          "OCR clínico treinado em prontuários manuscritos PT/BR e formulários hospitalares",
-        bullet3:
-          "Auditoria automática contra protocolos do hospital e regras do pagador",
-        pill: "Codificação · auditoria",
-        specimen: {
-          header: "Prontuário · processado",
-          meta: "alta · 12.04",
-          recordHeader: "EVOLUÇÃO · 12.04.2026 · 14:22",
-          recordPart1: "Doente refere",
-          recordHighlight1: "dor torácica",
-          recordPart2:
-            "com início súbito, irradiação para o membro superior esquerdo, associada a",
-          recordHighlight2: "dispneia em esforço",
-          recordPart3: ". Ausculta cardíaca rítmica, sem sopros. ECG mostra",
-          recordHighlight3: "elevação de ST",
-          recordPart4: "em parede inferior.",
-          code1Label: "Enfarte agudo do miocárdio · parede inferior",
-          code2Label: "Dor torácica não especificada",
-          code3Label: "Dispneia",
-          excerpts: "12 excertos analisados",
-          suggested: "3 códigos sugeridos",
-        },
-      },
-      escala: {
-        codename: "Instrumento 02 / Escala",
-        name: "Escala",
-        tagline: "Cada turno, coberto com justiça.",
-        body: "Gera escalas mensais determinísticas a partir das regras de horário de cada serviço — respeitando competências, especialidades e limites de trabalho. Distribui noites e fins de semana de forma equilibrada e reconstrói toda a escala em segundos quando alguém falta.",
-        bullet1:
-          "Escala mensal gerada a partir das horas contratadas e do catálogo de turnos do serviço",
-        bullet2:
-          "Equilíbrio automático de noites, fins de semana e competências por profissional",
-        bullet3:
-          "Reconstrução determinística em segundos — sem folhas de cálculo, sem favoritismos",
-        pill: "Escalas · força de trabalho",
-        specimen: {
-          header: "Escala · Abril 2026",
-          meta: "Cardiologia · 6 profissionais",
-          gridLegend: "M manhã · T tarde · N noite · — folga",
-          rowsLabel: "Equipa",
-          coverageLabel: "Cobertura",
-          coverageValue: "100% · sem lacunas",
-          balanceLabel: "Noites por profissional",
-          balanceValue: "equilibrado · Δ 1",
-          footerLeft: "30 dias gerados",
-          footerRight: "0 conflitos",
-        },
-      },
-      bedflow: {
-        codename: "Instrumento 03 / BedFlow",
-        name: "BedFlow",
-        tagline: "Cada cama, com o estado certo.",
-        body: "Mantém o inventário de camas do hospital e o seu ciclo de ocupação em tempo real — livre, ocupada, em limpeza ou bloqueada — com resumo de ocupação por ala. A base para alocar camas a pedidos de transferência entre serviços, antes que o doente espere numa maca.",
-        bullet1:
-          "Inventário de camas por ala com transições de estado auditáveis",
-        bullet2:
-          "Resumo de ocupação por serviço em tempo real — livre · ocupada · limpeza · bloqueada",
-        bullet3:
-          "Alocação de camas a pedidos de transferência entre serviços — roadmap ativo",
-        pill: "Fluxo · camas",
-        specimen: {
-          header: "Ocupação · em tempo real",
-          meta: "3 alas · 48 camas",
-          ward1Label: "Cardiologia · Ala A",
-          ward1Value: "18 / 20",
-          ward2Label: "Medicina Interna · Ala B",
-          ward2Value: "12 / 16",
-          ward3Label: "Cirurgia · Ala C",
-          ward3Value: "9 / 12",
-          statusFree: "Livre",
-          statusOccupied: "Ocupada",
-          statusCleaning: "Limpeza",
-          statusBlocked: "Bloqueada",
-          requestLabel: "Pedido de transferência",
-          requestValue: "Ala B → Ala A · cama alocada",
-          footerLeft: "48 camas monitorizadas",
-          footerRight: "5 livres agora",
-        },
-      },
+    p2: {
+      title: "Os vossos dados não treinam modelos",
+      body: "Compromisso contratual, não política interna.",
     },
-  },
-
-  market: {
-    eyebrow: "O Mercado",
-    titlePre: "Mais de",
-    titleEmphasis: "4 biliões",
-    titlePost:
-      "de dólares em ineficiência hospitalar — à espera de uma camada que pense.",
-    body: "A IA clínica está a tornar-se infraestrutura. Quem chegar primeiro à camada certa fica.",
-    cards: {
-      ineff: {
-        title: "Ineficiências hospitalares globais.",
-        body: "Custo anual desperdiçado em fragmentação de sistemas, fluxos manuais e erros evitáveis. Endereço directo da PHMCare AI.",
-      },
-      valuation: {
-        title: "Avaliação só em operações clínicas.",
-        bodyPart1:
-          "Titulares em codificação, escalas e gestão de camas ultrapassam os mil milhões em avaliação. E é apenas",
-        bodyEmphasis: "um",
-        bodyPart2: "dos três eixos onde a PHMCare AI opera.",
-      },
-      infra: {
-        title: "Infraestrutura essencial.",
-        body: "Em cinco anos, a IA clínica deixará de ser um diferenciador opcional para passar a ser tão obrigatória como o EHR. Quem não tiver, não opera.",
-      },
+    p3: {
+      title: "Rasto de auditoria completo",
+      body: "Cada sugestão com a passagem clínica que a sustenta e o registo de quem validou, o quê e quando.",
     },
-    sources:
-      "— Fontes: McKinsey Global Institute (Healthcare AI 2024), CB Insights, dados públicos das rondas de investimento dos competidores listados em IV. Reproduzidos para efeito de validação de categoria.",
-  },
-
-  advantage: {
-    eyebrow: "A Vantagem",
-    titleLine1: "Não competimos numa categoria.",
-    titleLine2: "Competimos em três — e ligamos as três.",
-    body: "Cada categoria tem os seus titulares — gigantes ou unicórnios. Mas todos operam em silos. A vantagem da PHMCare AI é a camada que os atravessa.",
-    categories: {
-      docs: {
-        label: "— Categoria 01",
-        title: "Codificação clínica",
-        body: "Transformam prontuário em código CID e episódio faturável.",
-      },
-      voice: {
-        label: "— Categoria 02",
-        title: "Escalas & força de trabalho",
-        body: "Montam turnos e gerem a equipa. Rígidos, fora do fluxo clínico.",
-      },
-      systems: {
-        label: "— Categoria 03",
-        title: "Fluxo & capacidade hospitalar",
-        body: "Gerem camas e transferências. Caros, difíceis de integrar.",
-      },
+    p4: {
+      title: "Supervisão humana como requisito, não como opção",
+      body: "É o passo 03 do fluxo, e está alinhado com o artigo 1.º-C do Código dos Contratos Públicos.",
     },
-    msftSuffix: "parte de MSFT",
-    punchlinePre: "Eles operam em silos.",
-    punchlineEmphasis: "A PHMCare AI é a camada que os atravessa.",
-  },
-
-  model: {
-    eyebrow: "O Modelo",
-    titleLine1: "SaaS por hospital,",
-    titleLine2: "utilização para a operação.",
-    items: {
-      saas: {
-        title: "SaaS clínico",
-        body: "Por hospital, por cama ou por profissional de saúde. Modelos de preço alinhados com a estrutura interna.",
-      },
-      consumption: {
-        title: "Consumo · operação",
-        body: "Preço por prontuário codificado, por escala gerada e por cama-dia monitorizada. Escala com o volume, sem teto artificial.",
-      },
-      enterprise: {
-        title: "Contratos enterprise",
-        body: "Integração com EHRs (Epic, Oracle Health, Meditech, Allscripts), SLAs definidos, BAA na assinatura.",
-      },
-    },
-  },
-
-  vision: {
-    eyebrow: "A Visão",
-    titleLine1: "Começamos com 3.",
-    titleLine2: "Construímos para 1.",
-    body: "Três produtos hoje. Uma camada amanhã. Um sistema operativo hospitalar nativo de IA — coordenando decisão clínica, operação e fluxo de pacientes em tempo real.",
-    todayLabel: "Hoje",
-    todayBody:
-      "Codificação clínica · escalas inteligentes · gestão de camas.",
-    nextLabel: "Próximo",
-    nextBody:
-      "Pathways clínicos automatizados · monitorização remota · formulário inteligente · gestão do fluxo de pacientes.",
-    visionLabel: "Visão",
-    visionPart1:
-      "Sistema operativo hospitalar nativo de IA — uma única camada que coordena",
-    visionEmphasis: "decisão, operação e fluxo",
-    visionPart2: "em tempo real.",
   },
 
   cta: {
+    secNum: "VIII",
     eyebrow: "Falar com a equipa",
-    titleLine1: "Vamos colocar",
-    titleLine2: "a PHMCare AI",
-    titleLine3: "no seu hospital.",
-    body: "Uma demonstração de 30 minutos sobre os seus fluxos reais. Sem slideware. Conectamos a um sandbox dos seus dados, mostramos CodiCare, Escala e BedFlow em acção, e deixamos um relatório escrito.",
-    emailLabel: "Email clínico ou executivo",
-    emailPlaceholder: "pedro@phmcare.ai",
-    hospitalLabel: "Hospital · serviço",
-    hospitalPlaceholder: "Hospital São Bartolomeu, Cardiologia",
-    ehrLabel: "EHR",
-    ehrOther: "Outro",
-    ehrOtherEU: "Soarian / outros EU",
-    submit: "Pedir demonstração",
-    disclaimer:
-      "Resposta em 24h · BAA na assinatura · sem PHI necessário para a demo",
-    stats: {
-      goliveLabel: "Do contrato à primeira recomendação",
-      phiLabel: "PHI sai do seu perímetro",
-      overrideLabel:
-        "Override clínico — quem cuida tem sempre a última palavra",
+    titleLine1: "Vejam o Codex",
+    titleLine2: "a correr",
+    titleLine3: "sobre um episódio.",
+    body1:
+      "Uma sessão de 30 minutos, sobre um caso real anonimizado ou sobre um exemplo nosso, consoante preferirem. Mostramos o percurso completo — documentação, códigos propostos com justificação, validação, GDH e valor do episódio — e respondemos às perguntas de integração e de proteção de dados na mesma conversa.",
+    body2:
+      "Se quiserem, levamos também o dimensionamento da vossa instituição, calculado a partir de documentos públicos.",
+    form: {
+      email: "Email clínico ou executivo",
+      emailPlaceholder: "pedro@phmcare.ai",
+      hospital: "Hospital · serviço",
+      hospitalPlaceholder: "Hospital São Bartolomeu, Cardiologia",
+      role: "Função",
+      rolePlaceholder: "Seleccione",
+      roles: {
+        board: "Conselho de administração",
+        clinical: "Direcção clínica",
+        coding: "Serviço de codificação",
+        it: "Sistemas de informação",
+        other: "Outra",
+      },
+      roleOther: "Qual?",
+      roleOtherPlaceholder: "Indique a sua função",
+      submit: "Pedir demonstração",
+      microcopy: "Resposta em 24h · BAA na assinatura · sem PHI necessário para a demo",
+      invalid: "Preencha todos os campos, com um email válido.",
+      sent: "O seu cliente de email vai abrir com o pedido preenchido. Se não abrir, escreva para pedro@phmcare.ai.",
+      subject: "Pedido de demonstração",
+      bodyIntro: "Gostaria de marcar uma demonstração do Codex.",
     },
-    alertSubmitted:
-      "Pedido recebido. Um responsável clínico entrará em contacto nas próximas 24 horas.",
+    stats: {
+      s1Num: "14d",
+      s1Label: "Do contrato à primeira recomendação",
+      s2Num: "0",
+      s2Label: "PHI sai do seu perímetro",
+      s3Num: "∞",
+      s3Label: "Override clínico — quem cuida tem sempre a última palavra",
+    },
   },
 
   footer: {
     eyebrow: "Fim de edição",
     cities: "Ponte de Lima · Portugal",
-    body: "O sistema operativo de IA para hospitais. <em>CodiCare</em>, <em>Escala</em> e <em>BedFlow</em> numa única camada de inteligência clínica — escrita com o mesmo cuidado que pede às pessoas que cuidam.",
     bodyPart1: "O sistema operativo de IA para hospitais.",
     bodyProducts: "CodiCare, Escala e BedFlow",
     bodyPart2:
@@ -418,86 +305,6 @@ const ptPT = {
       topAria: "Voltar ao topo",
     },
     rodapeAria: "Rodapé",
-  },
-
-  colophon: {
-    eyebrow: "Colofão — sobre esta edição",
-    edition: "Edição 01 · Abril 2026",
-    titlePart1: "Um specimen do sistema",
-    titleEmphasis: "PHMCare AI.",
-    bodyPart1: "Esta página partilha o sistema visual da",
-    bodySisterLink: "edição-irmã Vellum",
-    bodyPart2:
-      ". Mesma autoridade clínica, mesma calorosidade humana — calibrada para a realidade hospitalar de PT, BR e UE.",
-    paletteLabel: "— Paleta",
-    imageLabel: "— Direcção de imagem (briefing AI por secção)",
-    images: {
-      hero: "Fotografia editorial de um corredor hospitalar silencioso ao amanhecer. Luz volumétrica suave a entrar pelas janelas. Estação de enfermagem ao fundo com brilho subtil de monitor. Sem pessoas em primeiro plano. Paleta: bone quente, ink charcoal, clay suave. Mamiya 7, 80mm, profundidade reduzida. Editorial arquival. 4K.",
-      trust:
-        "Still life em mesa de nogueira: um livro clínico encadernado a couro entreaberto, candeeiro de mesa em latão a criar piscina de luz quente, crachás dispersos, caneta-tinteiro, bata branca. Cream + ink. NEJM-style. 45°, 50mm. 4K.",
-      problem:
-        "Macro de uma pilha de prontuários em papel, um deles aberto com notas manuscritas e valores de laboratório. Luz suave de janela à esquerda, sombras longas, dessaturação subtil para tons de osso e tinta. Comunica peso sem alarme. Fotojornalismo, 100mm macro. 4K.",
-      codicare:
-        "Fotografia top-down: prontuário em papel com palavras-chave a ressaltar (sublinhado fino clay), ao lado uma régua brass e fichas pequenas com códigos impressos. Editorial product photography, sage e clay. 4K.",
-      escala:
-        "Fotografia top-down: uma grelha mensal desenhada à mão em papel cream, marcas de turno em tinta clay dispostas em ritmo regular, um compasso de latão pousado ao lado. Sugere ordem e equilíbrio. Editorial arquival. 4K.",
-      bedflow:
-        "Composição minimalista: uma planta de ala hospitalar em linhas de blueprint sobre bone quente, pequenos rectângulos preenchidos em sage e clay a marcar camas ocupadas e livres. Espaço negativo generoso. Editorial fine-art. 4K.",
-      model:
-        "Diagrama arquitectónico: workflow hospitalar desenhado como linhas de blueprint sobre papel cream quente, ferramentas de divisão em latão pousadas ao lado. Top-down editorial. Sem clutter. 4K.",
-      cta: "Fotografia editorial larga: átrio hospitalar com janelas altas em arco, uma figura solitária de bata branca a caminhar com confiança em direcção à luz. Iluminação de amanhecer, paredes cream, acentos terracotta no chão. Contemplativo, aspiracional, sem sci-fi. 4K.",
-    },
-    imageSection: {
-      hero: "§ Hero",
-      trust: "§ Trust",
-      problem: "§ Problem",
-      codicare: "§ CodiCare",
-      escala: "§ Escala",
-      bedflow: "§ BedFlow",
-      model: "§ Modelo / Visão",
-      cta: "§ Final CTA",
-    },
-    composedLine1:
-      "Composto em Fraunces (display, opsz 9–144) e Manrope (corpo, peso variável). Mono em JetBrains Mono. Grelha editorial 12 colunas, hairlines a 1px / 12% ink.",
-    composedLine2: "Impresso em ecrã. Construído com cuidado · 2026.",
-  },
-
-  hospitals: {
-    h1: "Hospital São Bartolomeu",
-    h2: "Centro Clínico Tejo Sul",
-    h3: "Vitalis Health Group",
-    h4: "Belmar Saúde",
-    h5: "Caldera Hospital Group",
-    h6: "Mercator Health",
-  },
-
-  team: {
-    eyebrow: "A Equipa",
-    eyebrowMeta: "Clínicos · engenheiros · investigadores",
-    titleLine1: "As pessoas por trás",
-    titleLine2: "do sistema.",
-    body: "Um grupo pequeno, deliberado. Construímos a PHMCare AI a partir de hospitais reais, com clínicos que prescrevem e engenheiros que escrevem código de produção. Sem distância entre o terreno e o repositório.",
-    specimenFooter: "Ponte de Lima · disponível para conversa",
-    footnoteLabel: "— Nota",
-    footnoteBody:
-      "Estamos a recrutar para engenharia clínica, calibração e operações hospitalares. Carta de motivação directa: pedro@phmcare.ai.",
-    members: {
-      m1: {
-        name: "Pedro Santos",
-        role: "Senior Engenheiro de Software + IA",
-        body: "Lidera a stack de produto e a infraestrutura de inferência. Responsável pela arquitectura federada que mantém o PHI dentro do perímetro do hospital.",
-      },
-      m2: {
-        name: "Mariana Matos",
-        role: "Jurista",
-        body: "Licenciada em Direito e História, mestre em Direito das Empresas e dos Negócios e doutoranda. Possui a especialização de Administração Hospitalar pela Escola Nacional de Saúde Pública da Universidade Nova de Lisboa.",
-      },
-      m3: {
-        name: "Fillipi Nascimento",
-        role: "Senior SRE Engineer",
-        body: "Responsável pela fiabilidade, observabilidade e operações on-premise. Mantém os 99.97% de disponibilidade que os hospitais parceiros leem na capa.",
-      },
-    },
   },
 };
 

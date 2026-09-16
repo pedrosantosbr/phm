@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { Fraunces, Manrope, JetBrains_Mono } from "next/font/google";
+import { Newsreader, IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "./i18n/provider";
-import { Masthead } from "./components/Masthead";
 import { Nav } from "./components/Nav";
 import { Footer } from "./components/Footer";
 
-const fraunces = Fraunces({
+const newsreader = Newsreader({
   subsets: ["latin"],
   variable: "--font-display",
   weight: "variable",
@@ -14,10 +13,10 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
-const manrope = Manrope({
+const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   variable: "--font-body",
-  weight: "variable",
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -29,14 +28,14 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PHMCare AI — Inteligência clínica em tempo real.",
+  title: "PHM Care — Codex · Do texto clínico ao GDH",
   description:
-    "O sistema operativo de IA para hospitais. A PHMCare AI liga medicação, voz e prontuários numa única camada de inteligência clínica — reduzindo erros, custos administrativos e tempos de espera.",
+    "O Codex lê a documentação do episódio, propõe os códigos ICD-10-CM/PCS com a passagem clínica que os sustenta, agrupa em GDH e mostra o valor do episódio. O médico codificador valida e decide. Codificação clínica assistida por IA, desenhada para o SNS.",
   metadataBase: new URL("https://phmcare.ai"),
   openGraph: {
-    title: "PHMCare AI — Inteligência clínica em tempo real.",
+    title: "PHM Care — Codex · Do texto clínico ao GDH",
     description:
-      "O sistema operativo de IA para hospitais. MediGuard, CodiCare e MediCall numa única camada.",
+      "Codificação clínica assistida por IA, desenhada para o SNS. O médico codificador valida e decide.",
     locale: "pt_PT",
     type: "website",
   },
@@ -49,12 +48,11 @@ export default function RootLayout({
 }) {
   return (
     <html
-      lang="pt"
-      className={`${fraunces.variable} ${manrope.variable} ${jetbrains.variable}`}
+      lang="pt-PT"
+      className={`${newsreader.variable} ${ibmPlexSans.variable} ${jetbrains.variable}`}
     >
       <body className="bg-bone text-ink font-body antialiased">
         <I18nProvider>
-          <Masthead />
           <Nav />
           {children}
           <Footer />
