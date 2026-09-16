@@ -358,8 +358,15 @@ body::after {
 
 .brand {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 10px;
+}
+
+.brand .logo-mark {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  margin-top: -2px;
 }
 
 .brand .name {

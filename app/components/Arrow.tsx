@@ -32,3 +32,24 @@ export function FlowMark({ fill = "var(--bone)" }: { fill?: string }) {
     </svg>
   );
 }
+
+/* Brand mark shared with web-app (public/favicon.svg there): a hexagonal
+   frame split into three faces. Fills with currentColor; the seams take the
+   colour of the surface so they read as gaps. */
+export function LogoMark({ seam = "var(--bone)" }: { seam?: string }) {
+  return (
+    <svg viewBox="0 0 100 100" className="logo-mark" aria-hidden="true">
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M50 14 81.2 32v36L50 86 18.8 68V32Zm0 15.8L32.5 40v20L50 70.2 67.5 60V40Z"
+      />
+      <path
+        fill="none"
+        stroke={seam}
+        strokeWidth="1.5"
+        d="M18.8 32 32.5 40M81.2 32 67.5 40M50 86V70.2"
+      />
+    </svg>
+  );
+}
